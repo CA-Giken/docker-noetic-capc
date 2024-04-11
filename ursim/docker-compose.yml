@@ -1,0 +1,16 @@
+services:
+  ursim:
+    container_name: ursim
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - ROBOT_MODEL=UR10
+    volumes:
+      - ~/src:/root/src
+    stdin_open: true
+    tty: true
+    command: bash -c "source ./ursim/bin/activate"
+    ports:
+      - 5900:5900
+      - 6080:6080

@@ -5,7 +5,7 @@ services:
       context: .
       dockerfile: Dockerfile
     environment:
-      - DISPLAY=$DISPLAY
+      - DISPLAY=localhost:0.0
       - QT_X11_NO_MITSHM=1
       - XAUTHORITY=/tmp/.docker.xauth
     volumes:
@@ -13,8 +13,8 @@ services:
       - /tmp/.docker.xauth:/tmp/.docker.xauth
       - ~/ursim:/root/ursim
       - ~/catkin_ws:/root/catkin_ws
-      - ~/src:/root/src
-    command: bash
+      - ~/src:/root/src 
+    command: bash run.sh
     stdin_open: true
     tty: true
     ports:

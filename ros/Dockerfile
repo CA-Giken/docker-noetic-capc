@@ -4,10 +4,12 @@ FROM osrf/ros:noetic-desktop-full
 # Docker実行してシェルに入ったときの初期ディレクトリ（ワークディレクトリ）の設定
 WORKDIR /root/
 
+# URSim Setup
 RUN apt-get update && \
-    apt-get install -y psmisc openjdk-8-jdk libjava3d-java policykit-1 && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/* 
+    apt-get install -y psmisc openjdk-8-jdk libjava3d-java policykit-1
+# SSH Setup
+RUN apt-get install -y openssh-server
+
 
 # ROSの環境整理
 # ROSのセットアップシェルスクリプトを.bashrcファイルに追記
@@ -36,3 +38,10 @@ RUN python3 -m pip install PySimpleGUI pytk
 
 # Pyenv
 RUN python3 -m venv ursim-env
+
+RUN apt-get clean && \
+    rm -rf /var/lib/apt/lists/* 
+
+
+# Command copy
+COPY ./run.sh /root/
