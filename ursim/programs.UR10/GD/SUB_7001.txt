@@ -1,0 +1,17 @@
+ プログラム
+   変数設定
+   ロボットプログラム
+     荷重の設定: k10
+     MoveL
+       gTAIHI_pos1
+       gTAIHI_pos2
+       gTAIHI_pos3
+       gTAIHI_pos4
+       荷重の設定: k120
+       gTAIHI_pos5
+       FREE_DRIVE
+         荷重の設定: k2
+         freedrive_mode()
+         設定
+         待機: 0.5
+         end_freedrive_mode()

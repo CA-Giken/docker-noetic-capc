@@ -1,0 +1,74 @@
+ プログラム
+   変数設定
+   ロボットプログラム
+     荷重の設定: k10
+     UF:=ベース_const
+     'If文 (GPII_CheckMST>0)'
+     M
+       MoveL
+         gGD_3_M_RXF
+         待機: 1.0
+         gGD_2_M_RXF
+         待機: 1.0
+         ポップアップ: ok?
+       フォース
+         待機: 3.0
+       ポップアップ: ok?
+       フォース
+         MoveL
+           gGD_1_M_RXF
+       待機: 1.0
+       ポップアップ: ok?
+       フォース
+         MoveL
+           gGD_2_M_RXF
+       待機: 1.0
+       MoveL
+         gGD_3_M_RXF
+         待機: 1.0
+     ポップアップ: ok?
+     LM
+       MoveL
+         gGD_3_LM_RXF
+         待機: 1.0
+         gGD_2_LM_RXF
+         待機: 1.0
+         ポップアップ: ok?
+       フォース
+         待機: 1.0
+       フォース
+         MoveL
+           gGD_1_LM_RXF
+       待機: 1.0
+       ポップアップ: ok?
+       フォース
+         MoveL
+           gGD_2_LM_RXF
+       待機: 1.0
+       MoveL
+         gGD_3_LM_RXF
+         待機: 1.0
+     ポップアップ: ok?
+     RM
+       MoveL
+         gGD_3_RM_RXF
+         待機: 1.0
+         gGD_2_RM_RXF
+         待機: 1.0
+         ポップアップ: ok?
+       フォース
+         待機: 1.0
+       フォース
+         MoveL
+           gGD_1_RM_RXF
+       待機: 1.0
+       ポップアップ: ok?
+       フォース
+         MoveL
+           gGD_2_RM_RXF
+       待機: 1.0
+       MoveL
+         gGD_3_RM_RXF
+         待機: 1.0
+     MoveL
+       gHome_Position

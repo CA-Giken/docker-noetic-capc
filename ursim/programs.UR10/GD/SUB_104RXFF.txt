@@ -1,0 +1,207 @@
+ プログラム
+   変数設定
+   ロボットプログラム
+     SET_BUCKET()
+     ROVI_CAPTURE
+       If文 ( not ROVI_CAPTURE())
+         SubPrgResult:=rovi_err
+         待機: 999999.0
+       CandCnt:=Y1[0]
+       DistPillar:=Y1[1] / 1000.0
+       LevelZ:=Y1[2] / 1000.0
+       NeighborZ:=Y1[3] / 1000.0
+       If文 (GPII_PrgNo≠1203)
+         DistPillarBak:=DistPillar
+       If文 (CandCnt<1)
+         SubPrgResult:=990
+         待機: 999999.0
+     ROVI_SOLVE
+       If文 (CandCnt>0)
+         Y2:=ROVI_SOLVE()
+         If文 (Y2[0]≟10000.)
+           SubPrgResult:=rovi_err
+           待機: 999999.0
+     UF:=Y2
+     PICK_POS
+       gGD_2_LM_p:=pose_add(gGD_2_LM_RX, gGD_2_LM_Offset)
+       gGD_2_M_p:=pose_add(gGD_2_M_RX, gGD_2_M_Offset)
+       gGD_2_RM_p:=pose_add(gGD_2_RM_RX, gGD_2_RM_Offset)
+     CHECK_PICK_POS
+       If文 (0≤DistPillar and DistPillar≤DistPillarAPTh)
+         gGD_2_p:=gGD_2_LM_p
+       ElseIf (-DistPillarAPTh≤DistPillar and DistPillar≤0)
+         gGD_2_p:=gGD_2_RM_p
+       Else
+         gGD_2_p:=gGD_2_M_p
+       PickPosFlange:=GET_DEST_FLANGE(gGD_2_p, UF, PickTCP)
+       PickPosDist:=GET_DIST(PickPosFlange, p[0, 0, 0, 0, 0, 0])
+       If文 ( not CHECK_DIST_NEAR(PickPosFlange, p[0, 0, 0, 0, 0, 0], RBArmLength+RBArmOffset))
+         SubPrgResult:=923
+         待機: 999999.0
+     PICK
+       荷重の設定: k10
+       BucketDef:=pBucket[WorkPosNo]
+       If文 (CaptIndexWk≟1)
+         If文 ((BucketDef[2]+Sub104_TiltZTh[0]<CurrPos[2]) and (CurrPos[2]<BucketDef[2]+Sub104_TiltZTh[1]))
+           If文 (0≤DistPillar and DistPillar≤DistPillarAPTh)
+             'MoveL'
+           Else
+             If文 WorkPosNo≟0
+               MoveL
+                 SlideL0
+             Else
+               MoveL
+                 SlideL1
+       ElseIf (CaptIndexWk≟2)
+         If文 ((BucketDef[2]+Sub104_TiltZTh[0]<CurrPos[2]) and (CurrPos[2]<BucketDef[2]+Sub104_TiltZTh[1]))
+           If文 (-DistPillarAPTh≤DistPillar and DistPillar≤0)
+             'MoveL'
+           Else
+             If文 WorkPosNo≟0
+               MoveL
+                 SlideR0
+             Else
+               MoveL
+                 SlideR1
+       If文 (0≤DistPillar and DistPillar≤DistPillarAPTh)
+         荷重の設定: k120
+         MoveL
+           gGD_4_LM
+         MoveL
+           gGD_3_LM_RX
+           'gGD_2_LM_RX'
+           gGD_2_LM_p
+           設定 GPBO_BLStop=HI:Pulse 1.0
+           待機: 0.5
+           荷重の設定: k10
+           'ポップアップ: ok?'
+         tm_handin: リセット
+         tm_handin: 起動
+         設定 DO[1]=オン
+         フォース
+           '待機 ((Currpos_p_UF0[1]≤(gGD_2_LM_RX[1]-HandInZ)) or (tm_handin>GPII_TMHandIn))'
+           待機 ((Currpos_p_UF0[0]>(gGD_2_LM_p[0]+HandInZ)) or (tm_handin>GPII_TMHandIn))
+         tm_handin: 停止
+         設定 GPBO_BLStart=HI:Pulse 1.0
+         設定 DO[1]=オフ
+       ElseIf (-DistPillarAPTh≤DistPillar and DistPillar≤0)
+         荷重の設定: k120
+         MoveL
+           gGD_4_RM
+         MoveL
+           gGD_3_RM_RX
+           'gGD_2_RM_RX'
+           gGD_2_RM_p
+           設定 GPBO_BLStop=HI:Pulse 1.0
+           待機: 0.5
+           荷重の設定: k10
+           'ポップアップ: ok?'
+         tm_handin: リセット
+         tm_handin: 起動
+         設定 DO[1]=オン
+         フォース
+           '待機 ((Currpos_p_UF0[1]≤(gGD_2_RM_RX[1]-HandInZ)) or (tm_handin>GPII_TMHandIn))'
+           待機 ((Currpos_p_UF0[0]>(gGD_2_RM_p[0]+HandInZ)) or (tm_handin>GPII_TMHandIn))
+         tm_handin: 停止
+         設定 GPBO_BLStart=HI:Pulse 1.0
+         設定 DO[1]=オフ
+       Else
+         荷重の設定: k120
+         MoveL
+           gGD_3_M_RX
+           'gGD_2_M_RX'
+           gGD_2_M_p
+           設定 GPBO_BLStop=HI:Pulse 1.0
+           待機: 0.5
+           荷重の設定: k10
+           'ポップアップ: ok?'
+         tm_handin: リセット
+         tm_handin: 起動
+         設定 DO[1]=オン
+         フォース
+           ShakeCnt:=-1
+           ループ ((Currpos_p_UF0[0]≤(gGD_2_LM_p[0]+HandInZ)) and (tm_handin<GPII_TMHandIn))
+             If文 UseShake
+               If文 ShakeCnt<0
+                 NOT_SHAKE
+                   tm_104: 起動
+                   待機 tm_104>ShakeWaitSec
+                   tm_104: 停止
+                   tm_104: リセット
+                 ShakeCnt:=0
+               IsShake:= False 
+               MONITOR_SPEED
+                 tm_104: リセット
+                 If文 norm(TCPSpeed[1])<TCPSpeedThZ
+                   IsShake:= True 
+                   If文 ShakeCnt≟0
+                     tm_104: 起動
+                     ループ ((tm_104<1.0) and (IsShake≟ True ))
+                       If文 norm(TCPSpeed[1])≥TCPSpeedThZ
+                         IsShake:= False 
+                     tm_104: 停止
+                   ShakeCnt:=ShakeCnt+1
+               SHAKE
+                 If文 IsShake
+                   Sub3100_Option:=7
+                   ループ2回
+                     '7:RX+,8:RX-,9:RY+,10:RY-,11:RZ+,12:RZ-'
+                     Sub3100_Xd:=[0.,0.,0.,0.,0.,0.]
+                     Sub3100_q:=floor((Sub3100_Option-1) / 2)
+                     Sub3100_e:=1-((Sub3100_Option-1) % 2)*2
+                     Sub3100_t:=0.2
+                     Sub3100_Xd[Sub3100_q]=d2r(Sub3100_XdRot/2.0)*Sub3100_e
+                     speedl(Sub3100_Xd,Sub3100_aRot/2.0,Sub3100_t)
+                     If文 Sub3100_Option≟7
+                       Sub3100_Option:=8
+                     Else
+                       Sub3100_Option:=7
+                     待機: 0.1
+                   IsShake:= False 
+             待機: 0.1
+         設定 DO[1]=オフ
+         tm_handin: 停止
+         設定 GPBO_BLStart=HI:Pulse 1.0
+         'IsSteady_01:=is_steady()'
+         '待機: 2.0'
+         'IsSteady_02:=is_steady()'
+       tm_steady_104: リセット
+       tm_steady_104: 起動
+       待機 is_steady()
+       tm_steady_104: 停止
+       'ポップアップ: force done!'
+       If文 ( not GPBI_WorkExists)
+         荷重の設定: k10
+         If文 (0≤DistPillar and DistPillar≤DistPillarAPTh)
+           MoveL
+             'gGD_2_LM_RX'
+             gGD_2_LM_p
+             gGD_3_LM_RX
+           MoveL
+             gGD_4_LM
+         ElseIf (-DistPillarAPTh≤DistPillar and DistPillar≤0)
+           MoveL
+             'gGD_2_RM_RX'
+             gGD_2_RM_p
+             gGD_3_RM_RX
+           MoveL
+             gGD_4_RM
+         Else
+           MoveL
+             'gGD_2_M_RX'
+             gGD_2_M_p
+             gGD_3_M_RX
+         荷重の設定: k25
+         ROVI_CAPTURE
+           CaptPos:=GET_CAPTPOS()
+           MoveJ
+             CaptPos
+           BUCKET
+             SET_BUCKET_DEF()
+             BucketUpperPos:=GET_BUCKET_UPPER()
+           MoveJ
+             BucketUpperPos
+           待機: 1.0
+           'POPUP_CAPT_OPTION()'
+         SubPrgResult:=821
+         待機: 999999.0

@@ -1,0 +1,25 @@
+def ROVI_RECIPE(recipe):
+  if (not socket_open(host,port,socket_name)):
+    rovi_err=902
+    return False
+  end
+  socket_send_line(str_cat(str_cat("X3(",recipe),")"),socket_name)
+  ret=socket_read_line(socket_name,socket_timeout)
+  if (ret == "OK"):
+    rovi_err=0
+  elif (ret == "NG"):
+    rovi_err=to_num(socket_read_line(socket_name,socket_timeout))
+  else:
+    ret="NG"
+    rovi_err=903
+  end
+  socket_close(socket_name)
+  if (rovi_err != 0):
+    if (is_popup):
+      popup(str_cat(ret,rovi_err),title="X3",warning=True,blocking=True)
+    end
+    return False
+  else:
+    return True
+  end
+end

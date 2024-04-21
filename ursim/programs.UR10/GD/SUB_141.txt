@@ -1,0 +1,53 @@
+ プログラム
+   変数設定
+   ロボットプログラム
+     INITIALIZE
+       荷重の設定: k10
+       pBucket[WorkPosNo]=p[0.,0.,0.,0.,0.,0.]
+       If文 (WorkPosNo≟0)
+         GD_pos4:=Capt_2BK_pos1
+         GD_pos5:=Capt_2BK_pos2
+         Capt_BK_L:=Capt_2BK_L
+         Capt_BK_R:=Capt_2BK_R
+       ElseIf (WorkPosNo≟1)
+         GD_pos4:=Capt_1BK_pos1
+         GD_pos5:=Capt_1BK_pos2
+         Capt_BK_L:=Capt_1BK_L
+         Capt_BK_R:=Capt_1BK_R
+     HOME
+       'MoveJ'
+       'MoveL'
+     ROVI_RECIPE
+       If文 ( not ROVI_RECIPE(GPII_BucketNo))
+         SubPrgResult:=rovi_err
+         待機: 999999.0
+     ROVI_RESET
+       If文 ( not ROVI_RESET())
+         SubPrgResult:=rovi_err
+         待機: 999999.0
+     ROVI_CAPTURE_1
+       MoveL
+         Capt_BK_L
+       待機: 1.0
+       If文 ( not ROVI_CAPTURE())
+         SubPrgResult:=rovi_err
+         待機: 999999.0
+     ROVI_CAPTURE_2
+       MoveL
+         Capt_BK_R
+       待機: 1.0
+       If文 ( not ROVI_CAPTURE())
+         SubPrgResult:=rovi_err
+         待機: 999999.0
+     ROVI_SOLVE
+       Y2:=ROVI_SOLVE()
+       If文 (Y2[0]≟10000.)
+         SubPrgResult:=rovi_err
+         待機: 999999.0
+     ROVI_PARAM
+       If文  not ROVI_PARAM(BKWidth_Name)
+         SubPrgResult:=rovi_err
+         待機: 999999.0
+       BKWidth_Value[WorkPosNo]=Y8
+     HOME
+       'MoveL'

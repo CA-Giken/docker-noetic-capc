@@ -1,0 +1,52 @@
+ プログラム
+   変数設定
+   開始前シーケンス
+     prg_no:=0
+     スクリプト: ALIGN_AXIS.script
+     スクリプト: CYCLE_CONTROL.script
+     スクリプト: ZONE_CONTROL.script
+     スクリプト: ROTATE_CONTROL.script
+   ロボットプログラム
+     '待機: 20.0'
+     If文 UseCutOffTCP
+       設定
+       CutOffPos:=p[0.,0.,0.,0.,0.,0.]
+       CutOffPos:=GET_ALIGNED_TCP(CutOffPos)
+       CurrPos=get_actual_tool_flange_pose()
+       CutOffTCP:=pose_trans(pose_inv(CurrPos),CutOffPos)
+       'MoveJ'
+       設定
+       CutOffTCP:=pose_trans(get_tcp_offset(),CutOffTCP)
+       設定
+     Else
+       設定
+       CutOffTCP:=get_tcp_offset()
+     set_tcp(CutOffTCP)
+     MoveL
+       If文 UseZSlide
+         gGD_pos5:=GET_ZSLIDE_POS(g1GD_pos5_NEAR)
+       Else
+         gGD_pos5:=g1GD_pos5
+       'CV_CORR_RZ'
+       DistBKUpper=GET_DIST(CurrPos_p,gGD_pos5)
+       If文 ( not CHECK_DIST_NEAR(CurrPos_p, gGD_pos5, DistBKUpperTh))
+         gGD_pos5
+     MoveL
+       荷重の設定: k10
+       g1GD_pos3
+       g1GD_pos2
+     MoveL
+       荷重の設定: k120
+       g1GD_pos1
+       If文 UseCVCorr
+         PoseAdd:=GET_CVCORR_POS(g1GD_pos1)
+         PoseAdd
+     MoveJ
+       gHome_Position
+   スレッド_2
+     CurrPos=get_actual_tool_flange_pose()
+     CurrPos_p=get_actual_tcp_pose()
+     Currpos_p_UF0=pose_trans(pose_inv(UF), CurrPos_p)
+     TCPSpeed:=get_actual_tcp_speed()
+     TCPForce:=get_tcp_force()
+     sync()

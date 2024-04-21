@@ -1,0 +1,75 @@
+ プログラム
+   変数設定
+   ロボットプログラム
+     荷重の設定: k10
+     UF:=ベース_const
+     If文 (GPII_CheckMST>0)
+       ROVI_SOLVE
+         If文 (CandCnt>0)
+           Y2:=ROVI_SOLVE()
+           If文 (Y2[0]≟10000.)
+             SubPrgResult:=rovi_err
+             待機: 999999.0
+       UF:=Y2
+     M
+       MoveL
+         gGD_3_M_RX
+         待機: 1.0
+         gGD_2_M_RX
+         待機: 1.0
+         設定 GPBO_BLStop=HI:Pulse 1.0
+         ポップアップ: ok?
+       tm_6102_01: リセット
+       tm_6102_01: 起動
+       'フォース'
+       tm_6102_01: 停止
+       設定 GPBO_BLStart=HI:Pulse 1.0
+       待機: 1.0
+       ポップアップ: ok?
+       MoveL
+         gGD_2_M_RX
+         待機: 1.0
+         gGD_3_M_RX
+         待機: 1.0
+     LM
+       MoveL
+         gGD_3_LM_RX
+         待機: 1.0
+         gGD_2_LM_RX
+         待機: 1.0
+         設定 GPBO_BLStop=HI:Pulse 1.0
+         ポップアップ: ok?
+       tm_6102_01: リセット
+       tm_6102_01: 起動
+       'フォース'
+       tm_6102_01: 停止
+       設定 GPBO_BLStart=HI:Pulse 1.0
+       待機: 1.0
+       ポップアップ: ok?
+       MoveL
+         gGD_2_LM_RX
+         待機: 1.0
+         gGD_3_LM_RX
+         待機: 1.0
+     RM
+       MoveL
+         gGD_3_RM_RX
+         待機: 1.0
+         gGD_2_RM_RX
+         待機: 1.0
+         設定 GPBO_BLStop=HI:Pulse 1.0
+         ポップアップ: ok?
+       tm_6102_01: リセット
+       tm_6102_01: 起動
+       'フォース'
+       tm_6102_01: 停止
+       設定 GPBO_BLStart=HI:Pulse 1.0
+       待機: 1.0
+       ポップアップ: ok?
+       MoveL
+         gGD_2_RM_RX
+         待機: 1.0
+         gGD_3_RM_RX
+         待機: 1.0
+     MoveL
+       gHome_Position

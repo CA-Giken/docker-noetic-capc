@@ -1,0 +1,32 @@
+ プログラム
+   変数設定
+   開始前シーケンス
+     スクリプト: ROVI_RESET.script
+     スクリプト: ROVI_CAPTURE.script
+     スクリプト: ROVI_SOLVE.script
+   ロボットプログラム
+     呼び出し SUB_001
+     呼び出し SUB_6001
+     呼び出し SUB_001
+   SUB_001
+     荷重の設定: k10
+     MoveJ
+       gHome_Position
+   SUB_6001
+     荷重の設定: k10
+     If文 ( not ROVI_RESET())
+       SubPrgResult:=rovi_err
+       待機: 999999.0
+     MoveJ
+       CaptPos0
+     CaptPos:=CaptPos0_p
+     ループ (CaptPos[0]≠10000.0)
+       MoveJ
+         CaptPos
+       待機: 2.0
+       If文 ( not ROVI_CAPTURE())
+         SubPrgResult:=rovi_err
+         待機: 999999.0
+       CaptPos:=ROVI_SOLVE(is_popup=False)
+     MoveJ
+       CaptPos0

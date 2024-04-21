@@ -1,0 +1,15 @@
+ プログラム
+   変数設定
+   開始前シーケンス
+     スクリプト: CYCLE_CONTROL.script
+   ロボットプログラム
+     prg_no:=1201
+     WorkPosNo:=1
+     CaptRowNo:=0
+     CaptIndex[WorkPosNo]=2
+     ROVI_CAPTURE
+       CaptPos:=GET_CAPTPOS()
+       Test02:=CaptPos
+       MoveL
+         CaptPos
+       待機: 1.0

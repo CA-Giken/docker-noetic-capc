@@ -1,0 +1,10 @@
+ プログラム
+   変数設定
+   ロボットプログラム
+     INITIALIZE
+       荷重の設定: k10
+     BUCKET
+       SET_BUCKET_DEF()
+       BucketUpperPos:=GET_BUCKET_UPPER()
+     MoveJ
+       BucketUpperPos

@@ -1,0 +1,52 @@
+ プログラム
+   変数設定
+   ロボットプログラム
+     荷重の設定: k10
+     UF:=ベース_const
+     If文 (GPII_CheckMST>0)
+       ROVI_SOLVE
+         If文 (CandCnt>0)
+           Y2:=ROVI_SOLVE()
+           If文 (Y2[0]≟10000.)
+             SubPrgResult:=rovi_err
+             待機: 999999.0
+       UF:=Y2
+     MoveL
+       gGD_3_M_RX
+       待機: 1.0
+       gGD_2_M_RX
+       待機: 1.0
+       ポップアップ: ok?
+       gGD_1_M_RX
+       待機: 1.0
+       ポップアップ: ok?
+       gGD_2_M_RX
+       待機: 1.0
+       gGD_3_M_RX
+       待機: 1.0
+       gGD_3_LM_RX
+       待機: 1.0
+       gGD_2_LM_RX
+       待機: 1.0
+       ポップアップ: ok?
+       gGD_1_LM_RX
+       待機: 1.0
+       ポップアップ: ok?
+       gGD_2_LM_RX
+       待機: 1.0
+       gGD_3_LM_RX
+       待機: 1.0
+       gGD_3_RM_RX
+       待機: 1.0
+       gGD_2_RM_RX
+       待機: 1.0
+       ポップアップ: ok?
+       gGD_1_RM_RX
+       待機: 1.0
+       ポップアップ: ok?
+       gGD_2_RM_RX
+       待機: 1.0
+       gGD_3_RM_RX
+       待機: 1.0
+     MoveL
+       gHome_Position

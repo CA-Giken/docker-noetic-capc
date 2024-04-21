@@ -1,0 +1,11 @@
+ プログラム
+   変数設定
+   ロボットプログラム
+     荷重の設定: k10
+     MoveL
+       gTAIHI_pos5
+       gTAIHI_pos4
+       gTAIHI_pos3
+       gTAIHI_pos2
+       gTAIHI_pos1
+       gHome_Position

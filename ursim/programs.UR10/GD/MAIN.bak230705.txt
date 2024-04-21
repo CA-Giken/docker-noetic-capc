@@ -1,0 +1,1232 @@
+ プログラム
+   変数設定
+   開始前シーケンス
+     スクリプト: ROVI_RESET.script
+     スクリプト: ROVI_CAPTURE.script
+     スクリプト: ROVI_SOLVE.script
+     スクリプト: ROVI_RECIPE.script
+     スクリプト: ROVI_PARAM.script
+     スクリプト: STATUS_CONTROL.script
+     スクリプト: CYCLE_CONTROL.script
+     スクリプト: ZONE_CONTROL.script
+     スクリプト: ALIGN_AXIS.script
+     スクリプト: ROTATE_CONTROL.script
+     'スクリプト: LOG.script'
+   ロボットプログラム
+     position_deviation_warning(True,0.4)
+     荷重の設定: k10
+     設定
+     CutOffTCP:=get_tcp_offset()
+     設定 GPIO_PrgNo=0
+     設定 GPBO_PrgBegin=オフ
+     設定 GPBO_PrgEnd=オフ
+     設定 GPBO_PrgRun=オフ
+     設定 GPBO_BKPosDone=オフ
+     設定 GPBO_BLStop=オフ
+     設定 GPBO_BLStart=オフ
+     設定 GPBO_Released=オフ
+     待機 GPBI_PrgStart=LO
+     待機 GPBI_PrgStart=HI
+     設定 GPIO_PrgResult=0
+     prg_no:=GPII_PrgNo
+     If文 ( not GPBI_PrgStop≠ False )
+       CHECK_RB_POS(prg_no)
+       設定 GPIO_PrgNo=prg_no
+       待機: 0.1
+       設定 GPBO_PrgBegin=HI:Pulse 1.0
+       SubPrgResult:=100
+       If文 (SubPrgResult≟100)
+         GET_REG(prg_no)
+         スイッチ文 prg_no
+           ケース 1001
+             CHECK_RB_POS(prg_no)
+             設定 GPIO_SubPrgNo=001
+             呼び出し SUB_001
+           ケース 1002
+             設定 GPIO_SubPrgNo=102
+             呼び出し SUB_002
+             設定 GPIO_SubPrgNo=001
+             呼び出し SUB_001
+           ケース 1201
+             設定 GPIO_SubPrgNo=101
+             呼び出し SUB_101
+             設定 GPIO_SubPrgNo=102
+             呼び出し SUB_102
+             設定 GPIO_SubPrgNo=104
+             '呼び出し SUB_104'
+             '呼び出し SUB_104RX'
+             '呼び出し SUB_104RXF'
+             呼び出し SUB_104RXFF
+             設定 GPIO_SubPrgNo=105
+             呼び出し SUB_105
+             設定 GPIO_SubPrgNo=106
+             呼び出し SUB_106
+             設定 GPIO_SubPrgNo=121
+             呼び出し SUB_121
+             設定 GPIO_SubPrgNo=122
+             呼び出し SUB_122
+             設定 GPIO_SubPrgNo=001
+             呼び出し SUB_001
+             If文 (CandCnt≟1)
+               SubPrgResult:=990
+               待機: 999999.0
+           ケース 1202
+             設定 GPIO_SubPrgNo=102
+             呼び出し SUB_102
+             設定 GPIO_SubPrgNo=104
+             '設定 GPIO_SubPrgNo=104'
+             '呼び出し SUB_104'
+             '呼び出し SUB_104RX'
+             '呼び出し SUB_104RXF'
+             呼び出し SUB_104RXFF
+             設定 GPIO_SubPrgNo=105
+             呼び出し SUB_105
+             設定 GPIO_SubPrgNo=106
+             呼び出し SUB_106
+             設定 GPIO_SubPrgNo=121
+             呼び出し SUB_121
+             設定 GPIO_SubPrgNo=122
+             呼び出し SUB_122
+             設定 GPIO_SubPrgNo=001
+             呼び出し SUB_001
+             If文 (CandCnt≟1)
+               SubPrgResult:=990
+               待機: 999999.0
+           ケース 1203
+             設定 GPIO_SubPrgNo=103
+             呼び出し SUB_103
+             設定 GPIO_SubPrgNo=104
+             '呼び出し SUB_104'
+             '呼び出し SUB_104RX'
+             '呼び出し SUB_104RXF'
+             呼び出し SUB_104RXFF
+             設定 GPIO_SubPrgNo=105
+             呼び出し SUB_105
+             設定 GPIO_SubPrgNo=106
+             呼び出し SUB_106
+             設定 GPIO_SubPrgNo=121
+             呼び出し SUB_121
+             設定 GPIO_SubPrgNo=122
+             呼び出し SUB_122
+             設定 GPIO_SubPrgNo=001
+             呼び出し SUB_001
+             If文 (CandCnt≟1)
+               SubPrgResult:=990
+               待機: 999999.0
+           ケース 1241
+             設定 GPIO_SubPrgNo=106
+             呼び出し SUB_106
+             設定 GPIO_SubPrgNo=121
+             呼び出し SUB_121
+             設定 GPIO_SubPrgNo=122
+             呼び出し SUB_122
+             設定 GPIO_SubPrgNo=001
+             呼び出し SUB_001
+           ケース 1251
+             設定 GPIO_SubPrgNo=120
+             呼び出し SUB_120
+             設定 GPIO_SubPrgNo=121
+             呼び出し SUB_121
+             設定 GPIO_SubPrgNo=122
+             呼び出し SUB_122
+             設定 GPIO_SubPrgNo=001
+             呼び出し SUB_001
+           ケース 1261
+             設定 GPIO_SubPrgNo=161
+             呼び出し SUB_161
+             設定 GPIO_SubPrgNo=001
+             呼び出し SUB_001
+           ケース 1281
+             設定 GPIO_SubPrgNo=181
+             呼び出し SUB_181
+             設定 GPIO_SubPrgNo=001
+             呼び出し SUB_001
+           ケース 1401
+             設定 GPIO_SubPrgNo=141
+             呼び出し SUB_141
+             pBucket[WorkPosNo]=Y2
+             設定 GPIO_SubPrgNo=143
+             呼び出し SUB_143
+             設定 GPBO_BKPosDone=HI:Pulse 1.0
+           ケース 1402
+             設定 GPIO_SubPrgNo=142
+             呼び出し SUB_142
+             設定 GPIO_SubPrgNo=001
+             呼び出し SUB_001
+             pCV=Y2
+           ケース 3100
+             設定 GPIO_SubPrgNo=3100
+             呼び出し SUB_3100
+           ケース 6001
+             設定 GPIO_SubPrgNo=6001
+             呼び出し SUB_6001
+           ケース 6101
+             CheckMST:=0
+             設定 GPIO_SubPrgNo=6101
+             呼び出し SUB_6101
+           ケース 6102
+             If文 (GPII_CheckMST>0)
+               CheckMST:=GPII_CheckMST
+               WorkPosNo:=-1
+               CaptRowNo:=5
+               'CaptRowNo:=3'
+               SET_BUCKET()
+               設定 GPIO_SubPrgNo=6101
+               呼び出し SUB_6101
+             設定 GPIO_SubPrgNo=6102
+             '呼び出し SUB_6102'
+             '呼び出し SUB_6102RX'
+             '呼び出し SUB_6102RXF'
+             呼び出し SUB_6102RXFF
+           ケース 6401
+             設定 GPIO_SubPrgNo=141
+             呼び出し SUB_141
+             pBucketM=Y2
+             pBucket[WorkPosNo]=Y2
+           ケース 6402
+             設定 GPIO_SubPrgNo=142
+             呼び出し SUB_6402
+           ケース 7001
+             設定 GPIO_SubPrgNo=7001
+             呼び出し SUB_7001
+           ケース 7002
+             設定 GPIO_SubPrgNo=7002
+             呼び出し SUB_7002
+       設定 GPIO_PrgResult=SubPrgResult
+     END_CYCLE()
+     If文 GPBI_PrgStop≟ True 
+       SubPrgResult:=800
+       設定 GPIO_PrgResult=SubPrgResult
+       設定 GPBO_PrgRun= False 
+     待機: 0.1
+     prg_no:=0
+     荷重の設定: k10
+     設定
+     If文 (GPIO_PrgNo≠0)
+       設定 GPBO_PrgEnd=HI:Pulse 1.0
+       設定 GPIO_PrgNo=0
+     待機 GPBI_PrgStart=LO
+     待機 GPBI_PrgStop=LO
+   スレッド_2
+     Sub3100_GPII18:=GPII_RunOption
+     CurrPos=get_actual_tool_flange_pose()
+     CurrPos_p=get_actual_tcp_pose()
+     Currpos_p_UF0=pose_trans(pose_inv(UF), CurrPos_p)
+     TCPSpeed:=get_actual_tcp_speed()
+     TCPForce:=get_tcp_force()
+     設定 GPBO_RBHome=CHECK_HOME()
+     設定 GPBO_AllowGoHom=CHECK_EVAC()
+     設定 GPBO_Zone01=CHECK_ZONE(1)
+     設定 GPBO_Zone02=CHECK_ZONE(2)
+     設定 GPBO_Zone03=CHECK_ZONE(3)
+     設定 GPBO_Zone04=CHECK_ZONE(4)
+     設定 GPBO_Zone05=CHECK_ZONE(5)
+     設定 GPBO_Zone06=CHECK_ZONE(6)
+     CHECK_VT_STATUS()
+     sync()
+   SUB_001
+     荷重の設定: k10
+     MoveJ
+       gHome_Position
+   SUB_002
+     If文 (WorkPosNo≟0)
+       MoveL
+         g2GD_pos4
+       MoveL
+         g2GD_pos5
+       MoveL
+         g2GD_pos1
+     ElseIf (WorkPosNo≟1)
+       MoveL
+         g1GD_pos3
+       MoveL
+         g1GD_pos2
+       MoveL
+         g1GD_pos1
+   SUB_101
+     INITIALIZE
+       荷重の設定: k10
+     BUCKET
+       SET_BUCKET_DEF()
+       BucketUpperPos:=GET_BUCKET_UPPER()
+     MoveJ
+       BucketUpperPos
+   SUB_102
+     ROVI_RECIPE
+       If文 (not ROVI_RECIPE(GPII_WorkNo))
+         SubPrgResult:=rovi_err
+         待機: 999999.0
+     ROVI_PARAM
+       If文 ( not ROVI_PARAM(BKWidth_Name,BKWidth_Value[WorkPosNo]))
+         SubPrgResult:=rovi_err
+         待機: 999999.0
+     ROVI_RESET
+       If文 (not ROVI_RESET())
+         SubPrgResult:=rovi_err
+         待機: 999999.0
+     荷重の設定: k25
+     ROVI_CAPTURE
+       If文 ( not CHECK_CAPTPOS())
+         SubPrgResult:=802
+         待機: 999999.0
+       荷重の設定: k25
+       CaptPos:=GET_CAPTPOS()
+       MoveL
+         CaptPos
+       待機: 1.0
+       'POPUP_CAPT_OPTION()'
+   SUB_103
+     荷重の設定: k25
+     ROVI_CAPTURE
+       CaptPos:=GET_CAPTPOS()
+       MoveL
+         CaptPos
+       待機: 1.0
+       'POPUP_CAPT_OPTION()'
+   'SUB_104'
+   'SUB_104RX'
+   'SUB_104RXF'
+   SUB_104RXFF
+     SET_BUCKET()
+     ROVI_CAPTURE
+       If文 ( not ROVI_CAPTURE())
+         SubPrgResult:=rovi_err
+         待機: 999999.0
+       CandCnt:=Y1[0]
+       DistPillar:=Y1[1] / 1000.0
+       LevelZ:=Y1[2] / 1000.0
+       NeighborZ:=Y1[3] / 1000.0
+       If文 (GPII_PrgNo≠1203)
+         DistPillarBak:=DistPillar
+       If文 (CandCnt<1)
+         SubPrgResult:=990
+         待機: 999999.0
+     ROVI_SOLVE
+       If文 (CandCnt>0)
+         Y2:=ROVI_SOLVE()
+         If文 (Y2[0]≟10000.)
+           SubPrgResult:=rovi_err
+           待機: 999999.0
+     UF:=Y2
+     PICK
+       荷重の設定: k10
+       BucketDef:=pBucket[WorkPosNo]
+       If文 (CaptIndexWk≟1)
+         If文 ((BucketDef[2]+Sub104_TiltZTh[0]<CurrPos[2]) and (CurrPos[2]<BucketDef[2]+Sub104_TiltZTh[1]))
+           If文 (0≤DistPillar and DistPillar≤DistPillarAPTh)
+             MoveL
+               TiltL
+           Else
+             If文 WorkPosNo≟0
+               MoveL
+                 SlideL0
+             Else
+               MoveL
+                 SlideL1
+       ElseIf (CaptIndexWk≟2)
+         If文 ((BucketDef[2]+Sub104_TiltZTh[0]<CurrPos[2]) and (CurrPos[2]<BucketDef[2]+Sub104_TiltZTh[1]))
+           If文 (-DistPillarAPTh≤DistPillar and DistPillar≤0)
+             MoveL
+               TiltR
+           Else
+             If文 WorkPosNo≟0
+               MoveL
+                 SlideR0
+             Else
+               MoveL
+                 SlideR1
+       If文 (0≤DistPillar and DistPillar≤DistPillarAPTh)
+         MoveL
+           gGD_4_LM
+         MoveL
+           gGD_3_LM_RX
+           gGD_2_LM_RX
+           設定 GPBO_BLStop=HI:Pulse 1.0
+           待機: 0.5
+           'ポップアップ: ok?'
+         tm_handin: リセット
+         tm_handin: 起動
+         設定 DO[1]=オン
+         フォース
+           待機 ((Currpos_p_UF0[1]≤(gGD_2_LM_RX[1]-HandInZ)) or (tm_handin>GPII_TMHandIn))
+         tm_handin: 停止
+         設定 GPBO_BLStart=HI:Pulse 1.0
+         設定 DO[1]=オフ
+       ElseIf (-DistPillarAPTh≤DistPillar and DistPillar≤0)
+         MoveL
+           gGD_4_RM
+         MoveL
+           gGD_3_RM_RX
+           gGD_2_RM_RX
+           設定 GPBO_BLStop=HI:Pulse 1.0
+           待機: 0.5
+           'ポップアップ: ok?'
+         tm_handin: リセット
+         tm_handin: 起動
+         設定 DO[1]=オン
+         フォース
+           待機 ((Currpos_p_UF0[1]≤(gGD_2_RM_RX[1]-HandInZ)) or (tm_handin>GPII_TMHandIn))
+         tm_handin: 停止
+         設定 GPBO_BLStart=HI:Pulse 1.0
+         設定 DO[1]=オフ
+       Else
+         MoveL
+           gGD_3_M_RX
+           gGD_2_M_RX
+           設定 GPBO_BLStop=HI:Pulse 1.0
+           待機: 0.5
+           'ポップアップ: ok?'
+         tm_handin: リセット
+         tm_handin: 起動
+         設定 DO[1]=オン
+         フォース
+           ShakeCnt:=-1
+           ループ ((Currpos_p_UF0[1]>(gGD_2_M_RX[1]-HandInZ)) and (tm_handin<GPII_TMHandIn))
+             If文 UseShake
+               If文 ShakeCnt<0
+                 NOT_SHAKE
+                   tm_104: 起動
+                   待機 tm_104>ShakeWaitSec
+                   tm_104: 停止
+                   tm_104: リセット
+                 ShakeCnt:=0
+               IsShake:= False 
+               MONITOR_SPEED
+                 tm_104: リセット
+                 If文 norm(TCPSpeed[1])<TCPSpeedThZ
+                   IsShake:= True 
+                   If文 ShakeCnt≟0
+                     tm_104: 起動
+                     ループ ((tm_104<1.0) and (IsShake≟ True ))
+                       If文 norm(TCPSpeed[1])≥TCPSpeedThZ
+                         IsShake:= False 
+                     tm_104: 停止
+                   ShakeCnt:=ShakeCnt+1
+               SHAKE
+                 If文 IsShake
+                   Sub3100_Option:=7
+                   ループ2回
+                     '7:RX+,8:RX-,9:RY+,10:RY-,11:RZ+,12:RZ-'
+                     Sub3100_Xd:=[0.,0.,0.,0.,0.,0.]
+                     Sub3100_q:=floor((Sub3100_Option-1) / 2)
+                     Sub3100_e:=1-((Sub3100_Option-1) % 2)*2
+                     Sub3100_t:=0.2
+                     Sub3100_Xd[Sub3100_q]=d2r(Sub3100_XdRot/2.0)*Sub3100_e
+                     speedl(Sub3100_Xd,Sub3100_aRot/2.0,Sub3100_t)
+                     If文 Sub3100_Option≟7
+                       Sub3100_Option:=8
+                     Else
+                       Sub3100_Option:=7
+                     待機: 0.1
+                   IsShake:= False 
+             待機: 0.1
+         設定 DO[1]=オフ
+         tm_handin: 停止
+         設定 GPBO_BLStart=HI:Pulse 1.0
+         'IsSteady_01:=is_steady()'
+         '待機: 2.0'
+         'IsSteady_02:=is_steady()'
+       tm_steady_104: リセット
+       tm_steady_104: 起動
+       待機 is_steady()
+       tm_steady_104: 停止
+       'ポップアップ: force done!'
+       If文 ( not GPBI_WorkExists)
+         If文 (0≤DistPillar and DistPillar≤DistPillarAPTh)
+           MoveL
+             gGD_2_LM_RX
+             gGD_3_LM_RX
+           MoveL
+             gGD_4_LM
+         ElseIf (-DistPillarAPTh≤DistPillar and DistPillar≤0)
+           MoveL
+             gGD_2_RM_RX
+             gGD_3_RM_RX
+           MoveL
+             gGD_4_RM
+         Else
+           MoveL
+             gGD_2_M_RX
+             gGD_3_M_RX
+         荷重の設定: k25
+         ROVI_CAPTURE
+           CaptPos:=GET_CAPTPOS()
+           MoveL
+             CaptPos
+           待機: 1.0
+           'POPUP_CAPT_OPTION()'
+         SubPrgResult:=821
+         待機: 999999.0
+   SUB_105
+     UF:=Y2
+     PICK
+       FREE_DRIVE
+         荷重の設定: k2
+         freedrive_mode()
+         設定
+         待機: 0.5
+         end_freedrive_mode()
+       ForceStartZ:=CurrPos_p[2]
+       If文 LevelZ<0
+         CutOffZ:=0.0
+       Else
+         CutOffZ:=LevelZ
+       CutOffZAdd:=NeighborZ+BeyondZ
+       'ポップアップ: zero ft_sensor...'
+       TCPForceBak:=TCPForce
+       tm_cutoff: リセット
+       tm_cutoff: 起動
+       'If文 (0≤DistPillar and DistPillar≤DistPillarCOTh)'
+       設定 DO[3]=オン
+       FORCE_CUTOFF
+         荷重の設定: k1
+         待機: 0.02
+         'zero_ftsensor()'
+         ForceStep:=0
+         If文 (0≤DistPillar and DistPillar≤DistPillarCOTh)
+           ForceValue:=[40,0,40,0,0,0]
+         ElseIf (-DistPillarCOTh≤DistPillar and DistPillar≤0)
+           ForceValue:=[-40,0,40,0,0,0]
+         Else
+           ForceValue:=[0,0,40,0,0,0]
+         ForceFeature:=Bucket
+         CutOffZ:=CutOffZ+CutOffZAdd
+         ループ tm_cutoff<GPII_TMCutOff
+           If文 WorkPosNo≟0
+             ForceValue[5]=-GET_FORCE_VALUE_RZ(g2GD_pos5)
+           ElseIf WorkPosNo≟1
+             ForceValue[5]=-GET_FORCE_VALUE_RZ(g1GD_pos5)
+           スイッチ文 ForceStep
+             ケース 0
+               ForceStep:=1
+               ForceLimit:=[0.01,0.01,ForceLimitZ[ForceStep-1],d2r(10.),d2r(10.),d2r(10.)]
+               force_mode(ForceFeature,ForceAxis,ForceValue,ForceType,ForceLimit)
+             ケース 1
+               If文 GPBI_BLLoad1
+                 ForceStep:=2
+                 ForceLimit:=[0.01,0.01,ForceLimitZ[ForceStep-1],d2r(10.),d2r(10.),d2r(10.)]
+                 force_mode(ForceFeature,ForceAxis,ForceValue,ForceType,ForceLimit)
+               ElseIf UseRZSuppress
+                 force_mode(ForceFeature,ForceAxis,ForceValue,ForceType,ForceLimit)
+             ケース 2
+               If文 GPBI_BLLoad2
+                 break
+               If文 CurrPos_p[2]>ForceStartZ+CutOffZ
+                 ForceStep:=3
+                 ForceValue[2]=0.0
+                 ForceLimit:=[0.01,0.01,ForceLimitZ[ForceStep-1],d2r(10.),d2r(10.),d2r(10.)]
+                 force_mode(ForceFeature,ForceAxis,ForceValue,ForceType,ForceLimit)
+               ElseIf UseRZSuppress
+                 force_mode(ForceFeature,ForceAxis,ForceValue,ForceType,ForceLimit)
+             ケース 3
+               If文 GPBI_BLLoad2
+                 break
+               If文 (UseRZSuppress and (ForceValue[5]≠0.0))
+                 force_mode(ForceFeature,ForceAxis,ForceValue,ForceType,ForceLimit)
+               Else
+                 If文 CHECK_SPEED(StopSpeed) and ((UseRZSuppress and (ForceValue[5]==0.0)) or ( not UseRZSuppress))
+                   break
+             'ケース 4'
+           sync()
+         end_force_mode()
+         stopl(5.0)
+       '待機: 0'
+       'end_force_mode()'
+       'stopl(1.0)'
+       設定 DO[3]=オフ
+       待機 is_steady()
+       tm_cutoff: 停止
+     If文 (GPBI_BLLoad2)
+       SubPrgResult:=825
+       待機: 999999.0
+     If文 ( not GPBI_BLLoad1)
+       SubPrgResult:=822
+       待機: 999999.0
+     荷重の設定: k10
+     'IsSteady_01:=is_steady()'
+     '待機: 1.5'
+     'IsSteady_02:=is_steady()'
+     tm_steady_105: リセット
+     tm_steady_105: 起動
+     待機 is_steady()
+     tm_steady_105: 停止
+     設定 DO[0]=オン
+     FREE_DRIVE
+       freedrive_mode()
+       荷重の設定: k2
+       設定
+       待機: 1.5
+       end_freedrive_mode()
+     待機 is_steady()
+     設定 DO[0]=オフ
+     CV_CORR_RZ
+       If文 UseCVCorr
+         設定
+         sync()
+         CurrPos_p=get_actual_tcp_pose()
+         CurrposAligned:=p[0,0,0,0,0,0]
+         CurrposAligned:=GET_ALIGNED_TCP(CurrposAligned)
+         CVCorrRZVal:=GET_CVCORR_RZ(CurrposAligned)
+     CUTOFF_POSE
+       If文 UseCutOffTCP
+         設定
+         CutOffPos:=p[0.,0.,0.,0.,0.,0.]
+         CutOffPos:=GET_ALIGNED_TCP(CutOffPos)
+         CutOffTCP:=pose_trans(pose_inv(CurrPos),CutOffPos)
+         設定
+         CutOffTCP:=pose_trans(get_tcp_offset(),CutOffTCP)
+         設定
+       Else
+         設定
+         CutOffTCP:=get_tcp_offset()
+   SUB_106
+     If文 GPBI_WorkExists
+       TRANSFER
+         If文 (WorkPosNo≟0)
+           設定 DO[7]=オン
+           荷重の設定: k120
+           If文 UseBaseZRotate
+             設定
+             sync()
+             CurrPos_p=get_actual_tcp_pose()
+             MoveL
+               PoseSub:=pose_sub(CurrPos_p,g2GD_pos5_NEAR)
+               RZSub:=r2d(PoseSub[5])
+               If文 (norm(PoseSub[5])≥d2r(RZTh))
+                 PoseAdd:=pose_add(p[0,0,0,0,0,d2r(RZSub)],p[0,0,0,CurrPos_p[3],CurrPos_p[4],CurrPos_p[5]])
+                 PoseAdd:=p[CurrPos_p[0],CurrPos_p[1],CurrPos_p[2],PoseAdd[3],PoseAdd[4],PoseAdd[5]]
+                 PoseAdd
+           Else
+             MoveL
+               PoseSub:=pose_sub(CurrPos, pose_trans(g2GD_pos5, pose_inv(get_tcp_offset())))
+               RZSub:=r2d(PoseSub[5])
+               If文 (norm(PoseSub[5])≥d2r(RZTh))
+                 PoseSub[0]=0.0
+                 PoseSub[1]=0.0
+                 PoseSub[2]=0.0
+                 PoseAdd:=pose_add(PoseSub, CurrPos)
+                 PoseAdd
+           'MoveL'
+           set_tcp(CutOffTCP)
+           MoveL
+             If文 UseZSlide
+               gGD_pos5:=GET_ZSLIDE_POS(g2GD_pos5_NEAR)
+             Else
+               gGD_pos5:=g2GD_pos5
+             DistBKUpper=GET_DIST(CurrPos_p,gGD_pos5)
+             If文 ( not CHECK_DIST_NEAR(CurrPos_p, gGD_pos5, DistBKUpperTh))
+               gGD_pos5
+             設定 DO[7]=オフ
+           設定 DO[6]=オン
+           MoveL
+             荷重の設定: k10
+             g2GD_pos4
+             g2GD_pos3
+             g2GD_pos2
+           設定 DO[6]=オフ
+           設定 DO[4]=オン
+           MoveL
+             荷重の設定: k120
+             g2GD_pos1
+         ElseIf (WorkPosNo≟1)
+           荷重の設定: k120
+           設定
+           If文 UseBaseZRotate
+             sync()
+             CurrPos_p=get_actual_tcp_pose()
+             MoveL
+               PoseSub:=pose_sub(CurrPos_p,g1GD_pos5_NEAR)
+               RZSub:=r2d(PoseSub[5])
+               If文 (norm(PoseSub[5])≥d2r(RZTh))
+                 PoseAdd:=pose_add(p[0,0,0,0,0,d2r(RZSub)],p[0,0,0,CurrPos_p[3],CurrPos_p[4],CurrPos_p[5]])
+                 PoseAdd:=p[CurrPos_p[0],CurrPos_p[1],CurrPos_p[2],PoseAdd[3],PoseAdd[4],PoseAdd[5]]
+                 PoseAdd
+           Else
+             MoveL
+               PoseSub:=pose_sub(CurrPos, pose_trans(g1GD_pos5, pose_inv(get_tcp_offset())))
+               RZSub:=r2d(PoseSub[5])
+               If文 (norm(PoseSub[5])≥d2r(RZTh))
+                 PoseSub[0]=0.0
+                 PoseSub[1]=0.0
+                 PoseSub[2]=0.0
+                 PoseAdd:=pose_add(PoseSub, CurrPos)
+                 PoseAdd
+           'MoveL'
+           set_tcp(CutOffTCP)
+           MoveL
+             If文 UseZSlide
+               gGD_pos5:=GET_ZSLIDE_POS(g1GD_pos5_NEAR)
+             Else
+               gGD_pos5:=g1GD_pos5
+             DistBKUpper=GET_DIST(CurrPos_p,gGD_pos5)
+             If文 ( not CHECK_DIST_NEAR(CurrPos_p, gGD_pos5, DistBKUpperTh))
+               gGD_pos5
+           設定 DO[4]=オフ
+           設定 DO[6]=オン
+           MoveL
+             荷重の設定: k10
+             g1GD_pos3
+             g1GD_pos2
+           設定 DO[6]=オフ
+           設定 DO[4]=オン
+           MoveL
+             荷重の設定: k120
+             g1GD_pos1
+     設定 DO[4]=オフ
+     If文 ( not GPBI_WorkExists)
+       SubPrgResult:=820
+       待機: 999999.0
+   SUB_120
+     If文 GPBI_WorkExists
+       TRANSFER
+         set_tcp(CutOffTCP)
+         MoveL
+           荷重の設定: k10
+           g2GD_pos1
+           待機: 0.5
+     If文 ( not GPBI_WorkExists)
+       SubPrgResult:=820
+       待機: 999999.0
+   SUB_121
+     SET_CV()
+     If文 GPBI_WorkExists
+       If文 GPBI_AllowGoCV≠ True 
+         SubPrgResult:=823
+         待機: 999999.0
+       荷重の設定: k120
+       MoveL
+         gCV_2_M
+       set_tcp(CutOffTCP)
+       MoveL
+         gCV_1_M
+       設定
+       'ポップアップ: stop'
+       CV_CORR_RZ
+         If文 UseCVCorr
+           RZSub:=CVCorrRZVal
+           設定
+           待機: 0.02
+           CurrPos_p=get_actual_tcp_pose()
+           MoveL
+             PoseAdd:=pose_add(p[0,0,0,0,0,d2r(-RZSub)],p[0,0,0,CurrPos_p[3],CurrPos_p[4],CurrPos_p[5]])
+             PoseAdd:=p[CurrPos_p[0],CurrPos_p[1],CurrPos_p[2],PoseAdd[3],PoseAdd[4],PoseAdd[5]]
+             PoseAdd
+     設定
+     If文 ( not GPBI_WorkExists)
+       stopl(1.2)
+       SubPrgResult:=820
+       待機: 999999.0
+   SUB_122
+     SET_CV()
+     設定 GPBO_BLStart=HI:Pulse 1.0
+     荷重の設定: k05
+     ForceStartZ:=CurrPos[2]
+     tm_landed: リセット
+     tm_landed: 起動
+     設定 DO[5]=オン
+     フォース
+       待機 GPII_TMLanded<tm_landed or GPBI_BLLoad0 or CurrPos[2]<ForceStartZ-UnloadZ
+       待機: 0.5
+     設定 DO[5]=オフ
+     end_force_mode()
+     tm_landed: 停止
+     If文 ( not GPBI_BLLoad0)
+       SubPrgResult:=824
+       待機: 999999.0
+     荷重の設定: k10
+     MoveL
+       待機: 1.0
+       gCV_11_M
+       gCV_12_M
+     設定 GPBO_Released=HI:Pulse 3.0
+     MoveL
+       gCV_13_M
+     荷重の設定: k10
+   SUB_141
+     INITIALIZE
+       荷重の設定: k10
+       pBucket[WorkPosNo]=p[0.,0.,0.,0.,0.,0.]
+       If文 (WorkPosNo≟0)
+         GD_pos4:=Capt_2BK_pos1
+         GD_pos5:=Capt_2BK_pos2
+         Capt_BK_L:=Capt_2BK_L
+         Capt_BK_R:=Capt_2BK_R
+       ElseIf (WorkPosNo≟1)
+         GD_pos4:=Capt_1BK_pos1
+         GD_pos5:=Capt_1BK_pos2
+         Capt_BK_L:=Capt_1BK_L
+         Capt_BK_R:=Capt_1BK_R
+     HOME
+       'MoveJ'
+       'MoveL'
+     ROVI_RECIPE
+       If文 ( not ROVI_RECIPE(GPII_BucketNo))
+         SubPrgResult:=rovi_err
+         待機: 999999.0
+     ROVI_RESET
+       If文 ( not ROVI_RESET())
+         SubPrgResult:=rovi_err
+         待機: 999999.0
+     ROVI_CAPTURE_1
+       MoveL
+         Capt_BK_L
+       待機: 1.0
+       If文 ( not ROVI_CAPTURE())
+         SubPrgResult:=rovi_err
+         待機: 999999.0
+     ROVI_CAPTURE_2
+       MoveL
+         Capt_BK_R
+       待機: 1.0
+       If文 ( not ROVI_CAPTURE())
+         SubPrgResult:=rovi_err
+         待機: 999999.0
+     ROVI_SOLVE
+       Y2:=ROVI_SOLVE()
+       If文 (Y2[0]≟10000.)
+         SubPrgResult:=rovi_err
+         待機: 999999.0
+     ROVI_PARAM
+       If文  not ROVI_PARAM(BKWidth_Name)
+         SubPrgResult:=rovi_err
+         待機: 999999.0
+       BKWidth_Value[WorkPosNo]=Y8
+     HOME
+       'MoveL'
+   SUB_142
+     INITIALIZE
+       荷重の設定: k10
+     ROVI_RECIPE
+       If文 ( not ROVI_RECIPE(GPII_ConveyorNo))
+         SubPrgResult:=rovi_err
+         待機: 999999.0
+     ROVI_RESET
+       If文 ( not ROVI_RESET())
+         SubPrgResult:=rovi_err
+         待機: 999999.0
+     ROVI_CAPTURE
+       MoveL
+         Capt_CV_M
+       待機: 2.0
+       If文 ( not ROVI_CAPTURE())
+         SubPrgResult:=rovi_err
+         待機: 999999.0
+     ROVI_SOLVE
+       Y2:=ROVI_SOLVE()
+       If文 (Y2[0]≟10000.)
+         SubPrgResult:=rovi_err
+         待機: 999999.0
+   SUB_143
+     SET_BUCKET_DEF()
+     ROVI_RESET
+       If文 (not ROVI_RESET())
+         SubPrgResult:=rovi_err
+         待機: 999999.0
+     ROVI_CAPTURE_1
+       BucketUpperPos:=GET_BUCKET_UPPER(1)
+       MoveL
+         BucketUpperPos
+       待機: 1.0
+       If文 ( not ROVI_CAPTURE())
+         SubPrgResult:=rovi_err
+         待機: 999999.0
+     ROVI_CAPTURE_2
+       BucketUpperPos:=GET_BUCKET_UPPER(2)
+       MoveL
+         BucketUpperPos
+       待機: 1.0
+       If文 ( not ROVI_CAPTURE())
+         SubPrgResult:=rovi_err
+         待機: 999999.0
+     JUDGEMENT
+       If文 (Y1[0]≟0)
+         SubPrgResult:=990
+         待機: 999999.0
+       CrankDepth:=(-1)*Y1[1]/1000.0
+       CaptRowNo:=1+floor((CrankDepth-CrankDepthFull)/CaptStepZ)
+       If文 (CaptRowNo<1)
+         CaptRowNo:=1
+       設定 GPIO_CaptRowNo=CaptRowNo
+   SUB_161
+     FREE_DRIVE
+       freedrive_mode()
+       荷重の設定: k2
+       設定
+       待機: 2.5
+       end_freedrive_mode()
+     荷重の設定: k05
+     ForceStartZ:=CurrPos[2]
+     フォース
+       待機 CurrPos[2]<ForceStartZ-0.05
+       待機: 1.0
+       end_force_mode()
+     GO HOME
+       If文 (WorkPosNo≟0)
+         荷重の設定: k05
+         ForceStartX:=CurrPos[0]
+         MoveL
+           var_4:=pose_trans(CurrPos, TCP3100TL)
+           var_5:=p[0.,0.,-0.034,0.,0.,0.]
+           var_6:=pose_sub(pose_trans(var_4,var_5),var_4)
+           var_6
+         荷重の設定: k120
+         MoveL
+           g2GD_pos4
+         MoveL
+           荷重の設定: k10
+           g2GD_pos5
+       ElseIf (WorkPosNo≟1)
+         If文 (is_popup)
+           ポップアップ: 1GD?
+         荷重の設定: k05
+         ForceStartX:=CurrPos[0]
+         MoveL
+           var_4:=pose_trans(CurrPos, TCP3100TL)
+           var_5:=p[0.,0.,-0.034,0.,0.,0.]
+           var_6:=pose_sub(pose_trans(var_4,var_5),var_4)
+           var_6
+         荷重の設定: k120
+         MoveL
+           g1GD_pos3
+   SUB_181
+     INITIALIZE
+       荷重の設定: k10
+     BUCKET
+       SET_BUCKET_DEF()
+       BucketUpperPos:=GET_BUCKET_UPPER()
+     MoveJ
+       BucketUpperPos
+   SUB_3100
+     ループ
+       Sub3100_Option:=Sub3100_GPII18
+       If文 (Sub3100_Option≤14)
+         'MOVE'
+         If文 GPBI_PrgRun
+           設定 GPBO_PrgRun= True 
+           If文 GPBI_BLLoad1
+             If文 (1≤Sub3100_Option and Sub3100_Option≤4)
+               荷重の設定: k10
+             ElseIf (5≤Sub3100_Option and Sub3100_Option≤6)
+               荷重の設定: k120
+             ElseIf (7≤Sub3100_Option and Sub3100_Option≤12)
+               荷重の設定: k10
+             ElseIf (13≤Sub3100_Option and Sub3100_Option≤14)
+               荷重の設定: k10
+           Else
+             If文 (1≤Sub3100_Option and Sub3100_Option≤4)
+               荷重の設定: k10
+             ElseIf (5≤Sub3100_Option and Sub3100_Option≤6)
+               荷重の設定: k120
+             ElseIf (7≤Sub3100_Option and Sub3100_Option≤12)
+               荷重の設定: k10
+             ElseIf (13≤Sub3100_Option and Sub3100_Option≤14)
+               荷重の設定: k10
+           ループ
+             Sub3100_Xd:=[0.,0.,0.,0.,0.,0.]
+             Sub3100_q:=floor((Sub3100_Option-1) / 2)
+             Sub3100_e:=1-((Sub3100_Option-1) % 2)*2
+             Sub3100_t:=0.5
+             If文 (1≤Sub3100_Option and Sub3100_Option≤6)
+               '1:X+,2:X-,3:Y+,4:Y-,5:Z+,6:Z-'
+               Sub3100_Xd[Sub3100_q]=Sub3100_XdV*Sub3100_e
+               If文 Sub3100_Option≟5
+                 If文 CurrPos[2]<Sub3100_ZMax
+                   speedl(Sub3100_Xd,Sub3100_a,t=Sub3100_t)
+                 stopl(Sub3100_d)
+               Else
+                 speedl(Sub3100_Xd,Sub3100_a,t=Sub3100_t)
+             ElseIf (7≤Sub3100_Option and Sub3100_Option≤12)
+               '7:RX+,8:RX-,9:RY+,10:RY-,11:RZ+,12:RZ-'
+               Sub3100_Xd[Sub3100_q]=d2r(Sub3100_XdRot)*Sub3100_e
+               speedl(Sub3100_Xd,Sub3100_aRot,Sub3100_t)
+             ElseIf (Sub3100_Option≟13 or Sub3100_Option≟14)
+               '13:TZ+,14:TZ-'
+               'Sub3100_curr:=CurrPos_p'
+               Sub3100_curr:=pose_trans(CurrPos, TCP3100TL)
+               var_1:=p[0.,0.,0.,0.,0.,0.]
+               var_1[Sub3100_q-4]=0.25*Sub3100_e
+               var_2:=pose_sub(pose_trans(Sub3100_curr,var_1),Sub3100_curr)
+               var_3:=0
+               ループ6回
+                 Sub3100_Xd[var_3]=var_2[var_3]
+                 var_3:=var_3+1
+               speedl(Sub3100_Xd,Sub3100_a,Sub3100_t)
+         stopl(Sub3100_d)
+       ElseIf (Sub3100_Option≤44)
+         'FORCE'
+         If文 GPBI_PrgRun
+           設定 GPBO_PrgRun= True 
+           If文 GPBI_BLLoad1
+             If文 (33≤Sub3100_Option and Sub3100_Option≤36)
+               荷重の設定: k05
+             ElseIf (37≤Sub3100_Option and Sub3100_Option≤38)
+               荷重の設定: k05
+             ElseIf (39≤Sub3100_Option and Sub3100_Option≤44)
+               荷重の設定: k05
+           Else
+             If文 (33≤Sub3100_Option and Sub3100_Option≤36)
+               荷重の設定: k05
+             ElseIf (37≤Sub3100_Option and Sub3100_Option≤38)
+               荷重の設定: k05
+             ElseIf (39≤Sub3100_Option and Sub3100_Option≤44)
+               荷重の設定: k05
+           If文 (Sub3100_Option≟33)
+             '33:X+'
+             フォース
+               待機 GPBI_PrgRun=LO
+           ElseIf (Sub3100_Option≟34)
+             '34:X-'
+             フォース
+               待機 GPBI_PrgRun=LO
+           ElseIf (Sub3100_Option≟35)
+             '35:Y+'
+             フォース
+               待機 GPBI_PrgRun=LO
+           ElseIf (Sub3100_Option≟36)
+             '36:Y-'
+             フォース
+               待機 GPBI_PrgRun=LO
+           ElseIf (Sub3100_Option≟37)
+             '37:Z+'
+             フォース
+               待機 GPBI_PrgRun=LO
+           ElseIf (Sub3100_Option≟38)
+             '38:Z-'
+             フォース
+               待機 GPBI_PrgRun=LO
+           ElseIf (Sub3100_Option≟39)
+             '39:RX+'
+             フォース
+               待機 GPBI_PrgRun=LO
+           ElseIf (Sub3100_Option≟40)
+             '40:RX-'
+             フォース
+               待機 GPBI_PrgRun=LO
+           ElseIf (Sub3100_Option≟41)
+             '41:RY+'
+             フォース
+               待機 GPBI_PrgRun=LO
+           ElseIf (Sub3100_Option≟42)
+             '42:RY-'
+             フォース
+               待機 GPBI_PrgRun=LO
+           ElseIf (Sub3100_Option≟43)
+             '43:RZ+'
+             フォース
+               待機 GPBI_PrgRun=LO
+           ElseIf (Sub3100_Option≟44)
+             '44:RZ-'
+             フォース
+               待機 GPBI_PrgRun=LO
+       ElseIf (Sub3100_Option≥90)
+         'FREEDRIVE'
+         If文 GPBI_PrgRun
+           設定 GPBO_PrgRun= True 
+           If文 GPBI_BLLoad1
+             荷重の設定: k05
+           Else
+             荷重の設定: k05
+           If文 (Sub3100_Option≟90)
+             '90:FreeDrive'
+             freedrive_mode()
+             待機 GPBI_PrgRun=LO
+             end_freedrive_mode()
+       stopl(Sub3100_d)
+       待機: 0.01
+       荷重の設定: k10
+       設定 GPBO_PrgRun= False 
+   SUB_6001
+     荷重の設定: k10
+     If文 ( not ROVI_RESET())
+       SubPrgResult:=rovi_err
+       待機: 999999.0
+     MoveJ
+       CaptPos0
+     CaptPos:=CaptPos0_p
+     ループ (CaptPos[0]≠10000.0)
+       MoveJ
+         CaptPos
+       待機: 4.0
+       If文 ( not ROVI_CAPTURE())
+         SubPrgResult:=rovi_err
+         待機: 999999.0
+       CaptPos:=ROVI_SOLVE(is_popup=False)
+     MoveJ
+       CaptPos0
+   SUB_6101
+     ROVI_RECIPE
+       If文 (not ROVI_RECIPE(GPII_WorkNo))
+         SubPrgResult:=rovi_err
+         待機: 999999.0
+     ROVI_RESET
+       If文 ( not ROVI_RESET())
+         SubPrgResult:=rovi_err
+         待機: 999999.0
+     ROVI_CAPTURE_1
+       MoveJ
+         スイッチ文 CheckMST
+           ケース 0
+             Master_pos
+           ケース 1
+             Master_pos
+           ケース 2
+             Master_posL
+           ケース 3
+             Master_posR
+         'ウェイポイント_1'
+       待機: 3.0
+       If文 ( not ROVI_CAPTURE())
+         SubPrgResult:=rovi_err
+         待機: 999999.0
+   'SUB_6102'
+   'SUB_6102RX'
+   'SUB_6102RXF'
+   SUB_6102RXFF
+     荷重の設定: k10
+     UF:=ベース_const
+     If文 (GPII_CheckMST>0)
+       ROVI_SOLVE
+         If文 (CandCnt>0)
+           Y2:=ROVI_SOLVE()
+           If文 (Y2[0]≟10000.)
+             SubPrgResult:=rovi_err
+             待機: 999999.0
+       UF:=Y2
+     M
+       MoveL
+         gGD_3_M_RX
+         待機: 1.0
+         gGD_2_M_RX
+         待機: 1.0
+         設定 GPBO_BLStop=HI:Pulse 1.0
+         ポップアップ: ok?
+       tm_6102_01: リセット
+       tm_6102_01: 起動
+       フォース
+         ShakeCnt:=-1
+         ループ ((Currpos_p_UF0[1]>(gGD_2_M_RX[1]-HandInZ)) and (tm_6102_01<GPII_TMHandIn))
+           IsShake:= False 
+           If文 ShakeCnt<0
+             NOT_SHAKE
+               tm_6102_02: 起動
+               待機 tm_6102_02>ShakeWaitSec
+               tm_6102_02: 停止
+               tm_6102_02: リセット
+             ShakeCnt:=0
+           MONITOR_SPEED
+             tm_6102_02: リセット
+             If文 norm(TCPSpeed[2])<TCPSpeedThZ
+               IsShake:= True 
+               If文 ShakeCnt≟0
+                 tm_6102_02: 起動
+                 ループ ((tm_6102_02<1.0) and (IsShake≟ True ))
+                   If文 norm(TCPSpeed[2])≥TCPSpeedThZ
+                     IsShake:= False 
+                 tm_6102_02: 停止
+               ShakeCnt:=ShakeCnt+1
+           SHAKE
+             If文 IsShake
+               Sub3100_Option:=9
+               ループ2回
+                 '7:RX+,8:RX-,9:RY+,10:RY-,11:RZ+,12:RZ-'
+                 Sub3100_Xd:=[0.,0.,0.,0.,0.,0.]
+                 Sub3100_q:=floor((Sub3100_Option-1) / 2)
+                 Sub3100_e:=1-((Sub3100_Option-1) % 2)*2
+                 Sub3100_t:=0.2
+                 Sub3100_Xd[Sub3100_q]=d2r(Sub3100_XdRot/2.0)*Sub3100_e
+                 speedl(Sub3100_Xd,Sub3100_aRot/2.0,Sub3100_t)
+                 If文 Sub3100_Option≟9
+                   Sub3100_Option:=10
+                 Else
+                   Sub3100_Option:=9
+                 待機: 0.1
+               IsShake:= False 
+           待機: 0.1
+       tm_6102_01: 停止
+       設定 GPBO_BLStart=HI:Pulse 1.0
+       待機: 1.0
+       ポップアップ: ok?
+       MoveL
+         gGD_2_M_RX
+         待機: 1.0
+         gGD_3_M_RX
+         待機: 1.0
+     LM
+       MoveL
+         gGD_3_LM_RX
+         待機: 1.0
+         gGD_2_LM_RX
+         待機: 1.0
+         設定 GPBO_BLStop=HI:Pulse 1.0
+         ポップアップ: ok?
+       tm_6102_01: リセット
+       tm_6102_01: 起動
+       フォース
+         待機 ((Currpos_p_UF0[1]≤(gGD_2_LM_RX[1]-HandInZ)) or (tm_6102_01>GPII_TMHandIn))
+       tm_6102_01: 停止
+       設定 GPBO_BLStart=HI:Pulse 1.0
+       待機: 1.0
+       ポップアップ: ok?
+       MoveL
+         gGD_2_LM_RX
+         待機: 1.0
+         gGD_3_LM_RX
+         待機: 1.0
+     RM
+       MoveL
+         gGD_3_RM_RX
+         待機: 1.0
+         gGD_2_RM_RX
+         待機: 1.0
+         設定 GPBO_BLStop=HI:Pulse 1.0
+         ポップアップ: ok?
+       tm_6102_01: リセット
+       tm_6102_01: 起動
+       フォース
+         待機 ((Currpos_p_UF0[1]≤(gGD_2_RM_RX[1]-HandInZ)) or (tm_6102_01>GPII_TMHandIn))
+       tm_6102_01: 停止
+       設定 GPBO_BLStart=HI:Pulse 1.0
+       待機: 1.0
+       ポップアップ: ok?
+       MoveL
+         gGD_2_RM_RX
+         待機: 1.0
+         gGD_3_RM_RX
+         待機: 1.0
+     MoveL
+       gHome_Position
+   SUB_6402
+     INITIALIZE
+       荷重の設定: k10
+     ROVI_RECIPE
+       If文 ( not ROVI_RECIPE(GPII_ConveyorNo))
+         SubPrgResult:=rovi_err
+         待機: 999999.0
+     ROVI_RESET
+       If文 ( not ROVI_RESET())
+         SubPrgResult:=rovi_err
+         待機: 999999.0
+     ROVI_CAPTURE
+       MoveL
+         Capt_CV_M
+       待機: 2.0
+       If文 ( not ROVI_CAPTURE())
+         SubPrgResult:=rovi_err
+         待機: 999999.0
+   SUB_7001
+     荷重の設定: k10
+     MoveL
+       gTAIHI_pos1
+       gTAIHI_pos2
+       gTAIHI_pos3
+       gTAIHI_pos4
+       gTAIHI_pos5
+   SUB_7002
+     荷重の設定: k10
+     MoveL
+       gTAIHI_pos5
+       gTAIHI_pos4
+       gTAIHI_pos3
+       gTAIHI_pos2
+       gTAIHI_pos1
+       gHome_Position

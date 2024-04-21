@@ -1,0 +1,21 @@
+ プログラム
+   変数設定
+   開始前シーケンス
+     スクリプト: ALIGN_AXIS.script
+     スクリプト: ROTATE_CONTROL.script
+   ロボットプログラム
+     設定
+     sync()
+     CurrPos_p=get_actual_tcp_pose()
+     CurrposAligned:=p[0,0,0,0,0,0]
+     CurrposAligned:=GET_ALIGNED_TCP(CurrposAligned)
+     RZSub:=GET_CVCORR_RZ(CurrposAligned)
+     ポップアップ: start!
+     MoveL
+       If文 (norm(RZSub)≠0.0)
+         PoseAdd:=pose_add(p[0,0,0,0,0,d2r(-RZSub)],p[0,0,0,CurrPos_p[3],CurrPos_p[4],CurrPos_p[5]])
+         PoseAdd:=p[CurrPos_p[0],CurrPos_p[1],CurrPos_p[2],PoseAdd[3],PoseAdd[4],PoseAdd[5]]
+         PoseAdd
+     ポップアップ: done!
+   スレッド_1
+     CurrPos_p=get_actual_tcp_pose()

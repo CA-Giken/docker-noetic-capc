@@ -4,19 +4,18 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      shm_size: '2gb'
+    shm_size: '2gb'
     environment:
       - DISPLAY=localhost:0.0
-      - QT_X11_NO_MITSHM=1
-      - XAUTHORITY=/tmp/.docker.xauth
     volumes:
-      - /tmp/.X11-unix:/tmp/.X11-unix:rw
-      - /tmp/.docker.xauth:/tmp/.docker.xauth
       - ~/ursim:/root/ursim
-      - ~/catkin_ws:/root/catkin_ws
-      - ~/src:/root/src 
+      - ~/catkin_ws/src:/root/catkin_ws/src
+      - ~/src:/root/src
     command: bash run.sh
     stdin_open: true
     tty: true
     ports:
+      - 6080:6080
       - 46375:46375
       - 11311:11311

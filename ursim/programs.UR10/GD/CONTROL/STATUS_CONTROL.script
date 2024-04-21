@@ -1,0 +1,6 @@
+def CHECK_VT_STATUS():
+  write_output_boolean_register(8, read_input_boolean_register(64))   # GPBO_PCOK
+  write_output_boolean_register(9, read_input_boolean_register(65))   # GPBO_YCAMOK
+  write_output_boolean_register(10, read_input_boolean_register(66))  # GPBO_DFOK
+  write_output_integer_register(5, read_input_integer_register(24))   # GPIO_PayloadNo
+end

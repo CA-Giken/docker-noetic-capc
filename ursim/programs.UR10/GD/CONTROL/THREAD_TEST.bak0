@@ -1,0 +1,13 @@
+thread THREAD_TEST():
+  THREAD_TEST_FLAG=0
+  var_2=0
+  while (var_2<10):
+    sleep(1.0)
+    var_2=var_2+1
+  end
+  THREAD_TEST_FLAG=1
+end
+def RUN_THREAD_TEST():
+  return run THREAD_TEST()
+def JOIN_THREAD_TEST(thrd):
+  join thrd

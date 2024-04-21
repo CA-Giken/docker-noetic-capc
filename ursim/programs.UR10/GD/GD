@@ -1,0 +1,167 @@
+<InstallationVariables timestamp="Tue Oct 17 18:10:04 CEST 2023">
+  <variable name="DistPillar" value="-0.35431" favourite="false"/>
+  <variable name="CandCnt" value="1" favourite="false"/>
+  <variable name="ReCaptZ" value="0.05" favourite="false"/>
+  <variable name="port" value="3000" favourite="false"/>
+  <variable name="socket_timeout" value="120" favourite="false"/>
+  <variable name="host" value="&quot;192.168.1.2&quot;" favourite="false"/>
+  <variable name="is_popup" value="False" favourite="false"/>
+  <variable name="pBucket" value="[p[0.89764, 0.48514, 0.32075, 0, 0, -1.53904], p[-0.78741, -0.50707, 0.3182, 0, 0, 1.57584], p[0, 0, 0, 0, 0, 0]]" favourite="false"/>
+  <variable name="CaptStepZ" value="0.085" favourite="false"/>
+  <variable name="CaptIndex" value="[0, 0, 0]" favourite="false"/>
+  <variable name="pBucketM" value="p[0.82555, 0.46654, 0.32036, 0, 0, -1.58175]" favourite="false"/>
+  <variable name="socket_name" value="&quot;vt&quot;" favourite="false"/>
+  <variable name="rovi_err" value="0" favourite="false"/>
+  <variable name="SubPrgResult" value="100" favourite="false"/>
+  <variable name="CurrPos" value="p[-0.00409, -0.42066, 0.6156, -0.0208, -3.14087, 0.00054]" favourite="false"/>
+  <variable name="CurrPos_p" value="p[-0.00317, -0.33081, 0.19557, -0.0208, -3.14087, 0.00054]" favourite="false"/>
+  <variable name="ForceStartZ" value="-0.01094" favourite="false"/>
+  <variable name="CutOffZ" value="0.16467" favourite="false"/>
+  <variable name="Sub3100_ZMax" value="0.74" favourite="false"/>
+  <variable name="ForceStartX" value="-0.90368" favourite="false"/>
+  <variable name="Sub3100_aRot" value="0.2" favourite="false"/>
+  <variable name="Sub3100_d" value="0.3" favourite="false"/>
+  <variable name="Sub3100_Option" value="90" favourite="false"/>
+  <variable name="Sub3100_a" value="0.2" favourite="false"/>
+  <variable name="Sub3100_XdV" value="0.1" favourite="false"/>
+  <variable name="Sub3100_XdRot" value="8" favourite="false"/>
+  <variable name="ZoneDistTh" value="0.05" favourite="false"/>
+  <variable name="BucketWidth" value="0.95" favourite="false"/>
+  <variable name="ZoneBucketGap" value="-0.1" favourite="false"/>
+  <variable name="ZoneHomeX" value="0.2" favourite="false"/>
+  <variable name="UnloadZ" value="0.072" favourite="false"/>
+  <variable name="CaptPos" value="p[0.471, -0.48541, -0.02886, 3.14142, -0.01793, 0.00027]" favourite="false"/>
+  <variable name="BucketUpperPos" value="p[0.471, -0.48541, -0.02886, 3.14142, -0.01793, 0.00027]" favourite="false"/>
+  <variable name="Sub3100_GPII18" value="90" favourite="false"/>
+  <variable name="Zone6ThX" value="0.1" favourite="false"/>
+  <variable name="Zone6ThY" value="0.05" favourite="false"/>
+  <variable name="pCV" value="p[0.00133, 0.00125, 0.00094, 0.00109, 0.00086, -0.00074]" favourite="false"/>
+  <variable name="CaptRowNo" value="7" favourite="false"/>
+  <variable name="CrankDepthFull" value="0.025" favourite="false"/>
+  <variable name="CrankDepth" value="0.12286" favourite="false"/>
+  <variable name="Y1" value="[1, -354.30884, -22.91309, -35.33002]" favourite="false"/>
+  <variable name="Y2" value="p[0.00459, -0.00108, 0.00017, -0.0015, -0.01163, -0.00392]" favourite="false"/>
+  <variable name="EvacRadiusTh" value="0.2" favourite="false"/>
+  <variable name="EvacXTh" value="[-0.36, 0.36]" favourite="false"/>
+  <variable name="EvacYTh" value="[-0.5, 1]" favourite="false"/>
+  <variable name="EvacZTh" value="[-0.1, 5]" favourite="false"/>
+  <variable name="WorkPosNo" value="0" favourite="false"/>
+  <variable name="Zone1ZTh" value="0.1" favourite="false"/>
+  <variable name="ReCaptNo" value="0" favourite="false"/>
+  <variable name="DistPillarBak" value="-0.35431" favourite="false"/>
+  <variable name="CaptIndexWk" value="0" favourite="false"/>
+  <variable name="PoseSub" value="p[0.60406, -0.06196, -0.68411, -0.07183, 0.00716, 0.09677]" favourite="false"/>
+  <variable name="PoseAdd" value="p[-0.25013, -0.47494, 0.04546, 2.26696, -2.15382, -0.02284]" favourite="false"/>
+  <variable name="RZTh" value="15" favourite="false"/>
+  <variable name="pBucketC" value="p[0.82756, 0.52809, 0.31225, 0, 0, -1.56214]" favourite="false"/>
+  <variable name="ReCaptZWk" value="0" favourite="false"/>
+  <variable name="CheckMST" value="1" favourite="false"/>
+  <variable name="RZSub" value="5.54442" favourite="false"/>
+  <variable name="DistPillarCOTh" value="0.16" favourite="false"/>
+  <variable name="DistPillarAPTh" value="0.26" favourite="false"/>
+  <variable name="CutOffZAdd" value="0.16467" favourite="false"/>
+  <variable name="CutOffZDef" value="0.09" favourite="false"/>
+  <variable name="Y8" value="0" favourite="false"/>
+  <variable name="BKWidth_Value" value="[944, 953, 0]" favourite="false"/>
+  <variable name="BKWidth_Name" value="&quot;/prepro/bucket_width&quot;" favourite="false"/>
+  <variable name="LevelZ" value="-0.02291" favourite="false"/>
+  <variable name="NeighborZ" value="-0.03533" favourite="false"/>
+  <variable name="Currpos_p_UF0" value="p[-0.00317, -0.33081, 0.19557, -0.0208, -3.14087, 0.00054]" favourite="false"/>
+  <variable name="TCPSpeed" value="p[0, 0, 0, 0, 0, 0]" favourite="false"/>
+  <variable name="Sub3100_Xd" value="[0, 0, 0.1, 0, 0, 0]" favourite="false"/>
+  <variable name="Sub3100_q" value="2" favourite="false"/>
+  <variable name="Sub3100_e" value="1" favourite="false"/>
+  <variable name="Sub3100_t" value="0.5" favourite="false"/>
+  <variable name="IsShake" value="False" favourite="false"/>
+  <variable name="BeyondZ" value="0.2" favourite="false"/>
+  <variable name="ShakeCnt" value="-1" favourite="false"/>
+  <variable name="IsSteady_01" value="False" favourite="false"/>
+  <variable name="IsSteady_02" value="True" favourite="false"/>
+  <variable name="HandInZ" value="0.05" favourite="false"/>
+  <variable name="TCPSpeedThZ" value="0.0005" favourite="false"/>
+  <variable name="ShakeWaitSec" value="1" favourite="false"/>
+  <variable name="CutOffPos" value="p[0.74495, -0.05741, 0.23647, -2.14909, 2.29151, 0]" favourite="false"/>
+  <variable name="RelMoveZ" value="0.075" favourite="false"/>
+  <variable name="ForceFeature" value="p[0.89764, 0.48514, -0.27425, 0, 0, -1.53904]" favourite="false"/>
+  <variable name="ForceAxis" value="[1, 1, 1, 1, 1, 1]" favourite="false"/>
+  <variable name="ForceValue" value="[0, 0, -0.04, 0, 0, 0]" favourite="false"/>
+  <variable name="ForceType" value="2" favourite="false"/>
+  <variable name="ForceLimit" value="[0.01, 0.01, -0.02505, 0.17453, 0.17453, 0.17453]" favourite="false"/>
+  <variable name="ForceStep" value="3" favourite="false"/>
+  <variable name="IsBLLoad" value="False" favourite="false"/>
+  <variable name="TM_BLLoad" value="0.5" favourite="false"/>
+  <variable name="Sub104__TiltZTh" value="[0.25, 0.4]" favourite="false"/>
+  <variable name="Sub104_TiltZTh" value="[-0.5, 0.5]" favourite="false"/>
+  <variable name="BucketDef" value="p[0.89764, 0.48514, 0.32075, 0, 0, -1.53904]" favourite="false"/>
+  <variable name="ForceLimitZ" value="[0.015, 0.05, 0.05]" favourite="false"/>
+  <variable name="gGD_pos5" value="p[0.76145, -0.00691, 0.50543, -2.22414, 2.19475, -0.06648]" favourite="false"/>
+  <variable name="CutOffTCP" value="p[0, 0.09, 0.42, 0, 0, 0]" favourite="false"/>
+  <variable name="UseCutOffTCP" value="False" favourite="false"/>
+  <variable name="UseZSlide" value="False" favourite="false"/>
+  <variable name="UseBaseZRotate" value="True" favourite="false"/>
+  <variable name="BKWidth" value="0.942" favourite="false"/>
+  <variable name="Test01" value="1" favourite="false"/>
+  <variable name="CaptPointL_dX" value="0.185" favourite="false"/>
+  <variable name="CaptPointR_dX" value="0.185" favourite="false"/>
+  <variable name="UseShake" value="False" favourite="false"/>
+  <variable name="UseNewCaptPos" value="True" favourite="false"/>
+  <variable name="RZSupDegMin" value="[-5, 5]" favourite="false"/>
+  <variable name="RZSupForceVal" value="0" favourite="false"/>
+  <variable name="UseRZSuppress" value="True" favourite="false"/>
+  <variable name="TCPForce" value="p[-5.98794, -2.88519, -4.21234, 0.92064, 0.08663, -1.37389]" favourite="true"/>
+  <variable name="TCPForceBak" value="p[-8.09892, 2.01141, -3.69723, 0.03154, 2.31683, -0.05283]" favourite="false"/>
+  <variable name="CVCorrDegMin" value="[-0.1, 0.1]" favourite="false"/>
+  <variable name="RZSupRatio" value="[1, 1]" favourite="false"/>
+  <variable name="RZSupOffset" value="[0, 0]" favourite="false"/>
+  <variable name="CVCorrRatio" value="[1.5, 1.5]" favourite="false"/>
+  <variable name="CVCorrOffset" value="[0, 0]" favourite="false"/>
+  <variable name="CVCorrRZVal" value="0" favourite="false"/>
+  <variable name="RYSub" value="-0.50461" favourite="false"/>
+  <variable name="UseCVCorr" value="True" favourite="false"/>
+  <variable name="RZSupForceRange" value="[-5, 5]" favourite="false"/>
+  <variable name="DistBKUpperTh" value="0.1" favourite="false"/>
+  <variable name="DistBKUpper" value="0.74684" favourite="false"/>
+  <variable name="StopSpeed" value="[0.005, 0.005, 0.005, 99999, 99999, 0.054]" favourite="false"/>
+  <variable name="RZSupRYRange" value="[-5, 5]" favourite="false"/>
+  <variable name="UseRZSupStep1" value="False" favourite="false"/>
+  <variable name="UseZRotate" value="True" favourite="false"/>
+  <variable name="CVCorrRYSub" value="1.23075" favourite="false"/>
+  <variable name="CVCorrYVal" value="0" favourite="false"/>
+  <variable name="DistOrigin" value="0.33082" favourite="false"/>
+  <variable name="v1" value="True" favourite="false"/>
+  <variable name="v2" value="True" favourite="false"/>
+  <variable name="v3" value="True" favourite="false"/>
+  <variable name="CVXTh" value="[-0.45, 0.45]" favourite="false"/>
+  <variable name="CVYTh" value="[-0.63, -0.33]" favourite="false"/>
+  <variable name="CVZTh" value="[-0.07, 5]" favourite="false"/>
+  <variable name="ForceVZDecay" value="0.04" favourite="false"/>
+  <variable name="ForceVZDecayWk" value="0.04" favourite="false"/>
+  <variable name="ForceLZDecay" value="0.00005" favourite="false"/>
+  <variable name="ForceLZDecayWk" value="0.00005" favourite="false"/>
+  <variable name="gGD_2_LM_Offset" value="p[0, 0, 0, 0, 0, 0]" favourite="false"/>
+  <variable name="gGD_2_RM_Offset" value="p[0, 0, 0, 0, 0, 0]" favourite="false"/>
+  <variable name="ForceValueBak" value="[0, 0, 0, 0, 0]" favourite="false"/>
+  <variable name="TCPForceBak2" value="p[10.8107, -1.04905, -0.02511, 0.20273, -1.32294, 0.02658]" favourite="false"/>
+  <variable name="TCPSpeedBak2" value="p[0.00736, 0.00898, -0.00886, -0.02619, -0.03683, -0.00056]" favourite="false"/>
+  <variable name="gGD_2_LM_p" value="p[0.56203, -0.13005, -0.08344, -0.90862, 1.22672, -1.13]" favourite="false"/>
+  <variable name="gGD_2_RM_p" value="p[0.5627, -0.13035, -0.07952, -1.23639, 0.98561, -1.43925]" favourite="false"/>
+  <variable name="gGD_2_M_p" value="p[0.56205, -0.12993, -0.0815, -1.09518, 1.11511, -1.28286]" favourite="false"/>
+  <variable name="gGD_2_M_Offset" value="p[0, 0, 0, 0, 0, 0]" favourite="false"/>
+  <variable name="RXSub" value="-6.79932" favourite="false"/>
+  <variable name="RXTiltDegMin" value="[-15, 15]" favourite="false"/>
+  <variable name="UseChkRXTilt" value="True" favourite="false"/>
+  <variable name="RBArmLength" value="1.2" favourite="false"/>
+  <variable name="gGD_2_p" value="p[0.56205, -0.12993, -0.0815, -1.09518, 1.11511, -1.28286]" favourite="false"/>
+  <variable name="PickPosFlange" value="p[1.00356, -0.10784, -0.00971, 2.15497, -2.03792, -0.23276]" favourite="false"/>
+  <variable name="PickTCP" value="p[0, 0.09, 0.42, 1.894, 0, 0]" favourite="false"/>
+  <variable name="RBArmOffset" value="-0.05" favourite="false"/>
+  <variable name="PickPosDist" value="1.00938" favourite="false"/>
+  <variable name="WorkNoCV" value="10000" favourite="false"/>
+  <variable name="WorkNoTL" value="20000" favourite="false"/>
+  <variable name="UseCVCorrCam" value="True" favourite="false"/>
+  <variable name="WorkNoOffset" value="10000" favourite="false"/>
+  <variable name="TCPForceTL" value="p[5.94645, -2.96278, 4.21726, -0.92031, 0.09929, 1.37325]" favourite="false"/>
+  <variable name="thrd108" value="0" favourite="false"/>
+  <variable name="THREAD_ROVI_FLG" value="2" favourite="false"/>
+  <variable name="THREAD_ROVI_ERR" value="-1" favourite="false"/>
+</InstallationVariables>

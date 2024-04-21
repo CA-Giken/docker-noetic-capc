@@ -1,0 +1,32 @@
+ プログラム
+   変数設定
+   開始前シーケンス
+     スクリプト: ROVI_RESET.script
+     スクリプト: ROVI_CAPTURE.script
+     スクリプト: ROVI_SOLVE.script
+     スクリプト: ROVI_RECIPE.script
+     スクリプト: ROVI_PARAM.script
+     スクリプト: CYCLE_CONTROL.script
+     スクリプト: ROTATE_CONTROL.script
+   ロボットプログラム
+     If文 UseCVCorr and UseCVCorrCam
+       JOIN_THREAD_ROVI(thrd108)
+       If文 THREAD_ROVI_ERR≠0
+         ROVI_RECIPE
+           If文 (not ROVI_RECIPE(GPII_WorkNo+WorkNoCV))
+             SubPrgResult:=rovi_err
+             待機: 999999.0
+         ROVI_RESET
+           If文 (not ROVI_RESET())
+             SubPrgResult:=rovi_err
+             待機: 999999.0
+         ROVI_CAPTURE
+           If文 ( not ROVI_CAPTURE())
+             SubPrgResult:=rovi_err
+             待機: 999999.0
+         ROVI_SOLVE
+           Y2:=ROVI_SOLVE()
+           If文 (Y2[0]≟10000.)
+             SubPrgResult:=824
+             待機: 999999.0
+       CutOffTCP:=pose_trans(Y2, get_tcp_offset())

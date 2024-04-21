@@ -1,0 +1,170 @@
+ プログラム
+   変数設定
+   ロボットプログラム
+     UF:=Y2
+     PICK
+       FREE_DRIVE
+         荷重の設定: k2
+         freedrive_mode()
+         設定
+         待機: 0.5
+         end_freedrive_mode()
+       force_mode_set_gain_scaling(0.9)
+       設定 GPBO_BLStart=HI:Pulse 1.0
+       ForceStartZ:=CurrPos_p[2]
+       If文 LevelZ<0
+         CutOffZ:=0.0
+       Else
+         CutOffZ:=LevelZ
+       CutOffZAdd:=NeighborZ+BeyondZ
+       'ポップアップ: zero ft_sensor...'
+       TCPForceBak:=TCPForce
+       tm_cutoff: リセット
+       tm_cutoff: 起動
+       'If文 (0≤DistPillar and DistPillar≤DistPillarCOTh)'
+       設定 DO[3]=オン
+       FORCE_CUTOFF
+         荷重の設定: kjF
+         待機: 0.02
+         'zero_ftsensor()'
+         ForceStep:=0
+         If文 (0≤DistPillar and DistPillar≤DistPillarCOTh)
+           ForceValue:=[40,0,60,0,0,0]
+         ElseIf (-DistPillarCOTh≤DistPillar and DistPillar≤0)
+           ForceValue:=[-40,0,60,0,0,0]
+         Else
+           ForceValue:=[0,0,60,0,0,0]
+         ForceFeature:=Bucket
+         ForceLZDecayWk:=0
+         ForceVZDecayWk:=0
+         CutOffZ:=CutOffZ+CutOffZAdd
+         tm_decay: リセット
+         ループ tm_cutoff<GPII_TMCutOff
+           If文 WorkPosNo≟0
+             ForceValue[5]=-GET_FORCE_VALUE_RZ(g2GD_pos5)
+           ElseIf WorkPosNo≟1
+             ForceValue[5]=-GET_FORCE_VALUE_RZ(g1GD_pos5)
+           スイッチ文 ForceStep
+             ケース 0
+               ForceStep:=1
+               ForceLimit:=[0.01,0.01,ForceLimitZ[ForceStep-1],d2r(10.),d2r(10.),d2r(10.)]
+               force_mode(ForceFeature,ForceAxis,ForceValue,ForceType,ForceLimit)
+             ケース 1
+               If文 GPBI_BLLoad1
+                 ForceStep:=2
+                 ForceLimit:=[0.01,0.01,ForceLimitZ[ForceStep-1],d2r(10.),d2r(10.),d2r(10.)]
+                 force_mode(ForceFeature,ForceAxis,ForceValue,ForceType,ForceLimit)
+               ElseIf UseRZSuppress
+                 force_mode(ForceFeature,ForceAxis,ForceValue,ForceType,ForceLimit)
+             ケース 2
+               If文 GPBI_BLLoad2
+                 break
+               ForceValue[2]=ForceValue[2]-ForceVZDecayWk
+               ForceLimit[2]=ForceLimit[2]-ForceLZDecayWk
+               If文 (ForceValue[2]≤0 and ForceLZDecay≟0)
+                 tm_decay: 停止
+                 ForceStep:=3
+                 break
+               ElseIf (ForceLimit[2]≤StopSpeed[2] and ForceVZDecay≟0)
+                 tm_decay: 停止
+                 ForceStep:=3
+                 break
+               ElseIf (ForceValue[2]≤0 and ForceLimit[2]≤0)
+                 tm_decay: 停止
+                 ForceStep:=3
+                 break
+               ElseIf (( CurrPos_p[2]>ForceStartZ+CutOffZ ) or ( not CHECK_DIST_NEAR(CurrPos, p[0,0,0,0,0,0], RBArmLength)))
+                 tm_decay: 起動
+                 TCPForceBak2:=TCPForce
+                 TCPSpeedBak2:=TCPSpeed
+                 ForceValue[0]=0.0
+                 If文 (ForceVZDecay≟0 and ForceLZDecay≟0)
+                   ForceVZDecayWk:=ForceValue[2]
+                   ForceLZDecayWk:=0
+                 ElseIf (ForceVZDecay≠0 and ForceLZDecay≟0)
+                   ForceVZDecayWk:=ForceVZDecay
+                   ForceLZDecayWk:=0
+                 ElseIf (ForceVZDecay≟0 and ForceLZDecay≠0)
+                   ForceVZDecayWk:=0
+                   ForceLZDecayWk:=ForceLZDecay
+                 Else
+                   ForceVZDecayWk:=ForceVZDecay
+                   ForceLZDecayWk:=ForceLZDecay
+                 force_mode(ForceFeature,ForceAxis,ForceValue,ForceType,ForceLimit)
+               ElseIf UseRZSuppress
+                 If文 (ForceValue[2]<0)
+                   ForceValue[2]=0.0
+                 If文 (ForceLimit[2]≤StopSpeed[2])
+                   ForceLimit[2]=StopSpeed[2]
+                 force_mode(ForceFeature,ForceAxis,ForceValue,ForceType,ForceLimit)
+             ケース 3
+               If文 GPBI_BLLoad2
+                 break
+               If文 (UseRZSuppress and (ForceValue[5]≠0.0))
+                 force_mode(ForceFeature,ForceAxis,ForceValue,ForceType,ForceLimit)
+               Else
+                 If文 CHECK_SPEED(StopSpeed) and ((UseRZSuppress and (ForceValue[5]==0.0)) or ( not UseRZSuppress))
+                   break
+             'ケース 4'
+           sync()
+         end_force_mode()
+         stopl(5.0)
+       '待機: 0'
+       'end_force_mode()'
+       'stopl(1.0)'
+       設定 DO[3]=オフ
+       '待機 is_steady()'
+       tm_cutoff: 停止
+     If文 (GPBI_BLLoad2)
+       SubPrgResult:=825
+       待機: 999999.0
+     If文 ( not GPBI_BLLoad1)
+       SubPrgResult:=822
+       待機: 999999.0
+     荷重の設定: k10
+     'IsSteady_01:=is_steady()'
+     '待機: 1.0'
+     'IsSteady_02:=is_steady()'
+     tm_steady_105: リセット
+     tm_steady_105: 起動
+     '待機 is_steady()'
+     tm_steady_105: 停止
+     設定 DO[0]=オン
+     FREE_DRIVE
+       freedrive_mode()
+       荷重の設定: k2
+       設定
+       待機: 1.5
+       end_freedrive_mode()
+     待機 is_steady()
+     設定 DO[0]=オフ
+     CHK_RX_TILT
+       If文 UseChkRXTilt
+         設定
+         sync()
+         CurrPos_p=get_actual_tcp_pose()
+         CurrposAligned:=p[0,0,0,0,0,0]
+         CurrposAligned:=GET_ALIGNED_TCP(CurrposAligned)
+         If文 (not CHECK_RX_TILT(CurrposAligned))
+           SubPrgResult:=825
+           待機: 999999.0
+     CV_CORR_RZ
+       If文 UseCVCorr
+         設定
+         sync()
+         CurrPos_p=get_actual_tcp_pose()
+         CurrposAligned:=p[0,0,0,0,0,0]
+         CurrposAligned:=GET_ALIGNED_TCP(CurrposAligned)
+         GET_CVCORR_VALUE(CurrposAligned)
+     CUTOFF_POSE
+       If文 UseCutOffTCP
+         設定
+         CutOffPos:=p[0.,0.,0.,0.,0.,0.]
+         CutOffPos:=GET_ALIGNED_TCP(CutOffPos)
+         CutOffTCP:=pose_trans(pose_inv(CurrPos),CutOffPos)
+         設定
+         CutOffTCP:=pose_trans(get_tcp_offset(),CutOffTCP)
+         設定
+       Else
+         設定
+         CutOffTCP:=get_tcp_offset()

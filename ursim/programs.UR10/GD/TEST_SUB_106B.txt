@@ -1,0 +1,111 @@
+ プログラム
+   変数設定
+   開始前シーケンス
+     スクリプト: ALIGN_AXIS.script
+     スクリプト: align_axis_2.script
+   ロボットプログラム
+     MoveL
+       'ウェイポイント_2'
+       '待機: 0.5'
+       ウェイポイント_6
+       待機: 0.5
+     var_5:=p[0.0,0.0,0.0,0.0,0.0,0.0]
+     'var_5=get_actual_tool_flange_pose()'
+     'var_5[0]=0'
+     'var_5[1]=0'
+     'var_5[0]=0'
+     待機: 0.5
+     設定
+     var_4:=GET_ALIGNED_TCP(var_5)
+     待機: 5.0
+     var_20:=pose_sub(CurrPos,var_4)
+     var_21:=pose_trans(pose_inv(CurrPos),var_4)
+     設定
+     var_1:=get_tcp_offset()
+     var_7:=pose_trans(var_1, var_21)
+     'var_7:=get_aligned_pose_current_to_base()'
+     'MoveL'
+     MoveL
+       ウェイポイント_1
+       'p1:=CurrPos_p'
+       待機: 1.0
+       'p11:=GET_ALIGNED_TCP(p1)'
+     set_tcp(var_7)
+     MoveL
+       ウェイポイント_1
+       待機: 1.0
+       'p1'
+       '待機: 1.0'
+       'p11'
+       '待機: 1.0'
+       ポップアップ: 1 done
+     設定
+     MoveL
+       ウェイポイント_3
+       'p2:=CurrPos_p'
+       待機: 1.0
+       'p12:=GET_ALIGNED_TCP(p2)'
+     set_tcp(var_7)
+     MoveL
+       ウェイポイント_3
+       待機: 1.0
+       'p2'
+       '待機: 1.0'
+       'p12'
+       '待機: 1.0'
+       ポップアップ: 2 done
+     設定
+     MoveL
+       ウェイポイント_4
+       'p3:=CurrPos_p'
+       待機: 1.0
+       'p13:=GET_ALIGNED_TCP(p3)'
+     set_tcp(var_7)
+     MoveL
+       ウェイポイント_4
+       待機: 1.0
+       'p3'
+       '待機: 1.0'
+       'p13'
+       '待機: 1.0'
+       ポップアップ: 3 done
+     CurrPos=get_actual_tool_flange_pose()
+     CutOffPos:=CurrPos
+     var_1:=get_tcp_offset()
+     var_2:=pose_trans(CutOffPos,var_1)
+     'FREE_DRIVE'
+     荷重の設定: k10
+     設定
+     待機: 0.5
+     CUTOFF_POSE
+       CutOffPos:=CurrPos
+       var_6:=CutOffPos
+       'CutOffPos:=p[0.0,0.0,0.0,CutOffPos[3],CutOffPos[4],CutOffPos[5]]'
+       var_1:=get_tcp_offset()
+       var_20:=pose_trans(pose_inv(CutOffPos),var_1)
+       'CutOffPos:=...'
+       var_4:=p[0.0,0.0,0.0,CutOffPos[3],CutOffPos[4],CutOffPos[5]]
+       var_5:=p[0.0,0.0,0.0,0.0,0.0,CutOffPos[5]]
+       CutOffPos:=pose_trans(var_4,pose_inv(var_5))
+       'CutOffPos:=p[0.0,0.0,0.0,var_5[0],var_5[1],var_5[2]]'
+       var_20:=pose_trans(pose_inv(CutOffPos),var_1)
+       var_21:=pose_trans(var_1,CutOffPos)
+       var_2:=pose_trans(CutOffPos,var_1)
+     待機 is_steady()
+     'CurrPos_p=get_actual_tcp_pose()'
+     'CircleMove'
+     set_tcp(var_2)
+     'TRANSFER'
+     MoveL
+       var_3:=get_tcp_offset()
+       ウェイポイント_1
+       待機: 1.0
+       ウェイポイント_3
+       待機: 1.0
+       ウェイポイント_4
+       待機: 1.0
+     ポップアップ: done!
+   スレッド_1
+     CurrPos=get_actual_tool_flange_pose()
+     CurrPos_p=get_actual_tcp_pose()
+     sync()

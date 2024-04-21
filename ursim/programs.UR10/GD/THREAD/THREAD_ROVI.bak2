@@ -1,0 +1,35 @@
+thread THREAD_ROVI():
+  THREAD_ROVI_FLG=0
+  if ((not ROVI_RECIPE(read_input_integer_register(2)+WorkNoOffset))):
+    global SubPrgResult=rovi_err
+    sleep(999999.0)
+  end
+  if ((not ROVI_RESET())):
+    global SubPrgResult=rovi_err
+    sleep(999999.0)
+  end
+  if ((  not  ROVI_CAPTURE())):
+    global SubPrgResult=rovi_err
+    sleep(999999.0)
+  end
+  global Y2=ROVI_SOLVE()
+  if ((Y2[0] == 10000.)):
+    global SubPrgResult=rovi_err
+    sleep(999999.0)
+  end
+  THREAD_ROVI_FLG=1
+end
+def RUN_THREAD_ROVI():
+  return run THREAD_ROVI()
+end
+def JOIN_THREAD_ROVI(thrd):
+  join thrd
+end
+def RESET_THREAD_ROVI():
+  THREAD_ROVI_FLG=2
+end
+def KILL_THREAD_ROVI(thrd):
+  if (THREAD_ROVI_FLG==0):
+    kill thrd
+  end
+end

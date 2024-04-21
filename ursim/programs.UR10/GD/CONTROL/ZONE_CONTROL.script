@@ -1,0 +1,159 @@
+def GET_DIST(P1, P2):
+  return pose_dist(P1, P2)
+end
+def CHECK_DIST_NEAR(P1, P2, th):
+  return (GET_DIST(P1, P2) < th)
+end
+def DIST_HOME():
+  return pose_dist(gHome_Position,CurrPos_p)
+end
+
+def CHECK_HOME():
+  return (DIST_HOME()<ZoneDistTh)
+end
+
+def GET_DEST_FLANGE(target, feature, tcp):
+  return pose_trans(pose_trans(feature, target), pose_inv(tcp))
+end
+
+def DIST_CVFront():
+  if (read_input_integer_register(4)==1):
+    p=g2GD_pos1
+  else:
+    p=g1GD_pos1
+  end
+  return pose_dist(p,CurrPos_p)
+end
+
+def CHECK_CVFront():
+  return (DIST_CVFront()<ZoneDistTh)
+end
+
+def CHECK_RB_POS(prg_no):
+  ret=True
+  if (prg_no==1001):
+    ret=CHECK_ALLOW_GO_HOME(0)
+  end
+  if ((prg_no==1201) or (prg_no==1401) or (prg_no==1402) or (prg_no==6001) or (prg_no==6101) or (prg_no==6401) or (prg_no==6102) or (prg_no==7001)):
+    ret=CHECK_HOME()
+  end
+  if ((prg_no==1002) or (prg_no==1241) or (prg_no==1261)):
+    ret=CHECK_BKInside()
+  end
+  if (prg_no==1251):
+    ret=(CHECK_HOME() or CHECK_CVUpper())
+  end
+  if (ret != True):
+    SubPrgResult=801
+    sleep(999999.0)
+  end
+end
+
+def DIST_ORIGIN():
+  p=CurrPos_p
+  o=p
+  o[0]=0.0
+  o[1]=0.0
+  DistOrigin=pose_dist(o,p)
+  return pose_dist(o,p)
+end
+
+def CHECK_EVAC_ORG():
+  return (EvacRadiusTh<DIST_ORIGIN())
+end
+
+def CHECK_EVAC_X():
+  return (EvacXTh[0]<CurrPos_p[0] and CurrPos_p[0]<EvacXTh[1])
+end
+
+def CHECK_EVAC_Y():
+  return (EvacYTh[0]<CurrPos_p[1] and CurrPos_p[1]<EvacYTh[1])
+end
+
+def CHECK_EVAC_Z():
+  return (EvacZTh[0]<CurrPos_p[2] and CurrPos_p[2]<EvacZTh[1])
+end
+
+def CHECK_EVAC():
+  ret=True
+  ret=(ret and CHECK_EVAC_ORG())
+  ret=(ret and CHECK_EVAC_X())
+  ret=(ret and CHECK_EVAC_Y())
+  ret=(ret and CHECK_EVAC_Z())
+  return ret
+end
+
+def CHECK_BKInside():
+  ret=True
+  pos=read_input_integer_register(4)
+  if (pos>2):
+    ret=False
+  else:
+    if (not read_input_boolean_register(13+pos)):
+      ret=False
+      ver_3=read_input_boolean_register(13+pos)
+    else:
+      bk=pBucket[pos-1]
+      if (pos==1):
+        ret=(ret and CurrPos_p[0]>ZoneHomeX)
+        ret=(ret and bk[1]-(BucketWidth-ZoneBucketGap)<CurrPos_p[1] and CurrPos_p[1]<bk[1]-ZoneBucketGap)
+      elif (pos==2):
+        ret=(ret and CurrPos_p[0]<-ZoneHomeX)
+        ret=(ret and bk[1]+ZoneBucketGap<CurrPos_p[1] and CurrPos_p[1]<bk[1]+(BucketWidth-ZoneBucketGap))
+      end
+    end
+  end
+  return ret
+end
+
+def CHECK_CVOutside():
+  ret=True
+  ret=(ret and gCV_11_M[0]-Zone6ThX<CurrPos_p[0])
+  ret=(ret and CurrPos_p[0]<gCV_11_M[0]+Zone6ThX)
+  ret=(ret and gCV_11_M[1]-Zone6ThY<CurrPos_p[1])
+  ret=(ret and CurrPos_p[1]<gCV_11_M[1]+Zone6ThY)
+  return (not ret)
+end
+
+def CHECK_CVUpper():
+  ret=True
+  ret=(ret and (CVXTh[0]<CurrPos_p[0] and CurrPos_p[0]<CVXTh[1]))
+  ret=(ret and (CVYTh[0]<CurrPos_p[1] and CurrPos_p[1]<CVYTh[1]))
+  ret=(ret and (CVZTh[0]<CurrPos_p[2] and CurrPos_p[2]<CVZTh[1]))
+  return ret
+end
+
+def CHECK_ALLOW_GO_HOME(no=0):
+  ret=False
+  if (no==0 or no==1):
+    ret=(ret or CHECK_EVAC())
+    v1=ret
+  end
+  if (no==0 or no==2):
+    ret=(ret or CHECK_BKInside())
+    v2=ret
+  end
+  if (no==0 or no==3):
+    ret=(ret or CHECK_CVUpper())
+    v3=ret
+  end
+  return ret
+end
+
+def CHECK_ZONE(no):
+  if (no==1):
+    return (CurrPos_p[2]>=Zone1ZTh)
+  elif (no==2):
+    return (CurrPos_p[0]>ZoneHomeX)
+  elif (no==3):
+    return (CurrPos_p[0]<-ZoneHomeX)
+  elif (no==4):
+    return CHECK_CVFront()
+  elif (no==5):
+    return CHECK_BKInside()
+  elif (no==6):
+    return CHECK_CVOutside()
+  elif (no==7):
+    return CHECK_CVUpper()
+  end
+end

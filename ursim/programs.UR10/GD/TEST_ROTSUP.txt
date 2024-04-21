@@ -1,0 +1,40 @@
+ プログラム
+   変数設定
+   開始前シーケンス
+     スクリプト: FORCE_CONTROL.script
+   ロボットプログラム
+     荷重の設定: k2
+     待機: 0.02
+     'フォース'
+     'ポップアップ: 111'
+     zero_ftsensor()
+     ForceStep:=1
+     'ForceFeature:=p[0,0,0,0,0,0]'
+     ForceFeature:=tool_pose()
+     var_1:=0
+     'var_2:=[0,0,1,0,0,1]'
+     var_2:=[1,1,1,1,1,1]
+     var_3:=2
+     ForceValue[2]=-20
+     ForceValue[5]=1
+     ForceLimit:=[0.01,0.01,ForceLimitZ[ForceStep-1],d2r(10.),d2r(10.),d2r(10.)]
+     force_mode(ForceFeature,var_2,ForceValue,var_3,ForceLimit)
+     ループ100000回
+       If文 UseRZSuppress
+         'If文 WorkPosNo≟0'
+         'ForceValue[5]=GET_FORCE_VALUE_RZ(TEST_ROTSUP)'
+         var_1=GET_FORCE_VALUE_RZ(TEST_ROTSUP)
+         var_4:=ForceValue
+         var_4[5]=var_1
+         'If文 norm(RZSub)>15'
+         force_mode(ForceFeature,var_2,var_4,var_3,ForceLimit)
+         'force_mode(ForceFeature,var_2,ForceValue,var_3,ForceLimit)'
+       sync()
+     end_force_mode()
+     stopl(5.0)
+     ポップアップ: !
+     荷重の設定: k10
+   スレッド_1
+     CurrPos=get_actual_tool_flange_pose()
+     CurrPos_p=get_actual_tcp_pose()
+     sync()

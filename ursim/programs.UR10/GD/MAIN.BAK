@@ -1,0 +1,4213 @@
+def MAIN():
+  global _hidden_verificationVariable=0
+  set_gravity([0.0, 0.0, 9.82])
+  set_safety_mode_transition_hardness(1)
+  set_tcp(p[0.0,0.09,0.42,1.894,0.0,0.0])
+  set_target_payload(0.100000, [0.000000, -0.135000, 0.225000], [10.000000, 10.000000, 10.000000, 0.000000, 0.000000, 0.000000])
+  set_standard_analog_input_domain(0, 1)
+  set_standard_analog_input_domain(1, 1)
+  set_tool_analog_input_domain(0, 1)
+  set_tool_analog_input_domain(1, 1)
+  set_analog_outputdomain(0, 0)
+  set_analog_outputdomain(1, 0)
+  set_input_actions_to_default()
+  set_runstate_gp_boolean_output_to_value(0, 3)
+  set_tool_communication(False, 115200, 0, 1, 1.5, 3.5)
+  set_tool_output_mode(0)
+  set_tool_digital_output_mode(0, 1)
+  set_tool_digital_output_mode(1, 1)
+  set_tool_voltage(0)
+  global DistPillar=-0.39074
+  global CandCnt=1
+  global ReCaptZ=0.05
+  global port=3000
+  global socket_timeout=120
+  global host="192.168.1.2"
+  global is_popup=False
+  global pBucket=[p[0.89764, 0.48514, 0.32075, 0, 0, -1.53904], p[-0.78741, -0.50707, 0.3182, 0, 0, 1.57584], p[0, 0, 0, 0, 0, 0]]
+  global CaptStepZ=0.085
+  global CaptIndex=[0, 0, 0]
+  global pBucketM=p[0.82555, 0.46654, 0.32036, 0, 0, -1.58175]
+  global socket_name="vt"
+  global rovi_err=0
+  global SubPrgResult=100
+  global CurrPos=p[-0.16522, -0.45963, 0.46279, 2.26207, -2.17148, 0.03314]
+  global CurrPos_p=p[-0.25041, -0.47121, 0.04195, 2.26207, -2.17148, 0.03314]
+  global ForceStartZ=0.01834
+  global CutOffZ=0.14338
+  global Sub3100_ZMax=0.74
+  global ForceStartX=-0.90368
+  global Sub3100_aRot=0.2
+  global Sub3100_d=0.3
+  global Sub3100_Option=90
+  global Sub3100_a=0.2
+  global Sub3100_XdV=0.1
+  global Sub3100_XdRot=8
+  global ZoneDistTh=0.05
+  global BucketWidth=0.95
+  global ZoneBucketGap=-0.1
+  global ZoneHomeX=0.2
+  global UnloadZ=0.072
+  global CaptPos=p[0.471, -0.48541, -0.02886, 3.14142, -0.01793, 0.00027]
+  global BucketUpperPos=p[0.471, -0.48541, -0.02886, 3.14142, -0.01793, 0.00027]
+  global Sub3100_GPII18=90
+  global Zone6ThX=0.1
+  global Zone6ThY=0.05
+  global pCV=p[0.00133, 0.00125, 0.00094, 0.00109, 0.00086, -0.00074]
+  global CaptRowNo=7
+  global CrankDepthFull=0.025
+  global CrankDepth=0.12286
+  global Y1=[1, -390.73798, -3.27141, -56.61572]
+  global Y2=p[0.01029, -0.01459, -0.00094, -0.03178, -0.02089, -0.00982]
+  global EvacRadiusTh=0.2
+  global EvacXTh=[-0.36, 0.36]
+  global EvacYTh=[-0.5, 1]
+  global EvacZTh=[-0.1, 5]
+  global WorkPosNo=0
+  global Zone1ZTh=0.1
+  global ReCaptNo=0
+  global DistPillarBak=-0.39074
+  global CaptIndexWk=0
+  global PoseSub=p[0.58163, -0.0506, -0.66547, -0.08645, 0.01737, 0.08565]
+  global PoseAdd=p[-0.25013, -0.47494, 0.04546, 2.26696, -2.15382, -0.02284]
+  global RZTh=15
+  global pBucketC=p[0.82756, 0.52809, 0.31225, 0, 0, -1.56214]
+  global ReCaptZWk=0
+  global CheckMST=1
+  global RZSub=4.90732
+  global DistPillarCOTh=0.16
+  global DistPillarAPTh=0.26
+  global CutOffZAdd=0.14338
+  global CutOffZDef=0.09
+  global Y8=0
+  global BKWidth_Value=[944, 953, 0]
+  global BKWidth_Name="/prepro/bucket_width"
+  global LevelZ=-0.00327
+  global NeighborZ=-0.05662
+  global Currpos_p_UF0=p[-0.53786, -0.44961, 0.32086, -2.19756, 2.23858, -0.04731]
+  global TCPSpeed=p[0, 0, 0, 0, 0, 0]
+  global Sub3100_Xd=[0, 0, 0.1, 0, 0, 0]
+  global Sub3100_q=2
+  global Sub3100_e=1
+  global Sub3100_t=0.5
+  global IsShake=False
+  global BeyondZ=0.2
+  global ShakeCnt=-1
+  global IsSteady_01=False
+  global IsSteady_02=True
+  global HandInZ=0.05
+  global TCPSpeedThZ=0.0005
+  global ShakeWaitSec=1
+  global CutOffPos=p[0.74495, -0.05741, 0.23647, -2.14909, 2.29151, 0]
+  global RelMoveZ=0.075
+  global ForceFeature=p[0.89764, 0.48514, -0.27425, 0, 0, -1.53904]
+  global ForceAxis=[1, 1, 1, 1, 1, 1]
+  global ForceValue=[0, 0, -0.04, 0, 0, 0]
+  global ForceType=2
+  global ForceLimit=[0.01, 0.01, -0.02505, 0.17453, 0.17453, 0.17453]
+  global ForceStep=3
+  global IsBLLoad=False
+  global TM_BLLoad=0.5
+  global Sub104__TiltZTh=[0.25, 0.4]
+  global Sub104_TiltZTh=[-0.5, 0.5]
+  global BucketDef=p[0.89764, 0.48514, 0.32075, 0, 0, -1.53904]
+  global ForceLimitZ=[0.015, 0.05, 0.05]
+  global gGD_pos5=p[0.76145, -0.00691, 0.50543, -2.22414, 2.19475, -0.06648]
+  global CutOffTCP=p[0.0025, 0.08875, 0.4159, -0.03178, -0.02089, -0.00982]
+  global UseCutOffTCP=False
+  global UseZSlide=False
+  global UseBaseZRotate=True
+  global BKWidth=0.942
+  global Test01=1
+  global CaptPointL_dX=0.185
+  global CaptPointR_dX=0.185
+  global UseShake=False
+  global UseNewCaptPos=True
+  global RZSupDegMin=[-5, 5]
+  global RZSupForceVal=0
+  global UseRZSuppress=True
+  global TCPForce=p[0.4478, 1.74126, -1.51884, 1.94145, 3.27358, -0.72278]
+  global TCPForceBak=p[-5.45241, -2.22448, -1.45598, -0.26066, 1.48778, -0.1852]
+  global CVCorrDegMin=[-0.1, 0.1]
+  global RZSupRatio=[1, 1]
+  global RZSupOffset=[0, 0]
+  global CVCorrRatio=[1.5, 1.5]
+  global CVCorrOffset=[0, 0]
+  global CVCorrRZVal=0
+  global RYSub=0.10271
+  global UseCVCorr=True
+  global RZSupForceRange=[-5, 5]
+  global DistBKUpperTh=0.1
+  global DistBKUpper=0.71966
+  global StopSpeed=[0.005, 0.005, 0.005, 99999, 99999, 0.054]
+  global RZSupRYRange=[-5, 5]
+  global UseRZSupStep1=False
+  global UseZRotate=True
+  global CVCorrRYSub=1.23075
+  global CVCorrYVal=0
+  global DistOrigin=0.53361
+  global v1=True
+  global v2=True
+  global v3=True
+  global CVXTh=[-0.45, 0.45]
+  global CVYTh=[-0.63, -0.33]
+  global CVZTh=[-0.07, 5]
+  global ForceVZDecay=0.04
+  global ForceVZDecayWk=0.04
+  global ForceLZDecay=0.00005
+  global ForceLZDecayWk=0.00005
+  global gGD_2_LM_Offset=p[0, 0, 0, 0, 0, 0]
+  global gGD_2_RM_Offset=p[0, 0, 0, 0, 0, 0]
+  global ForceValueBak=[0, 0, 0, 0, 0]
+  global TCPForceBak2=p[2.55533, 3.96172, -5.26065, 0.24343, -0.46418, -0.11967]
+  global TCPSpeedBak2=p[0.0019, 0.01097, -0.00358, 0.01758, -0.0014, 0.00897]
+  global gGD_2_LM_p=p[0.56203, -0.13005, -0.08344, -0.90862, 1.22672, -1.13]
+  global gGD_2_RM_p=p[0.5627, -0.13035, -0.07952, -1.23639, 0.98561, -1.43925]
+  global gGD_2_M_p=p[0.56205, -0.12993, -0.0815, -1.09518, 1.11511, -1.28286]
+  global gGD_2_M_Offset=p[0, 0, 0, 0, 0, 0]
+  global RXSub=-7.46652
+  global RXTiltDegMin=[-15, 15]
+  global UseChkRXTilt=True
+  global RBArmLength=1.2
+  global gGD_2_p=p[0.56205, -0.12993, -0.0815, -1.09518, 1.11511, -1.28286]
+  global PickPosFlange=p[0.99238, -0.08085, 0.0185, 2.16453, -2.0702, -0.20413]
+  global PickTCP=p[0, 0.09, 0.42, 1.894, 0, 0]
+  global RBArmOffset=-0.05
+  global PickPosDist=0.99584
+  global WorkNoCV=10000
+  global WorkNoTL=20000
+  global UseCVCorrCam=True
+  global WorkNoOffset=10000
+  global TCPForceTL=p[-1.75046, -0.50279, 1.49079, -3.20506, -2.06619, 0.68293]
+  global thrd108=8
+  global THREAD_ROVI_FLG=1
+  global THREAD_ROVI_ERR=0
+  global Bucket=p[0.32604,0.49174,0.0,-1.882900624652718E-5,2.8304179127934987E-5,-1.593185305749222]
+  global BucketM=p[0.32604,0.49174,0.0,2.2353980716304163E-16,-3.5868426080024975E-16,-1.5931853071795856]
+  global CV=p[0.0,0.0,0.0,0.0,0.0,0.0]
+  global CaptPoint_C=p[0.335,0.0,0.2915,2.196312346886493,-2.2460000000002043,5.664518247271313E-5]
+  global CaptPoint_C2=p[0.32796661698047924,-0.010768520544682924,0.01931625281283378,2.2288103429550152,-2.213636886217198,8.598462540813273E-5]
+  global CaptPoint_L=p[-0.335,-0.29,0.4,2.196198431950414,2.246349774520516,5.8693989933774055E-5]
+  global CaptPoint_L2=p[0.327894307417917,-0.010799940826224014,0.01928712668893995,2.087717047309385,-2.0736781215133306,0.27365839887453103]
+  global CaptPoint_R=p[-0.335,0.29,0.4,-2.1963472338807764,-2.2462285075856694,3.086531389441326E-5]
+  global CaptPoint_R2=p[0.327926308680866,-0.010795166414457658,0.019300245403843563,-2.1186306375223185,2.1040550557443427,0.22023197678473694]
+  global Capt_1BK_L=p[-0.395,-0.47,0.35,-2.1961210242572884,-2.2463362846055,-2.908274762447041E-4]
+  global Capt_1BK_R=p[-0.395,0.51,0.35,2.196067754706757,2.246288285862388,2.8411291050601595E-5]
+  global Capt_1BK_pos1=p[-0.4218793038724447,-0.003154429464978058,0.2915499891144615,-2.1963422029204875,-2.2438663520270015,-0.02197160668673838]
+  global Capt_1BK_pos2=p[-0.42187829024618434,-0.0031710253373066375,0.29156503858953065,-2.196324918349679,-2.2439040699490773,-0.021928444416953782]
+  global Capt_2BK_L=p[0.42186661528427194,0.4254738068040517,0.35042275762909847,2.239156309475874,-2.1837044610999294,0.002643817066643282]
+  global Capt_2BK_R=p[0.4218208572756906,-0.5427676723257963,0.350372239919558,2.2392697861179327,-2.183553596194912,0.002410470905346486]
+  global Capt_2BK_pos1=p[0.42193501458435656,0.004742683868356356,0.35045865974037793,2.2391012408536453,-2.1839704655717003,0.002677867056024068]
+  global Capt_2BK_pos2=p[0.421903984494575,0.004707988774967922,0.35045218900915065,2.239114367170047,-2.183895515396197,0.002684056681074047]
+  global Capt_CV_M=p[-0.019357978941551585,-0.19874636746087987,0.014791441060399646,0.06748580540671781,-2.900447423669126,0.02026237137086844]
+  global Capt_GD_M=p[-0.004053197679954899,-0.25261725691632436,-0.01970497430780127,0.0332779454553888,-3.140179196376707,-0.0034093680964018282]
+  global HomePointL=p[-0.36789,-0.5117344641471838,0.78,-0.6278857271586024,3.0680899128661667,-8.649957362498864E-4]
+  global Master_pos=p[0.1714829185860005,-0.16719667769202656,-0.007058747477581728,-2.23595635981541,2.206803774265921,-5.498327852539787E-5]
+  global Master_posL=p[-0.003,-0.27,0.109,0.02094395102393583,3.0543261909900803,-5.235987755386035E-4]
+  global Master_posR=p[-0.003,-0.27,0.109,-0.019810987664379186,-3.054193931591229,4.952746915529204E-4]
+  global Master_pos_1=p[0.11094339812903395,-0.23710672065782984,0.08047378202276018,-0.05666752666458696,3.1228966394147033,0.01312068089365201]
+  global PickPos=p[0.10830682331105715,-1.3709505888096256,-0.18404188875951455,-0.00622194000158997,2.880236948927292,-0.00383636509397631]
+  global Solve=p[-0.00368,-0.0021000000000000003,0.25739999999999996,0.0,0.0,0.0]
+  global TCP3100TL=p[0.0,0.08,0.42,1.8939999999999997,0.0,0.0]
+  global TEST=p[0.1,0.0,0.2,0.0,0.0,0.0]
+  global TEST_ROTSUP=p[-0.07293017509777999,-0.3201239472424659,0.14015840016860298,-0.014967413338418362,-3.108805898474534,-0.035972414862118114]
+  global UF=p[0.0,0.0,0.0,0.0,0.0,0.0]
+  global g1CV_posL1=p[0.05028133628211688,-0.4526481033729615,0.1221845548632916,-2.213335080948508,-2.1937561336067057,-0.3280056759040735]
+  global g1CV_posR1=p[0.03743870476062511,-0.53119407812668,0.11301901343688614,2.073418671558482,2.153257467049566,0.11656306439039889]
+  global g1GD_pos1=p[-0.35970048171101265,-0.034263162705844195,0.4712452675281985,1.4544407414029044,-2.7728634679713626,-0.035128178354601344]
+  global g1GD_pos2=p[-0.3672780542271926,-0.04650118480680687,0.4745431864568097,1.4432951365030073,-2.752292127914487,-0.013409632707634737]
+  global g1GD_pos3=p[-0.48616534104104636,-0.024488618874956104,0.4723842013909288,1.002772853353822,-2.9497177073065837,0.04413228150459102]
+  global g1GD_pos4=p[-0.4470954610016848,0.30526696421692584,0.47935546846417587,-0.2185418479425556,-3.1037691453747884,0.00991082717707436]
+  global g1GD_pos5=p[-0.6503388893826922,0.01909457792077452,0.46651656633421895,-2.149267473119867,-2.2441816383270154,0.025360274550710483]
+  global g1GD_pos5_NEAR=p[-0.5143300000000001,-0.023002183632447833,0.4499678963159493,2.1476150413314157,2.292837734093618,6.185870865614646E-5]
+  global g1GD_posL1=p[-0.08276848269606216,-0.3996147100031649,0.1488453551331823,2.286527078917204,1.8420745504477611,0.33698451773695576]
+  global g1GD_posL2=p[-0.3253977027403738,-0.3024804624281039,0.16332814085945146,2.72312820760317,0.9631021078169197,0.32447452035226126]
+  global g1GD_posL3=p[-0.6791033397183219,0.06787475590683856,0.16337212788108813,2.1383125299263996,2.086116032377724,0.4536080263755059]
+  global g1GD_posR1=p[-0.09893370538053747,-0.4999608954567234,0.14329885217724153,2.43311852414254,1.4238397520832589,0.08559216753941556]
+  global g1GD_posR2=p[-0.3729565201882258,-0.3752983669473301,0.143299052800563,2.6951655216297596,0.8130506811102118,-0.02387549506099888]
+  global g1GD_posR3=p[-0.7385929502572233,-0.029472684480355026,0.1499650660949685,2.0484522752014467,1.9493695704119496,0.18368227556562683]
+  global g2CV_posL1=p[0.3409386496330911,-0.4656338066361442,0.1250074988128972,2.209372209162659,2.1945371304665926,0.3160714960040194]
+  global g2CV_posR1=p[0.3400736278759575,-0.531334269888987,0.1183415684753657,2.07314649492589,2.1532617466521136,0.11638666128062146]
+  global g2GD_pos1=p[-0.2545628446268882,-0.3716287083704353,0.28677838315313353,2.166893935852709,-2.2430397029671987,0.03525196781239811]
+  global g2GD_pos2=p[-0.0626975716316528,-0.42208261502772493,0.5005565327006036,2.6697795713769565,-1.6060613294412205,-0.03457083174432865]
+  global g2GD_pos3=p[0.47119847191979547,-0.2515728757672076,0.5291274218391588,3.1030696298308738,-0.48017238881382845,0.0887998161543483]
+  global g2GD_pos4=p[0.4668278182470085,-0.24205664939449062,0.525143946038829,-3.0879544243782173,0.4770739189027302,-0.06957731450997277]
+  global g2GD_pos5=p[0.7614520805671341,-0.006907791449417792,0.5054258486177889,-2.224144412135483,2.194752974449526,-0.0664751881329382]
+  global g2GD_pos5_NEAR=p[0.5968300000000001,0.0128,0.44997000000000004,2.250000000000808,-2.1920000000007867,0.0]
+  global gCV_11_M=p[-0.2616573963506566,-0.4737572937522371,0.03001977795045596,2.219660782640226,-2.0076315012888504,-0.2464820181088678]
+  global gCV_12_M=p[-0.31104232316914415,-0.473114479602656,0.03198242902424653,2.1092574326703843,-2.110164634129401,-0.2272414389722628]
+  global gCV_13_M=p[-0.33698735694973647,-0.4872515246061231,0.055493315388404074,2.092225563006315,-2.1504324553574627,-0.1693129127257343]
+  global gCV_14_M=p[-0.3370081716793262,-0.552755746271941,0.18526445814507037,2.0922026908742946,-2.1504498745483254,-0.16938440639422297]
+  global gCV_1_M=p[-0.25013105569591165,-0.47493766996059916,0.045457063851997714,2.2669606069998625,-2.153821626340382,-0.022838800519718712]
+  global gCV_2_M=p[-0.25012945984270785,-0.4748698309851417,0.09535184732244156,2.266933487459649,-2.153964772425421,-0.022930972243429746]
+  global gCV_3_M=p[0.29099390607376485,-0.6570558385379063,0.0722153583041818,1.9884242634571576,2.2321538498123994,0.15249643504377583]
+  global gCV_pos5=p[0.3400172856834047,-0.9722754606605235,-0.18287928563575456,2.073394561413637,2.1531827558666565,0.11639000988241816]
+  global gGD_1_LM=p[0.02419,-0.7289500000000001,-0.11494,-0.010169347158913017,2.870767181856166,0.2884627079222753]
+  global gGD_1_LM_RX=p[0.5615283508951463,-0.12902185612997052,-0.08166692915667972,-0.908635434335958,1.226746522649397,-1.1299915780507528]
+  global gGD_1_LM_RXF=p[0.02413503458160308,-0.74534,-0.11578000000000001,0.2411332216392182,1.7407173006243832,-2.3674279033231747]
+  global gGD_1_M=p[0.023469999999999998,-0.72661,-0.11456000000000001,-0.029570847824802682,-3.12419917405015,-0.3106340785404749]
+  global gGD_1_M_RX=p[0.5620630557770745,-0.12993803481097282,-0.08149903394595409,-1.0951669764282943,1.1151198569582055,-1.282896607179443]
+  global gGD_1_M_RXF=p[0.02415523713330076,-0.7453200000000001,-0.11578426509069895,-0.012477314995716382,-1.853515977408631,2.515027308648709]
+  global gGD_1_RM=p[0.023629999999999998,-0.72653,-0.11331000000000001,-0.06253229749015264,-2.8808212567082414,-0.28238046714011755]
+  global gGD_1_RM_RX=p[0.5627126714766736,-0.13123245875046555,-0.08112272653758201,-1.2363001771808928,0.9856458151420526,-1.439278430980318]
+  global gGD_1_RM_RXF=p[0.024158234647744328,-0.74536,-0.11577,0.21548497967238725,-1.726437707763004,2.3373117534316665]
+  global gGD_2_LM=p[0.02467,-0.67055,-0.11509,-0.010179461791212513,2.870955921048522,0.2878734195391217]
+  global gGD_2_LM_RX=p[0.5620346452014305,-0.13004527897380314,-0.08344259517556757,-0.9086183206865769,1.2267235500099853,-1.1300040283815416]
+  global gGD_2_LM_RXF=p[0.02518,-0.6822999999999999,-0.11982,0.24121310672797797,1.7407223643292684,-2.3672997334921986]
+  global gGD_2_M=p[0.02389,-0.6721900000000001,-0.11456000000000001,-0.029666521928107308,-3.1243201149134068,-0.3098990972493868]
+  global gGD_2_M_RX=p[0.5620496225343672,-0.12993202271383786,-0.08150292654619579,-1.0951847489167492,1.1151123312763371,-1.2828641307972724]
+  global gGD_2_M_RXF=p[0.02469,-0.68228,-0.11781,-0.012625584579695818,-1.8536977166603092,2.514979910589354]
+  global gGD_2_RM=p[0.02429,-0.66916,-0.11353,-0.06253008389277029,-2.880917079483223,-0.28230802316028863]
+  global gGD_2_RM_RX=p[0.5627029685005208,-0.13034953622249715,-0.07952233006622617,-1.2363939175656962,0.9856082077170145,-1.4392463679685479]
+  global gGD_2_RM_RXF=p[0.02418,-0.68221,-0.11985,0.21545635593876583,-1.7267658137434814,2.337110041109278]
+  global gGD_3_LM=p[0.024149999999999998,-0.63442,-0.00372,-0.010168641563882792,2.8709293839329573,0.28786844960240987]
+  global gGD_3_LM_RX=p[0.5392196589844245,-0.1290140619501719,-0.08165723938107389,-0.908599533291361,1.2267705759618612,-1.1300125337134652]
+  global gGD_3_LM_RXF=p[0.02387752228160463,-0.5964211774687285,-0.05792315514989682,0.2704410553277331,1.9481847980902196,-2.214876983085744]
+  global gGD_3_M=p[0.023940000000000003,-0.63613,-0.00522,-0.029962916255114207,-3.1241595671421933,-0.3100480455299553]
+  global gGD_3_M_RX=p[0.5418071525949468,-0.12993736462440242,-0.0814943282772822,-1.0951794138880029,1.115124883138829,-1.2828887464146828]
+  global gGD_3_M_RXF=p[0.02383447419609676,-0.5964085561522618,-0.0579509198373786,-0.014600929068906539,-2.066655165579624,2.3438719244209403]
+  global gGD_3_RM=p[0.02428,-0.6347200000000001,-0.00846,-0.0624152449577923,-2.8809080008278345,-0.2823877130468296]
+  global gGD_3_RM_RX=p[0.5418515016335885,-0.13122028190534446,-0.08113380831156602,-1.2363425056853403,0.9856900470885266,-1.4392366357009618]
+  global gGD_3_RM_RXF=p[0.023773322279514588,-0.5964087734876792,-0.05795139315103717,0.24060086319727583,-1.933030903056379,2.187075285864524]
+  global gGD_4_LM=p[0.45587,-0.33153,0.1243,-0.9550732832975035,1.1942619708838935,-1.0580631399911162]
+  global gGD_4_LM_RX=p[-0.12533199352487323,-0.6346108123799734,-0.003643920282847657,0.304552460658092,1.9670859988240124,-2.226395027960848]
+  global gGD_4_RM=p[0.47908,0.04571,0.11177,-1.2912250795231692,0.9588205011482686,-1.3639701544258833]
+  global gHome_Position=p[-0.0029100000000000003,-0.33081,0.19568000000000002,-0.02099958342773921,-3.141491282453575,3.986162810876369E-4]
+  global gTAIHI_pos1=p[0.034435296708333146,-0.2890869270984411,0.28697762766096685,-0.9517096680276043,2.9907327255336362,-0.006242657270483182]
+  global gTAIHI_pos2=p[0.46041690381401934,0.09562026346103787,0.3409455343940188,-2.575428180750575,1.7504967205574518,-0.009370784990557466]
+  global gTAIHI_pos3=p[0.4777514786587304,0.10855417509450788,0.25667938190447326,-3.115092130529677,-0.059113053813058626,0.017060902648732133]
+  global gTAIHI_pos4=p[0.47773948064032057,0.10853581553326999,-0.15133852019421468,-3.1151611852917296,-0.05914313994407087,0.017149581050184888]
+  global gTAIHI_pos5=p[0.30588450070104545,0.17870028478253597,-0.38750721344025674,-3.115302721311487,-0.05927431563397507,0.01725874757592571]
+  global p0507=p[-0.335,0.29,0.4,-2.152,-2.1999999999999993,-0.09000000000000297]
+  global u28857_1=p[-0.0031323782298193804,-0.20060354916239503,0.3360735208323958,-0.020986125991815173,-3.1411044100968666,0.0015898128657515608]
+  rtde_set_watchdog("speed_slider_mask", 10.0, "ignore")
+  # begin: URCap Installation Node
+  #   Source: Ethernet/IP I/O Monitor URCap, 1.2.0, 
+  #   Type: Ethernet/IP I/O Monitor
+  conn = rpc_factory("xmlrpc", "http://127.0.0.1:" + to_str(61101) + "/RPC2")
+  
+  def show_monitor():
+    return conn.eip_monitor.show()
+  end
+  # end: URCap Installation Node
+  step_count_08515083_91ba_4723_8d18_63b03201e6d9 = 0.0
+  thread Step_Counter_Thread_5d90ae18_8df2_4efe_8a9e_4f1c7a3fc652():
+    while (True):
+      step_count_08515083_91ba_4723_8d18_63b03201e6d9 = step_count_08515083_91ba_4723_8d18_63b03201e6d9 + 1.0
+      sync()
+    end
+  end
+  run Step_Counter_Thread_5d90ae18_8df2_4efe_8a9e_4f1c7a3fc652()
+  global tm_104=0
+  global tm_6102_01=0
+  global tm_cutoff=0
+  global tm_decay=0
+  global tm_handin=0
+  global tm_landed=0
+  global tm_steady_104=0
+  global tm_steady_105=0
+  global SlideL0_from_p=p[.006558975951, -.389302015722, .060920696916, -.507304446373, 3.058645128813, -.014029590964]
+  global SlideL0_to_p=p[.006579338814, -.439267377296, .060917626318, -.507307534755, 3.058607729011, -.013922978471]
+  global SlideL1_from_p=p[-.004128046884, -.329517647850, .106532113051, -.022933334657, -3.138695067531, -.001916374829]
+  global SlideL1_to_p=p[-.004138218470, -.279531354018, .106538287846, -.022782734989, -3.138664778506, -.001862746150]
+  global SlideR0_from_p=p[.006530663685, -.439223474389, .060879662232, -.507257792347, 3.058675656178, -.013724007697]
+  global SlideR0_to_p=p[.006588957901, -.389288003310, .060942026835, -.507364990797, 3.058603375796, -.013956769517]
+  global SlideR1_from_p=p[-.004120918278, -.279484505094, .106522274930, -.022863021218, -3.138702604731, -.002089794914]
+  global SlideR1_to_p=p[-.004165133181, -.329432477472, .106436975922, -.022907205227, -3.138606071909, -.002218952223]
+  global CaptPos0_p=p[.893150490889, -.272890272358, .528478187574, -2.153855601914, 2.287000531632, -.000070787060]
+  global CaptPos0_q=[-0.11081439653505498, -1.965405126611227, -1.3569157123565674, -1.3913911145976563, 1.5765753984451294, -0.04810554185976201]
+  global tm_104_is_counting=False
+  global tm_steady_105_is_counting=False
+  global tm_steady_104_is_counting=False
+  global tm_decay_is_counting=False
+  global tm_landed_is_counting=False
+  global tm_6102_01_is_counting=False
+  global tm_cutoff_is_counting=False
+  global tm_handin_is_counting=False
+  thread Timer_Thread():
+    while (True):
+      if (tm_104_is_counting):
+        tm_104 = tm_104 + get_steptime()
+      end
+      if (tm_steady_105_is_counting):
+        tm_steady_105 = tm_steady_105 + get_steptime()
+      end
+      if (tm_steady_104_is_counting):
+        tm_steady_104 = tm_steady_104 + get_steptime()
+      end
+      if (tm_decay_is_counting):
+        tm_decay = tm_decay + get_steptime()
+      end
+      if (tm_landed_is_counting):
+        tm_landed = tm_landed + get_steptime()
+      end
+      if (tm_6102_01_is_counting):
+        tm_6102_01 = tm_6102_01 + get_steptime()
+      end
+      if (tm_cutoff_is_counting):
+        tm_cutoff = tm_cutoff + get_steptime()
+      end
+      if (tm_handin_is_counting):
+        tm_handin = tm_handin + get_steptime()
+      end
+      sync()
+    end
+  end
+  run Timer_Thread()
+  def SUB_001():
+    $ 251 "SUB_001" "noBreak"
+    $ 252 "荷重の設定: k10"
+    set_target_payload(0.100000, [0.000000, -0.135000, 0.225000], [10.000000, 10.000000, 10.000000, 0.000000, 0.000000, 0.000000])
+    $ 253 "MoveJ"
+    $ 254 "gHome_Position" "breakAfter"
+    set_tcp(p[0.0,0.09,0.42,0.0,0.0,0.0])
+    movej(gHome_Position, a=0.5235987755982988, v=1.2217304763960306)
+  end
+  def SUB_003():
+    $ 270 "SUB_003" "noBreak"
+    $ 271 "If文 CHECK_ALLOW_GO_HOME(3)"
+    if (CHECK_ALLOW_GO_HOME(3)):
+      $ 272 "If文 GPBI_WorkExists and GPBI_BLLoad1 and ( not GPBI_BLLoad0)"
+      global thread_flag_272=0
+      thread Thread_if_272():
+        $ 273 "荷重の設定: k120"
+        set_target_payload(0.100000, [0.000000, -0.135000, 0.225000], [120.000000, 120.000000, 120.000000, 0.000000, 0.000000, 0.000000])
+        $ 274 "MoveL"
+        $ 275 "gCV_2_M" "breakAfter"
+        movel(pose_trans(CV, gCV_2_M), a=0.05, v=0.25)
+        $ 276 "荷重の設定: k10"
+        set_target_payload(0.100000, [0.000000, -0.135000, 0.225000], [10.000000, 10.000000, 10.000000, 0.000000, 0.000000, 0.000000])
+        $ 277 "MoveL"
+        $ 278 "g1GD_pos2" "breakAfter"
+        movel(pose_trans(CV, g1GD_pos2), a=0.14, v=0.4)
+        $ 279 "MoveJ"
+        $ 280 "gHome_Position" "breakAfter"
+        set_tcp(p[0.0,0.09,0.42,0.0,0.0,0.0])
+        movej(gHome_Position, a=0.5235987755982988, v=1.2217304763960306)
+        thread_flag_272 = 1
+      end
+      if (read_input_boolean_register(9)  and  read_input_boolean_register(10)  and  (  not  read_input_boolean_register(8))):
+        global thread_handler_272=run Thread_if_272()
+        while (thread_flag_272 == 0):
+          if not(read_input_boolean_register(9)  and  read_input_boolean_register(10)  and  (  not  read_input_boolean_register(8))):
+            kill thread_handler_272
+            thread_flag_272 = 2
+          else:
+            sync()
+          end
+        end
+      else:
+        thread_flag_272 = 2
+      end
+      if (thread_flag_272 == 2):
+        $ 281 "ElseIf ( not GPBI_WorkExists) and ( not GPBI_BLLoad1) and GPBI_BLLoad0"
+        if ((  not  read_input_boolean_register(9))  and  (  not  read_input_boolean_register(10))  and  read_input_boolean_register(8)):
+          $ 282 "荷重の設定: k10"
+          set_target_payload(0.100000, [0.000000, -0.135000, 0.225000], [10.000000, 10.000000, 10.000000, 0.000000, 0.000000, 0.000000])
+          $ 283 "MoveL"
+          $ 284 "gCV_13_M" "breakAfter"
+          movel(pose_trans(CV, gCV_13_M), a=0.05, v=0.25)
+          $ 285 "gCV_14_M" "breakAfter"
+          movel(pose_trans(CV, gCV_14_M), a=0.05, v=0.25)
+          $ 286 "MoveL"
+          $ 287 "g1GD_pos2" "breakAfter"
+          movel(pose_trans(CV, g1GD_pos2), a=0.14, v=0.4)
+          $ 288 "MoveJ"
+          $ 289 "gHome_Position" "breakAfter"
+          set_tcp(p[0.0,0.09,0.42,0.0,0.0,0.0])
+          movej(gHome_Position, a=0.5235987755982988, v=1.2217304763960306)
+        end
+      end
+    else:
+      $ 290 "ElseIf CHECK_ALLOW_GO_HOME(2)"
+      if (CHECK_ALLOW_GO_HOME(2)):
+        $ 291 "荷重の設定: k120"
+        set_target_payload(0.100000, [0.000000, -0.135000, 0.225000], [120.000000, 120.000000, 120.000000, 0.000000, 0.000000, 0.000000])
+        $ 292 "sync()"
+        sync()
+        $ 293 "If文 (WorkPosNo≟0)"
+        if ((WorkPosNo == 0)):
+          $ 294 "MoveL"
+          $ 295 "g2GD_pos5" "breakAfter"
+          movel(g2GD_pos5, a=0.05, v=0.25)
+          $ 296 "MoveL"
+          $ 297 "荷重の設定: k10"
+          set_target_payload(0.100000, [0.000000, -0.135000, 0.225000], [10.000000, 10.000000, 10.000000, 0.000000, 0.000000, 0.000000])
+          $ 299 "g2GD_pos3" "breakAfter"
+          movel(g2GD_pos3, a=0.14, v=0.4, r=0.1)
+          $ 300 "g2GD_pos2" "breakAfter"
+          movel(g2GD_pos2, a=0.07, v=0.4)
+        else:
+          $ 301 "ElseIf (WorkPosNo≟1)"
+          if ((WorkPosNo == 1)):
+            $ 302 "MoveL"
+            $ 303 "g1GD_pos5" "breakAfter"
+            movel(g1GD_pos5, a=0.05, v=0.25)
+            $ 304 "MoveL"
+            $ 305 "荷重の設定: k10"
+            set_target_payload(0.100000, [0.000000, -0.135000, 0.225000], [10.000000, 10.000000, 10.000000, 0.000000, 0.000000, 0.000000])
+            $ 306 "g1GD_pos3" "breakAfter"
+            movel(g1GD_pos3, a=0.14, v=0.4)
+            $ 307 "g1GD_pos2" "breakAfter"
+            movel(g1GD_pos2, a=0.14, v=0.4)
+          end
+        end
+        $ 308 "MoveJ"
+        $ 309 "gHome_Position" "breakAfter"
+        set_tcp(p[0.0,0.09,0.42,0.0,0.0,0.0])
+        movej(gHome_Position, a=0.5235987755982988, v=1.2217304763960306)
+      else:
+        $ 310 "ElseIf CHECK_ALLOW_GO_HOME(1)"
+        if (CHECK_ALLOW_GO_HOME(1)):
+          $ 311 "荷重の設定: k10"
+          set_target_payload(0.100000, [0.000000, -0.135000, 0.225000], [10.000000, 10.000000, 10.000000, 0.000000, 0.000000, 0.000000])
+          $ 312 "MoveJ"
+          $ 313 "gHome_Position" "breakAfter"
+          set_tcp(p[0.0,0.09,0.42,0.0,0.0,0.0])
+          movej(gHome_Position, a=0.5235987755982988, v=1.2217304763960306)
+        end
+      end
+    end
+    $ 314 "設定"
+    set_tcp(p[0.0,0.09,0.42,0.0,0.0,0.0])
+  end
+  def SUB_101():
+    $ 315 "SUB_101" "noBreak"
+    $ 316 "INITIALIZE"
+    $ 317 "荷重の設定: k10"
+    set_target_payload(0.100000, [0.000000, -0.135000, 0.225000], [10.000000, 10.000000, 10.000000, 0.000000, 0.000000, 0.000000])
+    $ 318 "BUCKET"
+    $ 319 "SET_BUCKET_DEF()"
+    SET_BUCKET_DEF()
+    $ 320 "BucketUpperPos:=GET_BUCKET_UPPER()"
+    global BucketUpperPos=GET_BUCKET_UPPER()
+    $ 321 "MoveJ"
+    $ 322 "BucketUpperPos" "breakAfter"
+    set_tcp(p[0.0,0.09,0.42,0.0,0.0,0.0])
+    movej(pose_trans(Bucket, BucketUpperPos), a=0.3490658503988659, v=0.6981317007977318)
+  end
+  def SUB_102():
+    $ 323 "SUB_102" "noBreak"
+    $ 324 "ROVI_RECIPE"
+    $ 325 "If文 (not ROVI_RECIPE(GPII_WorkNo))"
+    if ((not ROVI_RECIPE(read_input_integer_register(2)))):
+      $ 326 "SubPrgResult:=rovi_err"
+      global SubPrgResult=rovi_err
+      $ 327 "待機: 999999.0"
+      sleep(999999.0)
+    end
+    $ 328 "ROVI_PARAM"
+    $ 329 "If文 ( not ROVI_PARAM(BKWidth_Name,BKWidth_Value[WorkPosNo]))"
+    if ((  not  ROVI_PARAM(BKWidth_Name,BKWidth_Value[WorkPosNo]))):
+      $ 330 "SubPrgResult:=rovi_err"
+      global SubPrgResult=rovi_err
+      $ 331 "待機: 999999.0"
+      sleep(999999.0)
+    end
+    $ 332 "ROVI_RESET"
+    $ 333 "If文 (not ROVI_RESET())"
+    if ((not ROVI_RESET())):
+      $ 334 "SubPrgResult:=rovi_err"
+      global SubPrgResult=rovi_err
+      $ 335 "待機: 999999.0"
+      sleep(999999.0)
+    end
+    $ 336 "荷重の設定: k120"
+    set_target_payload(0.100000, [0.000000, -0.135000, 0.225000], [120.000000, 120.000000, 120.000000, 0.000000, 0.000000, 0.000000])
+    $ 337 "ROVI_CAPTURE"
+    $ 338 "If文 ( not CHECK_CAPTPOS())"
+    if ((  not  CHECK_CAPTPOS())):
+      $ 339 "SubPrgResult:=802"
+      global SubPrgResult=802
+      $ 340 "待機: 999999.0"
+      sleep(999999.0)
+    end
+    $ 341 "荷重の設定: k120"
+    set_target_payload(0.100000, [0.000000, -0.135000, 0.225000], [120.000000, 120.000000, 120.000000, 0.000000, 0.000000, 0.000000])
+    $ 342 "CaptPos:=GET_CAPTPOS()"
+    global CaptPos=GET_CAPTPOS()
+    $ 343 "MoveJ"
+    $ 344 "CaptPos" "breakAfter"
+    set_tcp(p[0.0,0.09,0.42,0.0,0.0,0.0])
+    movej(pose_trans(Bucket, CaptPos), a=0.3490658503988659, v=0.6981317007977318)
+    $ 345 "待機: 1.0"
+    sleep(1.0)
+  end
+  def SUB_103():
+    $ 347 "SUB_103" "noBreak"
+    $ 348 "荷重の設定: k120"
+    set_target_payload(0.100000, [0.000000, -0.135000, 0.225000], [120.000000, 120.000000, 120.000000, 0.000000, 0.000000, 0.000000])
+    $ 349 "ROVI_CAPTURE"
+    $ 350 "CaptPos:=GET_CAPTPOS()"
+    global CaptPos=GET_CAPTPOS()
+    $ 351 "MoveJ"
+    $ 352 "CaptPos" "breakAfter"
+    set_tcp(p[0.0,0.09,0.42,0.0,0.0,0.0])
+    movej(pose_trans(Bucket, CaptPos), a=0.3490658503988659, v=0.6981317007977318)
+    $ 353 "待機: 1.0"
+    sleep(1.0)
+  end
+  def SUB_104RXFF():
+    $ 513 "SUB_104RXFF" "noBreak"
+    $ 514 "SET_BUCKET()"
+    SET_BUCKET()
+    $ 515 "ROVI_CAPTURE"
+    $ 516 "If文 ( not ROVI_CAPTURE())"
+    if ((  not  ROVI_CAPTURE())):
+      $ 517 "SubPrgResult:=rovi_err"
+      global SubPrgResult=rovi_err
+      $ 518 "待機: 999999.0"
+      sleep(999999.0)
+    end
+    $ 519 "CandCnt:=Y1[0]"
+    global CandCnt=Y1[0]
+    $ 520 "DistPillar:=Y1[1] / 1000.0"
+    global DistPillar=Y1[1] / 1000.0
+    $ 521 "LevelZ:=Y1[2] / 1000.0"
+    global LevelZ=Y1[2] / 1000.0
+    $ 522 "NeighborZ:=Y1[3] / 1000.0"
+    global NeighborZ=Y1[3] / 1000.0
+    $ 523 "If文 (GPII_PrgNo≠1203)"
+    if ((read_input_integer_register(0) != 1203)):
+      $ 524 "DistPillarBak:=DistPillar"
+      global DistPillarBak=DistPillar
+    end
+    $ 525 "If文 (CandCnt<1)"
+    if ((CandCnt<1)):
+      $ 526 "SubPrgResult:=990"
+      global SubPrgResult=990
+      $ 527 "待機: 999999.0"
+      sleep(999999.0)
+    end
+    $ 528 "ROVI_SOLVE"
+    $ 529 "If文 (CandCnt>0)"
+    if ((CandCnt>0)):
+      $ 530 "Y2:=ROVI_SOLVE()"
+      global Y2=ROVI_SOLVE()
+      $ 531 "If文 (Y2[0]≟10000.)"
+      if ((Y2[0] == 10000.)):
+        $ 532 "SubPrgResult:=rovi_err"
+        global SubPrgResult=rovi_err
+        $ 533 "待機: 999999.0"
+        sleep(999999.0)
+      end
+    end
+    $ 534 "UF:=Y2"
+    global UF=Y2
+    $ 535 "PICK_POS"
+    $ 536 "gGD_2_LM_p:=pose_add(gGD_2_LM_RX, gGD_2_LM_Offset)"
+    global gGD_2_LM_p= pose_add (gGD_2_LM_RX, gGD_2_LM_Offset)
+    $ 537 "gGD_2_M_p:=pose_add(gGD_2_M_RX, gGD_2_M_Offset)"
+    global gGD_2_M_p= pose_add (gGD_2_M_RX, gGD_2_M_Offset)
+    $ 538 "gGD_2_RM_p:=pose_add(gGD_2_RM_RX, gGD_2_RM_Offset)"
+    global gGD_2_RM_p= pose_add (gGD_2_RM_RX, gGD_2_RM_Offset)
+    $ 539 "CHECK_PICK_POS"
+    $ 540 "If文 (0≤DistPillar and DistPillar≤DistPillarAPTh)"
+    if ((0 <= DistPillar and DistPillar <= DistPillarAPTh)):
+      $ 541 "gGD_2_p:=gGD_2_LM_p"
+      global gGD_2_p=gGD_2_LM_p
+    else:
+      $ 542 "ElseIf (-DistPillarAPTh≤DistPillar and DistPillar≤0)"
+      if ((-DistPillarAPTh <= DistPillar and DistPillar <= 0)):
+        $ 543 "gGD_2_p:=gGD_2_RM_p"
+        global gGD_2_p=gGD_2_RM_p
+      else:
+        $ 544 "Else" "noBreak"
+        $ 545 "gGD_2_p:=gGD_2_M_p"
+        global gGD_2_p=gGD_2_M_p
+      end
+    end
+    $ 546 "PickPosFlange:=GET_DEST_FLANGE(gGD_2_p, UF, PickTCP)"
+    global PickPosFlange=GET_DEST_FLANGE(gGD_2_p, UF, PickTCP)
+    $ 547 "PickPosDist:=GET_DIST(PickPosFlange, p[0, 0, 0, 0, 0, 0])"
+    global PickPosDist=GET_DIST(PickPosFlange, p[0, 0, 0, 0, 0, 0])
+    $ 548 "If文 ( not CHECK_DIST_NEAR(PickPosFlange, p[0, 0, 0, 0, 0, 0], RBArmLength+RBArmOffset))"
+    if ((  not  CHECK_DIST_NEAR(PickPosFlange, p[0, 0, 0, 0, 0, 0], RBArmLength+RBArmOffset))):
+      $ 549 "SubPrgResult:=923"
+      global SubPrgResult=923
+      $ 550 "待機: 999999.0"
+      sleep(999999.0)
+    end
+    $ 551 "PICK"
+    $ 552 "荷重の設定: k10"
+    set_target_payload(0.100000, [0.000000, -0.135000, 0.225000], [10.000000, 10.000000, 10.000000, 0.000000, 0.000000, 0.000000])
+    $ 553 "BucketDef:=pBucket[WorkPosNo]"
+    global BucketDef=pBucket[WorkPosNo]
+    $ 554 "If文 (CaptIndexWk≟1)"
+    if ((CaptIndexWk == 1)):
+      $ 555 "If文 ((BucketDef[2]+Sub104_TiltZTh[0]<CurrPos[2]) and (CurrPos[2]<BucketDef[2]+Sub104_TiltZTh[1]))"
+      if (((BucketDef[2]+Sub104_TiltZTh[0]<CurrPos[2])  and  (CurrPos[2]<BucketDef[2]+Sub104_TiltZTh[1]))):
+        $ 556 "If文 (0≤DistPillar and DistPillar≤DistPillarAPTh)"
+        if ((0 <= DistPillar  and  DistPillar <= DistPillarAPTh)):
+        else:
+          $ 559 "Else" "noBreak"
+          $ 560 "If文 WorkPosNo≟0"
+          if (WorkPosNo == 0):
+            $ 561 "MoveL"
+            $ 562 "SlideL0" "breakAfter"
+            set_tcp(p[0.0,0.09,0.42,0.0,0.0,0.0])
+            movel(pose_add(get_target_tcp_pose(), pose_sub(SlideL0_to_p, SlideL0_from_p)), a=0.07, v=0.2)
+          else:
+            $ 563 "Else" "noBreak"
+            $ 564 "MoveL"
+            $ 565 "SlideL1" "breakAfter"
+            set_tcp(p[0.0,0.09,0.42,0.0,0.0,0.0])
+            movel(pose_add(get_target_tcp_pose(), pose_sub(SlideL1_to_p, SlideL1_from_p)), a=0.07, v=0.2)
+          end
+        end
+      end
+    else:
+      $ 566 "ElseIf (CaptIndexWk≟2)"
+      if ((CaptIndexWk == 2)):
+        $ 567 "If文 ((BucketDef[2]+Sub104_TiltZTh[0]<CurrPos[2]) and (CurrPos[2]<BucketDef[2]+Sub104_TiltZTh[1]))"
+        if (((BucketDef[2]+Sub104_TiltZTh[0]<CurrPos[2])  and  (CurrPos[2]<BucketDef[2]+Sub104_TiltZTh[1]))):
+          $ 568 "If文 (-DistPillarAPTh≤DistPillar and DistPillar≤0)"
+          if ((-DistPillarAPTh <= DistPillar  and  DistPillar <= 0)):
+          else:
+            $ 571 "Else" "noBreak"
+            $ 572 "If文 WorkPosNo≟0"
+            if (WorkPosNo == 0):
+              $ 573 "MoveL"
+              $ 574 "SlideR0" "breakAfter"
+              set_tcp(p[0.0,0.09,0.42,0.0,0.0,0.0])
+              movel(pose_add(get_target_tcp_pose(), pose_sub(SlideR0_to_p, SlideR0_from_p)), a=0.07, v=0.2)
+            else:
+              $ 575 "Else" "noBreak"
+              $ 576 "MoveL"
+              $ 577 "SlideR1" "breakAfter"
+              set_tcp(p[0.0,0.09,0.42,0.0,0.0,0.0])
+              movel(pose_add(get_target_tcp_pose(), pose_sub(SlideR1_to_p, SlideR1_from_p)), a=0.07, v=0.2)
+            end
+          end
+        end
+      end
+    end
+    $ 578 "If文 (0≤DistPillar and DistPillar≤DistPillarAPTh)"
+    if ((0 <= DistPillar  and  DistPillar <= DistPillarAPTh)):
+      $ 579 "荷重の設定: k120"
+      set_target_payload(0.100000, [0.000000, -0.135000, 0.225000], [120.000000, 120.000000, 120.000000, 0.000000, 0.000000, 0.000000])
+      $ 580 "MoveL"
+      $ 581 "gGD_4_LM" "breakAfter"
+      set_tcp(p[0.0,0.09,0.42,1.894,0.0,0.0])
+      movel(pose_trans(UF, gGD_4_LM), a=0.07, v=0.4)
+      $ 582 "MoveL"
+      $ 583 "gGD_3_LM_RX" "breakAfter"
+      set_tcp(p[0.0,0.09,0.42,1.894,0.0,0.0])
+      movel(pose_trans(UF, gGD_3_LM_RX), a=0.05, v=0.25)
+      $ 585 "gGD_2_LM_p" "breakAfter"
+      set_tcp(p[0.0,0.09,0.42,1.894,0.0,0.0])
+      movel(pose_trans(UF, gGD_2_LM_p), a=0.05, v=0.25)
+      $ 586 "設定 GPBO_BLStop=HI:Pulse 1.0"
+      thread SinglePulse660():
+        write_output_boolean_register(14, True)
+        sleep(1.0)
+        write_output_boolean_register(14, False)
+      end
+      singlePulse660 = run SinglePulse660()
+      $ 587 "待機: 0.5"
+      sleep(0.5)
+      $ 588 "荷重の設定: k10"
+      set_target_payload(0.100000, [0.000000, -0.135000, 0.225000], [10.000000, 10.000000, 10.000000, 0.000000, 0.000000, 0.000000])
+      $ 590 "tm_handin: リセット"
+      tm_handin = 0
+      $ 591 "tm_handin: 起動"
+      tm_handin_is_counting = True
+      $ 592 "設定 DO[1]=オン"
+      set_standard_digital_out(1, True)
+      $ 593 "フォース"
+      sleep(0.02)
+      zero_ftsensor()
+      force_mode(tool_pose(), [1, 1, 1, 0, 0, 0], [0.0, 0.0, 20.0, 0.0, 0.0, 0.0], 2, [0.005, 0.005, 0.04, 0.3490658503988659, 0.3490658503988659, 0.3490658503988659])
+      $ 595 "待機 ((Currpos_p_UF0[0]>(gGD_2_LM_p[0]+HandInZ)) or (tm_handin>GPII_TMHandIn))" "noBreak"
+      while (not(((Currpos_p_UF0[0]>(gGD_2_LM_p[0]+HandInZ))  or  (tm_handin>read_input_integer_register(12))))):
+        sync()
+      end
+      end_force_mode()
+      stopl(5.0)
+      $ 596 "tm_handin: 停止"
+      tm_handin_is_counting = False
+      $ 597 "設定 GPBO_BLStart=HI:Pulse 1.0"
+      thread SinglePulse661():
+        write_output_boolean_register(15, True)
+        sleep(1.0)
+        write_output_boolean_register(15, False)
+      end
+      singlePulse661 = run SinglePulse661()
+      $ 598 "設定 DO[1]=オフ"
+      set_standard_digital_out(1, False)
+    else:
+      $ 599 "ElseIf (-DistPillarAPTh≤DistPillar and DistPillar≤0)"
+      if ((-DistPillarAPTh <= DistPillar  and  DistPillar <= 0)):
+        $ 600 "荷重の設定: k120"
+        set_target_payload(0.100000, [0.000000, -0.135000, 0.225000], [120.000000, 120.000000, 120.000000, 0.000000, 0.000000, 0.000000])
+        $ 601 "MoveL"
+        $ 602 "gGD_4_RM" "breakAfter"
+        set_tcp(p[0.0,0.09,0.42,1.894,0.0,0.0])
+        movel(pose_trans(UF, gGD_4_RM), a=0.07, v=0.4)
+        $ 603 "MoveL"
+        $ 604 "gGD_3_RM_RX" "breakAfter"
+        set_tcp(p[0.0,0.09,0.42,1.894,0.0,0.0])
+        movel(pose_trans(UF, gGD_3_RM_RX), a=0.05, v=0.25)
+        $ 606 "gGD_2_RM_p" "breakAfter"
+        set_tcp(p[0.0,0.09,0.42,1.894,0.0,0.0])
+        movel(pose_trans(UF, gGD_2_RM_p), a=0.05, v=0.25)
+        $ 607 "設定 GPBO_BLStop=HI:Pulse 1.0"
+        thread SinglePulse662():
+          write_output_boolean_register(14, True)
+          sleep(1.0)
+          write_output_boolean_register(14, False)
+        end
+        singlePulse662 = run SinglePulse662()
+        $ 608 "待機: 0.5"
+        sleep(0.5)
+        $ 609 "荷重の設定: k10"
+        set_target_payload(0.100000, [0.000000, -0.135000, 0.225000], [10.000000, 10.000000, 10.000000, 0.000000, 0.000000, 0.000000])
+        $ 611 "tm_handin: リセット"
+        tm_handin = 0
+        $ 612 "tm_handin: 起動"
+        tm_handin_is_counting = True
+        $ 613 "設定 DO[1]=オン"
+        set_standard_digital_out(1, True)
+        $ 614 "フォース"
+        sleep(0.02)
+        zero_ftsensor()
+        force_mode(tool_pose(), [1, 1, 1, 0, 0, 0], [0.0, 0.0, 20.0, 0.0, 0.0, 0.0], 2, [0.005, 0.005, 0.04, 0.3490658503988659, 0.3490658503988659, 0.3490658503988659])
+        $ 616 "待機 ((Currpos_p_UF0[0]>(gGD_2_RM_p[0]+HandInZ)) or (tm_handin>GPII_TMHandIn))" "noBreak"
+        while (not(((Currpos_p_UF0[0]>(gGD_2_RM_p[0]+HandInZ))  or  (tm_handin>read_input_integer_register(12))))):
+          sync()
+        end
+        end_force_mode()
+        stopl(5.0)
+        $ 617 "tm_handin: 停止"
+        tm_handin_is_counting = False
+        $ 618 "設定 GPBO_BLStart=HI:Pulse 1.0"
+        thread SinglePulse663():
+          write_output_boolean_register(15, True)
+          sleep(1.0)
+          write_output_boolean_register(15, False)
+        end
+        singlePulse663 = run SinglePulse663()
+        $ 619 "設定 DO[1]=オフ"
+        set_standard_digital_out(1, False)
+      else:
+        $ 620 "Else" "noBreak"
+        $ 621 "荷重の設定: k120"
+        set_target_payload(0.100000, [0.000000, -0.135000, 0.225000], [120.000000, 120.000000, 120.000000, 0.000000, 0.000000, 0.000000])
+        $ 622 "MoveL"
+        $ 623 "gGD_3_M_RX" "breakAfter"
+        set_tcp(p[0.0,0.09,0.42,1.894,0.0,0.0])
+        movel(pose_trans(UF, gGD_3_M_RX), a=0.07, v=0.4)
+        $ 625 "gGD_2_M_p" "breakAfter"
+        set_tcp(p[0.0,0.09,0.42,1.894,0.0,0.0])
+        movel(pose_trans(UF, gGD_2_M_p), a=0.07, v=0.4)
+        $ 626 "設定 GPBO_BLStop=HI:Pulse 1.0"
+        thread SinglePulse664():
+          write_output_boolean_register(14, True)
+          sleep(1.0)
+          write_output_boolean_register(14, False)
+        end
+        singlePulse664 = run SinglePulse664()
+        $ 627 "待機: 0.5"
+        sleep(0.5)
+        $ 628 "荷重の設定: k10"
+        set_target_payload(0.100000, [0.000000, -0.135000, 0.225000], [10.000000, 10.000000, 10.000000, 0.000000, 0.000000, 0.000000])
+        $ 630 "tm_handin: リセット"
+        tm_handin = 0
+        $ 631 "tm_handin: 起動"
+        tm_handin_is_counting = True
+        $ 632 "設定 DO[1]=オン"
+        set_standard_digital_out(1, True)
+        $ 633 "フォース"
+        sleep(0.02)
+        zero_ftsensor()
+        force_mode(tool_pose(), [1, 1, 1, 0, 0, 0], [0.0, 0.0, 20.0, 0.0, 0.0, 0.0], 2, [0.005, 0.005, 0.04, 0.3490658503988659, 0.3490658503988659, 0.3490658503988659])
+        $ 634 "ShakeCnt:=-1" "noBreak"
+        global ShakeCnt=-1
+        $ 635 "ループ ((Currpos_p_UF0[0]≤(gGD_2_LM_p[0]+HandInZ)) and (tm_handin<GPII_TMHandIn))" "noBreak"
+        while (((Currpos_p_UF0[0] <= (gGD_2_LM_p[0]+HandInZ))  and  (tm_handin<read_input_integer_register(12)))):
+          $ 636 "If文 UseShake" "noBreak"
+          if (UseShake):
+            $ 637 "If文 ShakeCnt<0" "noBreak"
+            if (ShakeCnt<0):
+              $ 638 "NOT_SHAKE" "noBreak"
+              $ 639 "tm_104: 起動" "noBreak"
+              tm_104_is_counting = True
+              $ 640 "待機 tm_104>ShakeWaitSec" "noBreak"
+              while (not(tm_104>ShakeWaitSec)):
+                sync()
+              end
+              $ 641 "tm_104: 停止" "noBreak"
+              tm_104_is_counting = False
+              $ 642 "tm_104: リセット" "noBreak"
+              tm_104 = 0
+              $ 643 "ShakeCnt:=0" "noBreak"
+              global ShakeCnt=0
+            end
+            $ 644 "IsShake:= False " "noBreak"
+            global IsShake=  False  
+            $ 645 "MONITOR_SPEED" "noBreak"
+            $ 646 "tm_104: リセット" "noBreak"
+            tm_104 = 0
+            $ 647 "If文 norm(TCPSpeed[1])<TCPSpeedThZ" "noBreak"
+            if (norm(TCPSpeed[1])<TCPSpeedThZ):
+              $ 648 "IsShake:= True " "noBreak"
+              global IsShake=  True  
+              $ 649 "If文 ShakeCnt≟0" "noBreak"
+              if (ShakeCnt == 0):
+                $ 650 "tm_104: 起動" "noBreak"
+                tm_104_is_counting = True
+                $ 651 "ループ ((tm_104<1.0) and (IsShake≟ True ))" "noBreak"
+                while (((tm_104<1.0)  and  (IsShake ==   True  ))):
+                  $ 652 "If文 norm(TCPSpeed[1])≥TCPSpeedThZ" "noBreak"
+                  if (norm(TCPSpeed[1]) >= TCPSpeedThZ):
+                    $ 653 "IsShake:= False " "noBreak"
+                    global IsShake=  False  
+                  end
+                end
+                $ 654 "tm_104: 停止" "noBreak"
+                tm_104_is_counting = False
+              end
+              $ 655 "ShakeCnt:=ShakeCnt+1" "noBreak"
+              global ShakeCnt=ShakeCnt+1
+            end
+            $ 656 "SHAKE" "noBreak"
+            $ 657 "If文 IsShake" "noBreak"
+            if (IsShake):
+              $ 658 "Sub3100_Option:=7" "noBreak"
+              global Sub3100_Option=7
+              $ 659 "ループ2回" "noBreak"
+              u12523u12540u12503_8 = 0
+              while (u12523u12540u12503_8 < 2):
+                $ 660 "'7:RX+,8:RX-,9:RY+,10:RY-,11:RZ+,12:RZ-'" "noBreak"
+                # '7:RX+,8:RX-,9:RY+,10:RY-,11:RZ+,12:RZ-'
+                $ 661 "Sub3100_Xd:=[0.,0.,0.,0.,0.,0.]" "noBreak"
+                global Sub3100_Xd=[0.,0.,0.,0.,0.,0.]
+                $ 662 "Sub3100_q:=floor((Sub3100_Option-1) / 2)" "noBreak"
+                global Sub3100_q=floor((Sub3100_Option-1) / 2)
+                $ 663 "Sub3100_e:=1-((Sub3100_Option-1) % 2)*2" "noBreak"
+                global Sub3100_e=1-((Sub3100_Option-1) % 2)*2
+                $ 664 "Sub3100_t:=0.2" "noBreak"
+                global Sub3100_t=0.2
+                $ 665 "Sub3100_Xd[Sub3100_q]=d2r(Sub3100_XdRot/2.0)*Sub3100_e" "noBreak"
+                Sub3100_Xd[Sub3100_q]= d2r (Sub3100_XdRot/2.0)*Sub3100_e
+                $ 666 "speedl(Sub3100_Xd,Sub3100_aRot/2.0,Sub3100_t)" "noBreak"
+                speedl(Sub3100_Xd,Sub3100_aRot/2.0,Sub3100_t)
+                $ 667 "If文 Sub3100_Option≟7" "noBreak"
+                if (Sub3100_Option == 7):
+                  $ 668 "Sub3100_Option:=8" "noBreak"
+                  global Sub3100_Option=8
+                else:
+                  $ 669 "Else" "noBreak"
+                  $ 670 "Sub3100_Option:=7" "noBreak"
+                  global Sub3100_Option=7
+                end
+                $ 671 "待機: 0.1" "noBreak"
+                sleep(0.1)
+                u12523u12540u12503_8 = u12523u12540u12503_8 + 1
+              end
+              $ 672 "IsShake:= False " "noBreak"
+              global IsShake=  False  
+            end
+          end
+          $ 673 "待機: 0.1" "noBreak"
+          sleep(0.1)
+        end
+        end_force_mode()
+        stopl(5.0)
+        $ 674 "設定 DO[1]=オフ"
+        set_standard_digital_out(1, False)
+        $ 675 "tm_handin: 停止"
+        tm_handin_is_counting = False
+        $ 676 "設定 GPBO_BLStart=HI:Pulse 1.0"
+        thread SinglePulse665():
+          write_output_boolean_register(15, True)
+          sleep(1.0)
+          write_output_boolean_register(15, False)
+        end
+        singlePulse665 = run SinglePulse665()
+      end
+    end
+    $ 680 "tm_steady_104: リセット"
+    tm_steady_104 = 0
+    $ 681 "tm_steady_104: 起動"
+    tm_steady_104_is_counting = True
+    $ 682 "待機 is_steady()"
+    while (not(is_steady())):
+      sync()
+    end
+    $ 683 "tm_steady_104: 停止"
+    tm_steady_104_is_counting = False
+    $ 685 "If文 ( not GPBI_WorkExists)"
+    if ((  not  read_input_boolean_register(9))):
+      $ 686 "荷重の設定: k10"
+      set_target_payload(0.100000, [0.000000, -0.135000, 0.225000], [10.000000, 10.000000, 10.000000, 0.000000, 0.000000, 0.000000])
+      $ 687 "If文 (0≤DistPillar and DistPillar≤DistPillarAPTh)"
+      if ((0 <= DistPillar  and  DistPillar <= DistPillarAPTh)):
+        $ 688 "MoveL"
+        $ 690 "gGD_2_LM_p" "breakAfter"
+        set_tcp(p[0.0,0.09,0.42,1.894,0.0,0.0])
+        movel(pose_trans(UF, gGD_2_LM_p), a=0.14, v=0.4)
+        $ 691 "gGD_3_LM_RX" "breakAfter"
+        set_tcp(p[0.0,0.09,0.42,1.894,0.0,0.0])
+        movel(pose_trans(UF, gGD_3_LM_RX), a=0.14, v=0.4)
+        $ 692 "MoveL"
+        $ 693 "gGD_4_LM" "breakAfter"
+        set_tcp(p[0.0,0.09,0.42,1.894,0.0,0.0])
+        movel(pose_trans(UF, gGD_4_LM), a=0.14, v=0.4)
+      else:
+        $ 694 "ElseIf (-DistPillarAPTh≤DistPillar and DistPillar≤0)"
+        if ((-DistPillarAPTh <= DistPillar  and  DistPillar <= 0)):
+          $ 695 "MoveL"
+          $ 697 "gGD_2_RM_p" "breakAfter"
+          set_tcp(p[0.0,0.09,0.42,1.894,0.0,0.0])
+          movel(pose_trans(UF, gGD_2_RM_p), a=0.07, v=0.4)
+          $ 698 "gGD_3_RM_RX" "breakAfter"
+          set_tcp(p[0.0,0.09,0.42,1.894,0.0,0.0])
+          movel(pose_trans(UF, gGD_3_RM_RX), a=0.07, v=0.4)
+          $ 699 "MoveL"
+          $ 700 "gGD_4_RM" "breakAfter"
+          set_tcp(p[0.0,0.09,0.42,1.894,0.0,0.0])
+          movel(pose_trans(UF, gGD_4_RM), a=0.07, v=0.4)
+        else:
+          $ 701 "Else" "noBreak"
+          $ 702 "MoveL"
+          $ 704 "gGD_2_M_p" "breakAfter"
+          set_tcp(p[0.0,0.09,0.42,1.894,0.0,0.0])
+          movel(pose_trans(UF, gGD_2_M_p), a=0.07, v=0.4)
+          $ 705 "gGD_3_M_RX" "breakAfter"
+          set_tcp(p[0.0,0.09,0.42,1.894,0.0,0.0])
+          movel(pose_trans(UF, gGD_3_M_RX), a=0.07, v=0.4)
+        end
+      end
+      $ 706 "荷重の設定: k25"
+      set_target_payload(0.100000, [0.000000, -0.135000, 0.225000], [25.000000, 25.000000, 25.000000, 0.000000, 0.000000, 0.000000])
+      $ 707 "ROVI_CAPTURE"
+      $ 708 "CaptPos:=GET_CAPTPOS()"
+      global CaptPos=GET_CAPTPOS()
+      $ 709 "MoveJ"
+      $ 710 "CaptPos" "breakAfter"
+      set_tcp(p[0.0,0.09,0.42,0.0,0.0,0.0])
+      movej(pose_trans(Bucket, CaptPos), a=0.3490658503988659, v=0.6981317007977318)
+      $ 711 "BUCKET"
+      $ 712 "SET_BUCKET_DEF()"
+      SET_BUCKET_DEF()
+      $ 713 "BucketUpperPos:=GET_BUCKET_UPPER()"
+      global BucketUpperPos=GET_BUCKET_UPPER()
+      $ 714 "MoveJ"
+      $ 715 "BucketUpperPos" "breakAfter"
+      set_tcp(p[0.0,0.09,0.42,0.0,0.0,0.0])
+      movej(pose_trans(Bucket, BucketUpperPos), a=0.3490658503988659, v=0.6981317007977318)
+      $ 716 "待機: 1.0"
+      sleep(1.0)
+      $ 718 "SubPrgResult:=821"
+      global SubPrgResult=821
+      $ 719 "待機: 999999.0"
+      sleep(999999.0)
+    end
+  end
+  def SUB_105():
+    $ 720 "SUB_105" "noBreak"
+    $ 721 "UF:=Y2"
+    global UF=Y2
+    $ 722 "PICK"
+    $ 723 "FREE_DRIVE"
+    $ 724 "荷重の設定: k2"
+    set_target_payload(0.100000, [0.000000, -0.135000, 0.225000], [2.000000, 2.000000, 2.000000, 0.000000, 0.000000, 0.000000])
+    $ 725 "freedrive_mode()"
+    freedrive_mode()
+    $ 726 "設定"
+    set_tcp(p[0.0,0.0,0.0,0.0,0.0,0.0])
+    $ 727 "待機: 0.5"
+    sleep(0.5)
+    $ 728 "end_freedrive_mode()"
+    end_freedrive_mode()
+    $ 729 "force_mode_set_gain_scaling(0.9)"
+    force_mode_set_gain_scaling(0.9)
+    $ 730 "設定 GPBO_BLStart=HI:Pulse 1.0"
+    thread SinglePulse666():
+      write_output_boolean_register(15, True)
+      sleep(1.0)
+      write_output_boolean_register(15, False)
+    end
+    singlePulse666 = run SinglePulse666()
+    $ 731 "ForceStartZ:=CurrPos_p[2]"
+    global ForceStartZ=CurrPos_p[2]
+    $ 732 "If文 LevelZ<0"
+    if (LevelZ<0):
+      $ 733 "CutOffZ:=0.0"
+      global CutOffZ=0.0
+    else:
+      $ 734 "Else" "noBreak"
+      $ 735 "CutOffZ:=LevelZ"
+      global CutOffZ=LevelZ
+    end
+    $ 736 "CutOffZAdd:=NeighborZ+BeyondZ"
+    global CutOffZAdd=NeighborZ+BeyondZ
+    $ 738 "TCPForceBak:=TCPForce"
+    global TCPForceBak=TCPForce
+    $ 739 "tm_cutoff: リセット"
+    tm_cutoff = 0
+    $ 740 "tm_cutoff: 起動"
+    tm_cutoff_is_counting = True
+    $ 767 "設定 DO[3]=オン"
+    set_standard_digital_out(3, True)
+    $ 768 "FORCE_CUTOFF"
+    $ 769 "荷重の設定: kjF"
+    set_target_payload(0.100000, [0.000000, -0.135000, 0.225000], [0.010000, 0.010000, 0.010000, 0.000000, 0.000000, 0.000000])
+    $ 770 "待機: 0.02"
+    sleep(0.02)
+    $ 772 "ForceStep:=0"
+    global ForceStep=0
+    $ 773 "If文 (0≤DistPillar and DistPillar≤DistPillarCOTh)"
+    if ((0 <= DistPillar  and  DistPillar <= DistPillarCOTh)):
+      $ 774 "ForceValue:=[40,0,60,0,0,0]"
+      global ForceValue=[40,0,60,0,0,0]
+    else:
+      $ 775 "ElseIf (-DistPillarCOTh≤DistPillar and DistPillar≤0)"
+      if ((-DistPillarCOTh <= DistPillar  and  DistPillar <= 0)):
+        $ 776 "ForceValue:=[-40,0,60,0,0,0]"
+        global ForceValue=[-40,0,60,0,0,0]
+      else:
+        $ 777 "Else" "noBreak"
+        $ 778 "ForceValue:=[0,0,60,0,0,0]"
+        global ForceValue=[0,0,60,0,0,0]
+      end
+    end
+    $ 779 "ForceFeature:=Bucket"
+    global ForceFeature=Bucket
+    $ 780 "ForceLZDecayWk:=0"
+    global ForceLZDecayWk=0
+    $ 781 "ForceVZDecayWk:=0"
+    global ForceVZDecayWk=0
+    $ 782 "CutOffZ:=CutOffZ+CutOffZAdd"
+    global CutOffZ=CutOffZ+CutOffZAdd
+    $ 783 "tm_decay: リセット"
+    tm_decay = 0
+    $ 784 "ループ tm_cutoff<GPII_TMCutOff"
+    while (tm_cutoff<read_input_integer_register(13)):
+      $ 785 "If文 WorkPosNo≟0"
+      if (WorkPosNo == 0):
+        $ 786 "ForceValue[5]=-GET_FORCE_VALUE_RZ(g2GD_pos5)"
+        ForceValue[5]=-GET_FORCE_VALUE_RZ(g2GD_pos5)
+      else:
+        $ 787 "ElseIf WorkPosNo≟1"
+        if (WorkPosNo == 1):
+          $ 788 "ForceValue[5]=-GET_FORCE_VALUE_RZ(g1GD_pos5)"
+          ForceValue[5]=-GET_FORCE_VALUE_RZ(g1GD_pos5)
+        end
+      end
+      $ 789 "スイッチ文 ForceStep"
+      switch_1 = ForceStep
+      $ 790 "ケース 0"
+      if (0 == switch_1):
+        $ 791 "ForceStep:=1"
+        global ForceStep=1
+        $ 792 "ForceLimit:=[0.01,0.01,ForceLimitZ[ForceStep-1],d2r(10.),d2r(10.),d2r(10.)]"
+        global ForceLimit=[0.01,0.01,ForceLimitZ[ForceStep-1], d2r (10.), d2r (10.), d2r (10.)]
+        $ 793 "force_mode(ForceFeature,ForceAxis,ForceValue,ForceType,ForceLimit)"
+        force_mode(ForceFeature,ForceAxis,ForceValue,ForceType,ForceLimit)
+      elif (1 == switch_1):
+        $ 794 "ケース 1"
+        $ 795 "If文 GPBI_BLLoad1"
+        if (read_input_boolean_register(10)):
+          $ 796 "ForceStep:=2"
+          global ForceStep=2
+          $ 797 "ForceLimit:=[0.01,0.01,ForceLimitZ[ForceStep-1],d2r(10.),d2r(10.),d2r(10.)]"
+          global ForceLimit=[0.01,0.01,ForceLimitZ[ForceStep-1], d2r (10.), d2r (10.), d2r (10.)]
+          $ 798 "force_mode(ForceFeature,ForceAxis,ForceValue,ForceType,ForceLimit)"
+          force_mode(ForceFeature,ForceAxis,ForceValue,ForceType,ForceLimit)
+        else:
+          $ 799 "ElseIf UseRZSuppress"
+          if (UseRZSuppress):
+            $ 800 "force_mode(ForceFeature,ForceAxis,ForceValue,ForceType,ForceLimit)"
+            force_mode(ForceFeature,ForceAxis,ForceValue,ForceType,ForceLimit)
+          end
+        end
+      elif (2 == switch_1):
+        $ 801 "ケース 2"
+        $ 802 "If文 GPBI_BLLoad2"
+        if (read_input_boolean_register(11)):
+          $ 803 "break"
+          break
+        end
+        $ 804 "ForceValue[2]=ForceValue[2]-ForceVZDecayWk"
+        ForceValue[2]=ForceValue[2]-ForceVZDecayWk
+        $ 805 "ForceLimit[2]=ForceLimit[2]-ForceLZDecayWk"
+        ForceLimit[2]=ForceLimit[2]-ForceLZDecayWk
+        $ 806 "If文 (ForceValue[2]≤0 and ForceLZDecay≟0)"
+        if ((ForceValue[2] <= 0  and  ForceLZDecay == 0)):
+          $ 807 "tm_decay: 停止"
+          tm_decay_is_counting = False
+          $ 808 "ForceStep:=3"
+          global ForceStep=3
+          $ 809 "break"
+          break
+        else:
+          $ 810 "ElseIf (ForceLimit[2]≤StopSpeed[2] and ForceVZDecay≟0)"
+          if ((ForceLimit[2] <= StopSpeed[2]  and  ForceVZDecay == 0)):
+            $ 811 "tm_decay: 停止"
+            tm_decay_is_counting = False
+            $ 812 "ForceStep:=3"
+            global ForceStep=3
+            $ 813 "break"
+            break
+          else:
+            $ 814 "ElseIf (ForceValue[2]≤0 and ForceLimit[2]≤0)"
+            if ((ForceValue[2] <= 0  and  ForceLimit[2] <= 0)):
+              $ 815 "tm_decay: 停止"
+              tm_decay_is_counting = False
+              $ 816 "ForceStep:=3"
+              global ForceStep=3
+              $ 817 "break"
+              break
+            else:
+              $ 818 "ElseIf (( CurrPos_p[2]>ForceStartZ+CutOffZ ) or ( not CHECK_DIST_NEAR(CurrPos, p[0,0,0,0,0,0], RBArmLength)))"
+              if ((( CurrPos_p[2]>ForceStartZ+CutOffZ )  or  (  not  CHECK_DIST_NEAR(CurrPos, p[0,0,0,0,0,0], RBArmLength)))):
+                $ 819 "tm_decay: 起動"
+                tm_decay_is_counting = True
+                $ 820 "TCPForceBak2:=TCPForce"
+                global TCPForceBak2=TCPForce
+                $ 821 "TCPSpeedBak2:=TCPSpeed"
+                global TCPSpeedBak2=TCPSpeed
+                $ 822 "ForceValue[0]=0.0"
+                ForceValue[0]=0.0
+                $ 823 "If文 (ForceVZDecay≟0 and ForceLZDecay≟0)"
+                if ((ForceVZDecay == 0  and  ForceLZDecay == 0)):
+                  $ 824 "ForceVZDecayWk:=ForceValue[2]"
+                  global ForceVZDecayWk=ForceValue[2]
+                  $ 825 "ForceLZDecayWk:=0"
+                  global ForceLZDecayWk=0
+                else:
+                  $ 826 "ElseIf (ForceVZDecay≠0 and ForceLZDecay≟0)"
+                  if ((ForceVZDecay != 0  and  ForceLZDecay == 0)):
+                    $ 827 "ForceVZDecayWk:=ForceVZDecay"
+                    global ForceVZDecayWk=ForceVZDecay
+                    $ 828 "ForceLZDecayWk:=0"
+                    global ForceLZDecayWk=0
+                  else:
+                    $ 829 "ElseIf (ForceVZDecay≟0 and ForceLZDecay≠0)"
+                    if ((ForceVZDecay == 0  and  ForceLZDecay != 0)):
+                      $ 830 "ForceVZDecayWk:=0"
+                      global ForceVZDecayWk=0
+                      $ 831 "ForceLZDecayWk:=ForceLZDecay"
+                      global ForceLZDecayWk=ForceLZDecay
+                    else:
+                      $ 832 "Else" "noBreak"
+                      $ 833 "ForceVZDecayWk:=ForceVZDecay"
+                      global ForceVZDecayWk=ForceVZDecay
+                      $ 834 "ForceLZDecayWk:=ForceLZDecay"
+                      global ForceLZDecayWk=ForceLZDecay
+                    end
+                  end
+                end
+                $ 835 "force_mode(ForceFeature,ForceAxis,ForceValue,ForceType,ForceLimit)"
+                force_mode(ForceFeature,ForceAxis,ForceValue,ForceType,ForceLimit)
+              else:
+                $ 836 "ElseIf UseRZSuppress"
+                if (UseRZSuppress):
+                  $ 837 "If文 (ForceValue[2]<0)"
+                  if ((ForceValue[2]<0)):
+                    $ 838 "ForceValue[2]=0.0"
+                    ForceValue[2]=0.0
+                  end
+                  $ 839 "If文 (ForceLimit[2]≤StopSpeed[2])"
+                  if ((ForceLimit[2] <= StopSpeed[2])):
+                    $ 840 "ForceLimit[2]=StopSpeed[2]"
+                    ForceLimit[2]=StopSpeed[2]
+                  end
+                  $ 841 "force_mode(ForceFeature,ForceAxis,ForceValue,ForceType,ForceLimit)"
+                  force_mode(ForceFeature,ForceAxis,ForceValue,ForceType,ForceLimit)
+                end
+              end
+            end
+          end
+        end
+      elif (3 == switch_1):
+        $ 842 "ケース 3"
+        $ 843 "If文 GPBI_BLLoad2"
+        if (read_input_boolean_register(11)):
+          $ 844 "break"
+          break
+        end
+        $ 845 "If文 (UseRZSuppress and (ForceValue[5]≠0.0))"
+        if ((UseRZSuppress  and  (ForceValue[5] != 0.0))):
+          $ 846 "force_mode(ForceFeature,ForceAxis,ForceValue,ForceType,ForceLimit)"
+          force_mode(ForceFeature,ForceAxis,ForceValue,ForceType,ForceLimit)
+        else:
+          $ 847 "Else" "noBreak"
+          $ 848 "If文 CHECK_SPEED(StopSpeed) and ((UseRZSuppress and (ForceValue[5]==0.0)) or ( not UseRZSuppress))"
+          if (CHECK_SPEED(StopSpeed)  and  ((UseRZSuppress  and  (ForceValue[5]==0.0))  or  (  not  UseRZSuppress))):
+            $ 849 "break"
+            break
+          end
+        end
+      end
+      $ 854 "sync()"
+      sync()
+    end
+    $ 855 "end_force_mode()"
+    end_force_mode()
+    $ 856 "stopl(5.0)"
+    stopl(5.0)
+    $ 860 "設定 DO[3]=オフ"
+    set_standard_digital_out(3, False)
+    $ 862 "tm_cutoff: 停止"
+    tm_cutoff_is_counting = False
+    $ 863 "If文 (GPBI_BLLoad2)"
+    if ((read_input_boolean_register(11))):
+      $ 864 "SubPrgResult:=825"
+      global SubPrgResult=825
+      $ 865 "待機: 999999.0"
+      sleep(999999.0)
+    end
+    $ 866 "If文 ( not GPBI_BLLoad1)"
+    if ((  not  read_input_boolean_register(10))):
+      $ 867 "SubPrgResult:=822"
+      global SubPrgResult=822
+      $ 868 "待機: 999999.0"
+      sleep(999999.0)
+    end
+    $ 869 "荷重の設定: k10"
+    set_target_payload(0.100000, [0.000000, -0.135000, 0.225000], [10.000000, 10.000000, 10.000000, 0.000000, 0.000000, 0.000000])
+    $ 873 "tm_steady_105: リセット"
+    tm_steady_105 = 0
+    $ 874 "tm_steady_105: 起動"
+    tm_steady_105_is_counting = True
+    $ 876 "tm_steady_105: 停止"
+    tm_steady_105_is_counting = False
+    $ 877 "設定 DO[0]=オン"
+    set_standard_digital_out(0, True)
+    $ 878 "FREE_DRIVE"
+    $ 879 "freedrive_mode()"
+    freedrive_mode()
+    $ 880 "荷重の設定: k2"
+    set_target_payload(0.100000, [0.000000, -0.135000, 0.225000], [2.000000, 2.000000, 2.000000, 0.000000, 0.000000, 0.000000])
+    $ 881 "設定"
+    set_tcp(p[0.0,0.0,0.0,0.0,0.0,0.0])
+    $ 882 "待機: 1.5"
+    sleep(1.5)
+    $ 883 "end_freedrive_mode()"
+    end_freedrive_mode()
+    $ 884 "待機 is_steady()"
+    while (not(is_steady())):
+      sync()
+    end
+    $ 885 "設定 DO[0]=オフ"
+    set_standard_digital_out(0, False)
+    $ 886 "CHK_RX_TILT"
+    $ 887 "If文 UseChkRXTilt"
+    if (UseChkRXTilt):
+      $ 888 "設定"
+      set_tcp(p[0.0,0.09,0.42,0.0,0.0,0.0])
+      $ 889 "sync()"
+      sync()
+      $ 890 "CurrPos_p=get_actual_tcp_pose()"
+      CurrPos_p= get_actual_tcp_pose ()
+      $ 891 "CurrposAligned:=p[0,0,0,0,0,0]"
+      global CurrposAligned=p[0,0,0,0,0,0]
+      $ 892 "CurrposAligned:=GET_ALIGNED_TCP(CurrposAligned)"
+      global CurrposAligned=GET_ALIGNED_TCP(CurrposAligned)
+      $ 893 "If文 (not CHECK_RX_TILT(CurrposAligned))"
+      if ((not CHECK_RX_TILT(CurrposAligned))):
+        $ 894 "SubPrgResult:=825"
+        global SubPrgResult=825
+        $ 895 "待機: 999999.0"
+        sleep(999999.0)
+      end
+    end
+    $ 896 "CV_CORR_RZ"
+    $ 897 "If文 UseCVCorr"
+    if (UseCVCorr):
+      $ 898 "設定"
+      set_tcp(p[0.0,0.09,0.42,0.0,0.0,0.0])
+      $ 899 "sync()"
+      sync()
+      $ 900 "CurrPos_p=get_actual_tcp_pose()"
+      CurrPos_p= get_actual_tcp_pose ()
+      $ 901 "CurrposAligned:=p[0,0,0,0,0,0]"
+      global CurrposAligned=p[0,0,0,0,0,0]
+      $ 902 "CurrposAligned:=GET_ALIGNED_TCP(CurrposAligned)"
+      global CurrposAligned=GET_ALIGNED_TCP(CurrposAligned)
+      $ 903 "GET_CVCORR_VALUE(CurrposAligned)"
+      GET_CVCORR_VALUE(CurrposAligned)
+    end
+    $ 904 "CUTOFF_POSE"
+    $ 905 "If文 UseCutOffTCP"
+    if (UseCutOffTCP):
+      $ 906 "設定"
+      set_tcp(p[0.0,0.09,0.42,0.0,0.0,0.0])
+      $ 907 "CutOffPos:=p[0.,0.,0.,0.,0.,0.]"
+      global CutOffPos=p[0.,0.,0.,0.,0.,0.]
+      $ 908 "CutOffPos:=GET_ALIGNED_TCP(CutOffPos)"
+      global CutOffPos=GET_ALIGNED_TCP(CutOffPos)
+      $ 909 "CutOffTCP:=pose_trans(pose_inv(CurrPos),CutOffPos)"
+      global CutOffTCP= pose_trans ( pose_inv (CurrPos),CutOffPos)
+      $ 910 "設定"
+      set_tcp(p[0.0,0.0,0.0,0.0,0.0,0.0])
+      $ 911 "CutOffTCP:=pose_trans(get_tcp_offset(),CutOffTCP)"
+      global CutOffTCP= pose_trans (get_tcp_offset(),CutOffTCP)
+      $ 912 "設定"
+      set_tcp(p[0.0,0.09,0.42,0.0,0.0,0.0])
+    else:
+      $ 913 "Else" "noBreak"
+      $ 914 "設定"
+      set_tcp(p[0.0,0.09,0.42,0.0,0.0,0.0])
+      $ 915 "CutOffTCP:=get_tcp_offset()"
+      global CutOffTCP=get_tcp_offset()
+    end
+  end
+  def SUB_106():
+    $ 916 "SUB_106" "noBreak"
+    $ 917 "If文 GPBI_WorkExists"
+    global thread_flag_917=0
+    thread Thread_if_917():
+      $ 918 "TRANSFER"
+      $ 919 "設定 DO[7]=オン"
+      set_standard_digital_out(7, True)
+      $ 920 "荷重の設定: k120"
+      set_target_payload(0.100000, [0.000000, -0.135000, 0.225000], [120.000000, 120.000000, 120.000000, 0.000000, 0.000000, 0.000000])
+      $ 921 "If文 UseZRotate"
+      if (UseZRotate):
+        $ 922 "設定"
+        set_tcp(p[0.0,-0.16,0.42,0.0,0.0,0.0])
+        $ 923 "sync()"
+        sync()
+        $ 924 "If文 UseBaseZRotate"
+        if (UseBaseZRotate):
+          $ 925 "If文 (WorkPosNo≟0)"
+          if ((WorkPosNo == 0)):
+            $ 926 "gGD_pos5:=g2GD_pos5_NEAR"
+            global gGD_pos5=g2GD_pos5_NEAR
+          else:
+            $ 927 "ElseIf (WorkPosNo≟1)"
+            if ((WorkPosNo == 1)):
+              $ 928 "gGD_pos5:=g1GD_pos5_NEAR"
+              global gGD_pos5=g1GD_pos5_NEAR
+            end
+          end
+          $ 929 "CurrPos_p=get_actual_tcp_pose()"
+          CurrPos_p= get_actual_tcp_pose ()
+          $ 930 "MoveL"
+          $ 932 "PoseSub:=pose_sub(CurrPos_p,gGD_pos5)"
+          global PoseSub= pose_sub (CurrPos_p,gGD_pos5)
+          $ 933 "RZSub:=r2d(PoseSub[5])"
+          global RZSub=r2d(PoseSub[5])
+          $ 934 "If文 (norm(PoseSub[5])≥d2r(RZTh))"
+          if ((norm(PoseSub[5]) >= d2r(RZTh))):
+            $ 935 "PoseAdd:=pose_add(p[0,0,0,0,0,d2r(RZSub)],p[0,0,0,CurrPos_p[3],CurrPos_p[4],CurrPos_p[5]])"
+            global PoseAdd= pose_add (p[0,0,0,0,0,d2r(RZSub)],p[0,0,0,CurrPos_p[3],CurrPos_p[4],CurrPos_p[5]])
+            $ 936 "PoseAdd:=p[CurrPos_p[0],CurrPos_p[1],CurrPos_p[2],PoseAdd[3],PoseAdd[4],PoseAdd[5]]"
+            global PoseAdd=p[CurrPos_p[0],CurrPos_p[1],CurrPos_p[2],PoseAdd[3],PoseAdd[4],PoseAdd[5]]
+            $ 937 "PoseAdd" "breakAfter"
+            set_tcp(p[0.0,-0.16,0.42,0.0,0.0,0.0])
+            movel(PoseAdd, a=0.01, v=0.06)
+          end
+        else:
+          $ 938 "Else" "noBreak"
+          $ 939 "If文 (WorkPosNo≟0)"
+          if ((WorkPosNo == 0)):
+            $ 940 "gGD_pos5:=g2GD_pos5"
+            global gGD_pos5=g2GD_pos5
+          else:
+            $ 941 "ElseIf (WorkPosNo≟1)"
+            if ((WorkPosNo == 1)):
+              $ 942 "gGD_pos5:=g1GD_pos5"
+              global gGD_pos5=g1GD_pos5
+            end
+          end
+          $ 943 "MoveL"
+          $ 945 "PoseSub:=pose_sub(CurrPos, pose_trans(gGD_pos5, pose_inv(get_tcp_offset())))"
+          global PoseSub= pose_sub (CurrPos,  pose_trans (gGD_pos5,  pose_inv (get_tcp_offset())))
+          $ 946 "RZSub:=r2d(PoseSub[5])"
+          global RZSub=r2d(PoseSub[5])
+          $ 947 "If文 (norm(PoseSub[5])≥d2r(RZTh))"
+          if ((norm(PoseSub[5]) >= d2r(RZTh))):
+            $ 948 "PoseSub[0]=0.0"
+            PoseSub[0]=0.0
+            $ 949 "PoseSub[1]=0.0"
+            PoseSub[1]=0.0
+            $ 950 "PoseSub[2]=0.0"
+            PoseSub[2]=0.0
+            $ 951 "PoseAdd:=pose_add(PoseSub, CurrPos)"
+            global PoseAdd= pose_add (PoseSub, CurrPos)
+            $ 952 "PoseAdd" "breakAfter"
+            set_tcp(p[0.0,0.0,0.0,0.0,0.0,0.0])
+            movel(PoseAdd, a=0.01, v=0.06)
+          end
+        end
+      end
+      $ 953 "If文 UseCVCorr and UseCVCorrCam"
+      if (UseCVCorr  and  UseCVCorrCam):
+        $ 954 "WorkNoOffset:=WorkNoCV"
+        global WorkNoOffset=WorkNoCV
+        $ 955 "thrd108:=RUN_THREAD_ROVI()"
+        global thrd108=RUN_THREAD_ROVI()
+      end
+      $ 956 "If文 (WorkPosNo≟0)"
+      if ((WorkPosNo == 0)):
+        $ 959 "set_tcp(CutOffTCP)"
+        set_tcp(CutOffTCP)
+        $ 960 "sync()"
+        sync()
+        $ 961 "MoveL"
+        $ 962 "If文 UseZSlide"
+        if (UseZSlide):
+          $ 963 "gGD_pos5:=GET_ZSLIDE_POS(g2GD_pos5_NEAR)"
+          global gGD_pos5=GET_ZSLIDE_POS(g2GD_pos5_NEAR)
+        else:
+          $ 964 "Else" "noBreak"
+          $ 965 "gGD_pos5:=g2GD_pos5"
+          global gGD_pos5=g2GD_pos5
+        end
+        $ 966 "DistBKUpper=GET_DIST(CurrPos_p,gGD_pos5)"
+        DistBKUpper=GET_DIST(CurrPos_p,gGD_pos5)
+        $ 967 "If文 ( not CHECK_DIST_NEAR(CurrPos_p, gGD_pos5, DistBKUpperTh))"
+        if ((  not  CHECK_DIST_NEAR(CurrPos_p, gGD_pos5, DistBKUpperTh))):
+          $ 968 "gGD_pos5" "breakAfter"
+          movel(gGD_pos5, a=0.025, v=0.25)
+        end
+        $ 969 "設定 DO[7]=オフ"
+        set_standard_digital_out(7, False)
+        $ 970 "設定 DO[6]=オン"
+        set_standard_digital_out(6, True)
+        $ 971 "MoveL"
+        $ 972 "荷重の設定: k10"
+        set_target_payload(0.100000, [0.000000, -0.135000, 0.225000], [10.000000, 10.000000, 10.000000, 0.000000, 0.000000, 0.000000])
+        $ 974 "g2GD_pos3" "breakAfter"
+        movel(g2GD_pos3, a=0.05, v=0.25, r=0.1)
+        $ 976 "PoseAdd:=GET_CVCORR_POS(g2GD_pos2)"
+        global PoseAdd=GET_CVCORR_POS(g2GD_pos2)
+        $ 977 "PoseAdd" "breakAfter"
+        movel(PoseAdd, a=0.07, v=0.4)
+        $ 978 "設定 DO[6]=オフ"
+        set_standard_digital_out(6, False)
+      else:
+        $ 985 "ElseIf (WorkPosNo≟1)"
+        if ((WorkPosNo == 1)):
+          $ 1000 "set_tcp(CutOffTCP)"
+          set_tcp(CutOffTCP)
+          $ 1001 "sync()"
+          sync()
+          $ 1002 "MoveL"
+          $ 1003 "If文 UseZSlide"
+          if (UseZSlide):
+            $ 1004 "gGD_pos5:=GET_ZSLIDE_POS(g1GD_pos5_NEAR)"
+            global gGD_pos5=GET_ZSLIDE_POS(g1GD_pos5_NEAR)
+          else:
+            $ 1005 "Else" "noBreak"
+            $ 1006 "gGD_pos5:=g1GD_pos5"
+            global gGD_pos5=g1GD_pos5
+          end
+          $ 1007 "DistBKUpper=GET_DIST(CurrPos_p,gGD_pos5)"
+          DistBKUpper=GET_DIST(CurrPos_p,gGD_pos5)
+          $ 1008 "If文 ( not CHECK_DIST_NEAR(CurrPos_p, gGD_pos5, DistBKUpperTh))"
+          if ((  not  CHECK_DIST_NEAR(CurrPos_p, gGD_pos5, DistBKUpperTh))):
+            $ 1009 "gGD_pos5" "breakAfter"
+            movel(gGD_pos5, a=0.038, v=0.25)
+          end
+          $ 1010 "設定 DO[4]=オフ"
+          set_standard_digital_out(4, False)
+          $ 1011 "設定 DO[6]=オン"
+          set_standard_digital_out(6, True)
+          $ 1012 "MoveL"
+          $ 1013 "荷重の設定: k10"
+          set_target_payload(0.100000, [0.000000, -0.135000, 0.225000], [10.000000, 10.000000, 10.000000, 0.000000, 0.000000, 0.000000])
+          $ 1014 "g1GD_pos4" "breakAfter"
+          movel(g1GD_pos4, a=0.05, v=0.25)
+          $ 1015 "g1GD_pos3" "breakAfter"
+          movel(g1GD_pos3, a=0.05, v=0.25)
+          $ 1017 "PoseAdd:=GET_CVCORR_POS(g1GD_pos2)"
+          global PoseAdd=GET_CVCORR_POS(g1GD_pos2)
+          $ 1018 "PoseAdd" "breakAfter"
+          movel(PoseAdd, a=0.05, v=0.25)
+          $ 1019 "設定 DO[6]=オフ"
+          set_standard_digital_out(6, False)
+        end
+      end
+      thread_flag_917 = 1
+    end
+    if (read_input_boolean_register(9)):
+      global thread_handler_917=run Thread_if_917()
+      while (thread_flag_917 == 0):
+        if not(read_input_boolean_register(9)):
+          kill thread_handler_917
+          thread_flag_917 = 2
+        else:
+          sync()
+        end
+      end
+    else:
+      thread_flag_917 = 2
+    end
+    $ 1027 "If文 ( not GPBI_WorkExists)"
+    if ((  not  read_input_boolean_register(9))):
+      $ 1028 "SubPrgResult:=820"
+      global SubPrgResult=820
+      $ 1029 "待機: 999999.0"
+      sleep(999999.0)
+    end
+  end
+  def SUB_107():
+    $ 1030 "SUB_107" "noBreak"
+    $ 1031 "FREE_DRIVE"
+    $ 1032 "freedrive_mode()"
+    freedrive_mode()
+    $ 1033 "荷重の設定: k2"
+    set_target_payload(0.100000, [0.000000, -0.135000, 0.225000], [2.000000, 2.000000, 2.000000, 0.000000, 0.000000, 0.000000])
+    $ 1034 "設定"
+    set_tcp(p[0.0,0.0,0.0,0.0,0.0,0.0])
+    $ 1035 "待機: 1.0"
+    sleep(1.0)
+    $ 1036 "end_freedrive_mode()"
+    end_freedrive_mode()
+    $ 1037 "CV_CORR_RZ"
+    $ 1038 "If文 UseCVCorr"
+    if (UseCVCorr):
+      $ 1039 "設定"
+      set_tcp(p[0.0,0.09,0.42,0.0,0.0,0.0])
+      $ 1040 "sync()"
+      sync()
+      $ 1041 "CurrPos_p=get_actual_tcp_pose()"
+      CurrPos_p= get_actual_tcp_pose ()
+      $ 1042 "CurrposAligned:=p[0,0,0,0,0,0]"
+      global CurrposAligned=p[0,0,0,0,0,0]
+      $ 1043 "CurrposAligned:=GET_ALIGNED_TCP(CurrposAligned)"
+      global CurrposAligned=GET_ALIGNED_TCP(CurrposAligned)
+      $ 1044 "GET_CVCORR_VALUE(CurrposAligned)"
+      GET_CVCORR_VALUE(CurrposAligned)
+    end
+  end
+  def SUB_108():
+    $ 1045 "SUB_108" "noBreak"
+    $ 1046 "If文 UseCVCorr and UseCVCorrCam"
+    if (UseCVCorr  and  UseCVCorrCam):
+      $ 1047 "JOIN_THREAD_ROVI(thrd108)"
+      JOIN_THREAD_ROVI(thrd108)
+      $ 1048 "If文 THREAD_ROVI_ERR≠0"
+      if (THREAD_ROVI_ERR != 0):
+        $ 1049 "ROVI_RECIPE"
+        $ 1050 "If文 (not ROVI_RECIPE(GPII_WorkNo+WorkNoCV))"
+        if ((not ROVI_RECIPE(read_input_integer_register(2)+WorkNoCV))):
+          $ 1051 "SubPrgResult:=rovi_err"
+          global SubPrgResult=rovi_err
+          $ 1052 "待機: 999999.0"
+          sleep(999999.0)
+        end
+        $ 1053 "ROVI_RESET"
+        $ 1054 "If文 (not ROVI_RESET())"
+        if ((not ROVI_RESET())):
+          $ 1055 "SubPrgResult:=rovi_err"
+          global SubPrgResult=rovi_err
+          $ 1056 "待機: 999999.0"
+          sleep(999999.0)
+        end
+        $ 1057 "ROVI_CAPTURE"
+        $ 1058 "If文 ( not ROVI_CAPTURE())"
+        if ((  not  ROVI_CAPTURE())):
+          $ 1059 "SubPrgResult:=rovi_err"
+          global SubPrgResult=rovi_err
+          $ 1060 "待機: 999999.0"
+          sleep(999999.0)
+        end
+        $ 1061 "ROVI_SOLVE"
+        $ 1062 "Y2:=ROVI_SOLVE()"
+        global Y2=ROVI_SOLVE()
+        $ 1063 "If文 (Y2[0]≟10000.)"
+        if ((Y2[0] == 10000.)):
+          $ 1064 "SubPrgResult:=824"
+          global SubPrgResult=824
+          $ 1065 "待機: 999999.0"
+          sleep(999999.0)
+        end
+      end
+      $ 1066 "CutOffTCP:=pose_trans(Y2, get_tcp_offset())"
+      global CutOffTCP= pose_trans (Y2, get_tcp_offset())
+    end
+  end
+  def SUB_109():
+    $ 1067 "SUB_109" "noBreak"
+    $ 1068 "If文 CHECK_ALLOW_GO_HOME(2) or CHECK_ALLOW_GO_HOME(3)"
+    if (CHECK_ALLOW_GO_HOME(2)  or  CHECK_ALLOW_GO_HOME(3)):
+      $ 1069 "If文 GPBI_WorkExists and GPBI_BLLoad0"
+      if (read_input_boolean_register(9)  and  read_input_boolean_register(8)):
+        $ 1070 "設定"
+        set_tcp(p[0.0,0.09,0.42,1.894,0.0,0.0])
+        $ 1071 "荷重の設定: k2"
+        set_target_payload(0.100000, [0.000000, -0.135000, 0.225000], [2.000000, 2.000000, 2.000000, 0.000000, 0.000000, 0.000000])
+        $ 1072 "ROVI_RECIPE"
+        $ 1073 "If文 (not ROVI_RECIPE(GPII_WorkNo+WorkNoTL))"
+        if ((not ROVI_RECIPE(read_input_integer_register(2)+WorkNoTL))):
+          $ 1074 "SubPrgResult:=rovi_err"
+          global SubPrgResult=rovi_err
+          $ 1075 "待機: 999999.0"
+          sleep(999999.0)
+        end
+        $ 1076 "ROVI_RESET"
+        $ 1077 "If文 (not ROVI_RESET())"
+        if ((not ROVI_RESET())):
+          $ 1078 "SubPrgResult:=rovi_err"
+          global SubPrgResult=rovi_err
+          $ 1079 "待機: 999999.0"
+          sleep(999999.0)
+        end
+        $ 1080 "設定 GPBO_BLStop=HI:Pulse 1.0"
+        thread SinglePulse667():
+          write_output_boolean_register(14, True)
+          sleep(1.0)
+          write_output_boolean_register(14, False)
+        end
+        singlePulse667 = run SinglePulse667()
+        $ 1081 "ROVI_CAPTURE"
+        $ 1082 "force_mode_set_damping(0)"
+        force_mode_set_damping(0)
+        $ 1083 "force_mode_set_gain_scaling(0.5)"
+        force_mode_set_gain_scaling(0.5)
+        $ 1084 "待機: 0.02"
+        sleep(0.02)
+        $ 1085 "zero_ftsensor()"
+        zero_ftsensor()
+        $ 1086 "フォース"
+        sleep(0.02)
+        zero_ftsensor()
+        force_mode(tool_pose(), [0, 0, 0, 1, 0, 0], [0.0, 30.0, 0.0, 5.0, 10.0, 0.0], 2, [0.1, 0.1, 0.1, 0.08726646259971647, 0.3490658503988659, 0.3490658503988659])
+        $ 1087 "forceON:= True " "noBreak"
+        global forceON=  True  
+        $ 1088 "ループ forceON" "noBreak"
+        while (forceON):
+          $ 1089 "If文 TCPForceTL[3]<-2" "noBreak"
+          global thread_flag_1089=0
+          thread Thread_if_1089():
+            $ 1090 "待機: 1.0" "noBreak"
+            sleep(1.0)
+            $ 1091 "forceON:= False " "noBreak"
+            global forceON=  False  
+            thread_flag_1089 = 1
+          end
+          if (TCPForceTL[3]<-2):
+            global thread_handler_1089=run Thread_if_1089()
+            while (thread_flag_1089 == 0):
+              if not(TCPForceTL[3]<-2):
+                kill thread_handler_1089
+                thread_flag_1089 = 2
+              else:
+                sync()
+              end
+            end
+          else:
+            thread_flag_1089 = 2
+          end
+          $ 1092 "待機: 0.1" "noBreak"
+          sleep(0.1)
+        end
+        end_force_mode()
+        stopl(5.0)
+        $ 1093 "待機: 3.0"
+        sleep(3.0)
+        $ 1094 "force_mode_set_gain_scaling(1)"
+        force_mode_set_gain_scaling(1)
+        $ 1095 "force_mode_set_damping(0)"
+        force_mode_set_damping(0)
+        $ 1096 "If文 ( not ROVI_CAPTURE())"
+        if ((  not  ROVI_CAPTURE())):
+          $ 1097 "SubPrgResult:=rovi_err"
+          global SubPrgResult=rovi_err
+          $ 1098 "待機: 999999.0"
+          sleep(999999.0)
+        end
+        $ 1099 "ROVI_SOLVE"
+        $ 1100 "Y2:=ROVI_SOLVE()"
+        global Y2=ROVI_SOLVE()
+        $ 1101 "If文 (Y2[0]≟10000.)"
+        if ((Y2[0] == 10000.)):
+          $ 1102 "SubPrgResult:=rovi_err"
+          global SubPrgResult=rovi_err
+          $ 1103 "待機: 999999.0"
+          sleep(999999.0)
+        end
+        $ 1104 "荷重の設定: k10"
+        set_target_payload(0.100000, [0.000000, -0.135000, 0.225000], [10.000000, 10.000000, 10.000000, 0.000000, 0.000000, 0.000000])
+        $ 1105 "UF:=Y2"
+        global UF=Y2
+        $ 1106 "MoveL"
+        $ 1107 "待機: 1.0"
+        sleep(1.0)
+        $ 1108 "gCV_11_M" "breakAfter"
+        set_tcp(p[0.0,0.09,0.42,0.0,0.0,0.0])
+        movel(pose_trans(UF, gCV_11_M), a=0.07, v=0.2)
+        $ 1109 "gCV_12_M" "breakAfter"
+        set_tcp(p[0.0,0.09,0.42,0.0,0.0,0.0])
+        movel(pose_trans(UF, gCV_12_M), a=0.07, v=0.2)
+        $ 1110 "MoveL"
+        $ 1111 "gCV_13_M" "breakAfter"
+        set_tcp(p[0.0,0.09,0.42,0.0,0.0,0.0])
+        movel(pose_trans(UF, gCV_13_M), a=0.03, v=0.03)
+        $ 1112 "gCV_14_M" "breakAfter"
+        set_tcp(p[0.0,0.09,0.42,0.0,0.0,0.0])
+        movel(pose_trans(UF, gCV_14_M), a=0.07, v=0.2)
+        $ 1113 "設定 GPBO_BLStart=HI:Pulse 1.0"
+        thread SinglePulse668():
+          write_output_boolean_register(15, True)
+          sleep(1.0)
+          write_output_boolean_register(15, False)
+        end
+        singlePulse668 = run SinglePulse668()
+      end
+    end
+  end
+  def SUB_120():
+    $ 1114 "SUB_120" "noBreak"
+    $ 1115 "If文 GPBI_WorkExists"
+    global thread_flag_1115=0
+    thread Thread_if_1115():
+      $ 1116 "TRANSFER"
+      $ 1117 "set_tcp(CutOffTCP)"
+      set_tcp(CutOffTCP)
+      $ 1118 "MoveL"
+      $ 1119 "荷重の設定: k10"
+      set_target_payload(0.100000, [0.000000, -0.135000, 0.225000], [10.000000, 10.000000, 10.000000, 0.000000, 0.000000, 0.000000])
+      $ 1120 "g2GD_pos1" "breakAfter"
+      movel(g2GD_pos1, a=0.03, v=0.15)
+      $ 1121 "待機: 0.5"
+      sleep(0.5)
+      thread_flag_1115 = 1
+    end
+    if (read_input_boolean_register(9)):
+      global thread_handler_1115=run Thread_if_1115()
+      while (thread_flag_1115 == 0):
+        if not(read_input_boolean_register(9)):
+          kill thread_handler_1115
+          thread_flag_1115 = 2
+        else:
+          sync()
+        end
+      end
+    else:
+      thread_flag_1115 = 2
+    end
+    $ 1122 "If文 ( not GPBI_WorkExists)"
+    if ((  not  read_input_boolean_register(9))):
+      $ 1123 "SubPrgResult:=820"
+      global SubPrgResult=820
+      $ 1124 "待機: 999999.0"
+      sleep(999999.0)
+    end
+  end
+  def SUB_121():
+    $ 1125 "SUB_121" "noBreak"
+    $ 1126 "SET_CV()"
+    SET_CV()
+    $ 1127 "If文 GPBI_WorkExists"
+    global thread_flag_1127=0
+    thread Thread_if_1127():
+      $ 1128 "荷重の設定: k120"
+      set_target_payload(0.100000, [0.000000, -0.135000, 0.225000], [120.000000, 120.000000, 120.000000, 0.000000, 0.000000, 0.000000])
+      $ 1129 "set_tcp(CutOffTCP)"
+      set_tcp(CutOffTCP)
+      $ 1130 "sync()"
+      sync()
+      $ 1131 "MoveL"
+      $ 1133 "PoseAdd:=GET_CVCORR_POS(gCV_2_M)"
+      global PoseAdd=GET_CVCORR_POS(gCV_2_M)
+      $ 1134 "PoseAdd" "breakAfter"
+      movel(pose_trans(CV, PoseAdd), a=0.03, v=0.25)
+      $ 1138 "待機 GPBI_AllowGoCV=HI"
+      while (read_input_boolean_register(12) == False):
+        sync()
+      end
+      $ 1139 "ポップアップ: stop"
+      popup("stop", "メッセージ", False, False, blocking=True)
+      $ 1140 "MoveL"
+      $ 1142 "PoseAdd:=GET_CVCORR_POS(gCV_1_M)"
+      global PoseAdd=GET_CVCORR_POS(gCV_1_M)
+      $ 1143 "PoseAdd" "breakAfter"
+      movel(pose_trans(CV, PoseAdd), a=0.07, v=0.3)
+      $ 1144 "設定"
+      set_tcp(p[0.0,0.09,0.42,0.0,0.0,0.0])
+      $ 1145 "ポップアップ: stop"
+      popup("stop", "メッセージ", False, False, blocking=True)
+      thread_flag_1127 = 1
+    end
+    if (read_input_boolean_register(9)):
+      global thread_handler_1127=run Thread_if_1127()
+      while (thread_flag_1127 == 0):
+        if not(read_input_boolean_register(9)):
+          kill thread_handler_1127
+          thread_flag_1127 = 2
+        else:
+          sync()
+        end
+      end
+    else:
+      thread_flag_1127 = 2
+    end
+    $ 1156 "設定"
+    set_tcp(p[0.0,0.09,0.42,0.0,0.0,0.0])
+    $ 1157 "If文 ( not GPBI_WorkExists)"
+    if ((  not  read_input_boolean_register(9))):
+      $ 1158 "stopl(1.2)"
+      stopl(1.2)
+      $ 1159 "SubPrgResult:=820"
+      global SubPrgResult=820
+      $ 1160 "待機: 999999.0"
+      sleep(999999.0)
+    end
+  end
+  def SUB_122():
+    $ 1161 "SUB_122" "noBreak"
+    $ 1162 "SET_CV()"
+    SET_CV()
+    $ 1163 "設定 GPBO_BLStart=HI:Pulse 1.0"
+    thread SinglePulse669():
+      write_output_boolean_register(15, True)
+      sleep(1.0)
+      write_output_boolean_register(15, False)
+    end
+    singlePulse669 = run SinglePulse669()
+    $ 1164 "荷重の設定: k05"
+    set_target_payload(0.100000, [0.000000, -0.135000, 0.225000], [0.500000, 0.500000, 0.500000, 0.000000, 0.000000, 0.000000])
+    $ 1165 "ForceStartZ:=CurrPos[2]"
+    global ForceStartZ=CurrPos[2]
+    $ 1166 "tm_landed: リセット"
+    tm_landed = 0
+    $ 1167 "tm_landed: 起動"
+    tm_landed_is_counting = True
+    $ 1168 "設定 DO[5]=オン"
+    set_standard_digital_out(5, True)
+    $ 1169 "フォース"
+    sleep(0.02)
+    zero_ftsensor()
+    force_mode(CV, [1, 1, 1, 0, 1, 0], [0.0, 0.0, -40.0, 0.0, 0.0, 0.0], 2, [0.005, 0.005, 0.02, 0.3490658503988659, 0.03490658503988659, 0.3490658503988659])
+    $ 1170 "待機 GPII_TMLanded<tm_landed or GPBI_BLLoad0 or CurrPos[2]<ForceStartZ-UnloadZ" "noBreak"
+    while (not(read_input_integer_register(14)<tm_landed  or  read_input_boolean_register(8)  or  CurrPos[2]<ForceStartZ-UnloadZ)):
+      sync()
+    end
+    $ 1171 "待機: 0.5" "noBreak"
+    sleep(0.5)
+    end_force_mode()
+    stopl(5.0)
+    $ 1172 "設定 DO[5]=オフ"
+    set_standard_digital_out(5, False)
+    $ 1173 "end_force_mode()"
+    end_force_mode()
+    $ 1174 "tm_landed: 停止"
+    tm_landed_is_counting = False
+    $ 1175 "If文 ( not GPBI_BLLoad0)"
+    if ((  not  read_input_boolean_register(8))):
+      $ 1176 "SubPrgResult:=824"
+      global SubPrgResult=824
+      $ 1177 "待機: 999999.0"
+      sleep(999999.0)
+    end
+    $ 1178 "荷重の設定: k10"
+    set_target_payload(0.100000, [0.000000, -0.135000, 0.225000], [10.000000, 10.000000, 10.000000, 0.000000, 0.000000, 0.000000])
+    $ 1179 "MoveL"
+    $ 1180 "待機: 1.0"
+    sleep(1.0)
+    $ 1181 "gCV_11_M" "breakAfter"
+    set_tcp(p[0.0,0.09,0.42,0.0,0.0,0.0])
+    movel(pose_trans(CV, gCV_11_M), a=0.03, v=0.03)
+    $ 1182 "gCV_12_M" "breakAfter"
+    set_tcp(p[0.0,0.09,0.42,0.0,0.0,0.0])
+    movel(pose_trans(CV, gCV_12_M), a=0.07, v=0.2)
+    $ 1183 "設定 GPBO_Released=HI:Pulse 3.0"
+    thread SinglePulse670():
+      write_output_boolean_register(17, True)
+      sleep(3.0)
+      write_output_boolean_register(17, False)
+    end
+    singlePulse670 = run SinglePulse670()
+    $ 1184 "MoveL"
+    $ 1185 "gCV_13_M" "breakAfter"
+    set_tcp(p[0.0,0.09,0.42,0.0,0.0,0.0])
+    movel(pose_trans(CV, gCV_13_M), a=0.14, v=0.5)
+    $ 1186 "gCV_14_M" "breakAfter"
+    set_tcp(p[0.0,0.09,0.42,0.0,0.0,0.0])
+    movel(pose_trans(CV, gCV_14_M), a=0.14, v=0.5)
+    $ 1187 "荷重の設定: k10"
+    set_target_payload(0.100000, [0.000000, -0.135000, 0.225000], [10.000000, 10.000000, 10.000000, 0.000000, 0.000000, 0.000000])
+  end
+  def SUB_141():
+    $ 1188 "SUB_141" "noBreak"
+    $ 1189 "INITIALIZE"
+    $ 1190 "荷重の設定: k10"
+    set_target_payload(0.100000, [0.000000, -0.135000, 0.225000], [10.000000, 10.000000, 10.000000, 0.000000, 0.000000, 0.000000])
+    $ 1191 "pBucket[WorkPosNo]=p[0.,0.,0.,0.,0.,0.]"
+    pBucket[WorkPosNo]=p[0.,0.,0.,0.,0.,0.]
+    $ 1192 "If文 (WorkPosNo≟0)"
+    if ((WorkPosNo == 0)):
+      $ 1193 "GD_pos4:=Capt_2BK_pos1"
+      global GD_pos4=Capt_2BK_pos1
+      $ 1194 "GD_pos5:=Capt_2BK_pos2"
+      global GD_pos5=Capt_2BK_pos2
+      $ 1195 "Capt_BK_L:=Capt_2BK_L"
+      global Capt_BK_L=Capt_2BK_L
+      $ 1196 "Capt_BK_R:=Capt_2BK_R"
+      global Capt_BK_R=Capt_2BK_R
+    else:
+      $ 1197 "ElseIf (WorkPosNo≟1)"
+      if ((WorkPosNo == 1)):
+        $ 1198 "GD_pos4:=Capt_1BK_pos1"
+        global GD_pos4=Capt_1BK_pos1
+        $ 1199 "GD_pos5:=Capt_1BK_pos2"
+        global GD_pos5=Capt_1BK_pos2
+        $ 1200 "Capt_BK_L:=Capt_1BK_L"
+        global Capt_BK_L=Capt_1BK_L
+        $ 1201 "Capt_BK_R:=Capt_1BK_R"
+        global Capt_BK_R=Capt_1BK_R
+      end
+    end
+    $ 1202 "HOME"
+    $ 1207 "ROVI_RECIPE"
+    $ 1208 "If文 ( not ROVI_RECIPE(GPII_BucketNo))"
+    if ((  not  ROVI_RECIPE(read_input_integer_register(3)))):
+      $ 1209 "SubPrgResult:=rovi_err"
+      global SubPrgResult=rovi_err
+      $ 1210 "待機: 999999.0"
+      sleep(999999.0)
+    end
+    $ 1211 "ROVI_RESET"
+    $ 1212 "If文 ( not ROVI_RESET())"
+    if ((  not  ROVI_RESET())):
+      $ 1213 "SubPrgResult:=rovi_err"
+      global SubPrgResult=rovi_err
+      $ 1214 "待機: 999999.0"
+      sleep(999999.0)
+    end
+    $ 1215 "ROVI_CAPTURE_1"
+    $ 1216 "MoveL"
+    $ 1217 "Capt_BK_L" "breakAfter"
+    set_tcp(p[0.0,0.09,0.42,0.0,0.0,0.0])
+    movel(Capt_BK_L, a=0.14, v=0.25)
+    $ 1218 "待機: 1.0"
+    sleep(1.0)
+    $ 1219 "If文 ( not ROVI_CAPTURE())"
+    if ((  not  ROVI_CAPTURE())):
+      $ 1220 "SubPrgResult:=rovi_err"
+      global SubPrgResult=rovi_err
+      $ 1221 "待機: 999999.0"
+      sleep(999999.0)
+    end
+    $ 1222 "ROVI_CAPTURE_2"
+    $ 1223 "MoveL"
+    $ 1224 "Capt_BK_R" "breakAfter"
+    set_tcp(p[0.0,0.09,0.42,0.0,0.0,0.0])
+    movel(Capt_BK_R, a=0.14, v=0.5)
+    $ 1225 "待機: 1.0"
+    sleep(1.0)
+    $ 1226 "If文 ( not ROVI_CAPTURE())"
+    if ((  not  ROVI_CAPTURE())):
+      $ 1227 "SubPrgResult:=rovi_err"
+      global SubPrgResult=rovi_err
+      $ 1228 "待機: 999999.0"
+      sleep(999999.0)
+    end
+    $ 1229 "ROVI_SOLVE"
+    $ 1230 "Y2:=ROVI_SOLVE()"
+    global Y2=ROVI_SOLVE()
+    $ 1231 "If文 (Y2[0]≟10000.)"
+    if ((Y2[0] == 10000.)):
+      $ 1232 "SubPrgResult:=rovi_err"
+      global SubPrgResult=rovi_err
+      $ 1233 "待機: 999999.0"
+      sleep(999999.0)
+    end
+    $ 1234 "ROVI_PARAM"
+    $ 1235 "If文  not ROVI_PARAM(BKWidth_Name)"
+    if (  not  ROVI_PARAM(BKWidth_Name)):
+      $ 1236 "SubPrgResult:=rovi_err"
+      global SubPrgResult=rovi_err
+      $ 1237 "待機: 999999.0"
+      sleep(999999.0)
+    end
+    $ 1238 "BKWidth_Value[WorkPosNo]=Y8"
+    BKWidth_Value[WorkPosNo]=Y8
+    $ 1239 "HOME"
+  end
+  def SUB_142():
+    $ 1243 "SUB_142" "noBreak"
+    $ 1244 "INITIALIZE"
+    $ 1245 "荷重の設定: k10"
+    set_target_payload(0.100000, [0.000000, -0.135000, 0.225000], [10.000000, 10.000000, 10.000000, 0.000000, 0.000000, 0.000000])
+    $ 1246 "ROVI_RECIPE"
+    $ 1247 "If文 ( not ROVI_RECIPE(GPII_ConveyorNo))"
+    if ((  not  ROVI_RECIPE(read_input_integer_register(1)))):
+      $ 1248 "SubPrgResult:=rovi_err"
+      global SubPrgResult=rovi_err
+      $ 1249 "待機: 999999.0"
+      sleep(999999.0)
+    end
+    $ 1250 "ROVI_RESET"
+    $ 1251 "If文 ( not ROVI_RESET())"
+    if ((  not  ROVI_RESET())):
+      $ 1252 "SubPrgResult:=rovi_err"
+      global SubPrgResult=rovi_err
+      $ 1253 "待機: 999999.0"
+      sleep(999999.0)
+    end
+    $ 1254 "ROVI_CAPTURE"
+    $ 1255 "MoveL"
+    $ 1256 "Capt_CV_M" "breakAfter"
+    set_tcp(p[0.0,0.09,0.42,0.0,0.0,0.0])
+    movel(Capt_CV_M, a=0.07, v=0.2)
+    $ 1257 "待機: 2.0"
+    sleep(2.0)
+    $ 1258 "If文 ( not ROVI_CAPTURE())"
+    if ((  not  ROVI_CAPTURE())):
+      $ 1259 "SubPrgResult:=rovi_err"
+      global SubPrgResult=rovi_err
+      $ 1260 "待機: 999999.0"
+      sleep(999999.0)
+    end
+    $ 1262 "ROVI_SOLVE"
+    $ 1263 "Y2:=ROVI_SOLVE()"
+    global Y2=ROVI_SOLVE()
+    $ 1264 "If文 (Y2[0]≟10000.)"
+    if ((Y2[0] == 10000.)):
+      $ 1265 "SubPrgResult:=rovi_err"
+      global SubPrgResult=rovi_err
+      $ 1266 "待機: 999999.0"
+      sleep(999999.0)
+    end
+  end
+  def SUB_143():
+    $ 1267 "SUB_143" "noBreak"
+    $ 1268 "SET_BUCKET_DEF()"
+    SET_BUCKET_DEF()
+    $ 1269 "ROVI_RESET"
+    $ 1270 "If文 (not ROVI_RESET())"
+    if ((not ROVI_RESET())):
+      $ 1271 "SubPrgResult:=rovi_err"
+      global SubPrgResult=rovi_err
+      $ 1272 "待機: 999999.0"
+      sleep(999999.0)
+    end
+    $ 1273 "ROVI_CAPTURE_1"
+    $ 1274 "BucketUpperPos:=GET_BUCKET_UPPER(1)"
+    global BucketUpperPos=GET_BUCKET_UPPER(1)
+    $ 1275 "MoveL"
+    $ 1276 "BucketUpperPos" "breakAfter"
+    set_tcp(p[0.0,0.09,0.42,0.0,0.0,0.0])
+    movel(pose_trans(Bucket, BucketUpperPos), a=0.14, v=0.25)
+    $ 1277 "待機: 1.0"
+    sleep(1.0)
+    $ 1278 "If文 ( not ROVI_CAPTURE())"
+    if ((  not  ROVI_CAPTURE())):
+      $ 1279 "SubPrgResult:=rovi_err"
+      global SubPrgResult=rovi_err
+      $ 1280 "待機: 999999.0"
+      sleep(999999.0)
+    end
+    $ 1281 "ROVI_CAPTURE_2"
+    $ 1282 "BucketUpperPos:=GET_BUCKET_UPPER(2)"
+    global BucketUpperPos=GET_BUCKET_UPPER(2)
+    $ 1283 "MoveL"
+    $ 1284 "BucketUpperPos" "breakAfter"
+    set_tcp(p[0.0,0.09,0.42,0.0,0.0,0.0])
+    movel(pose_trans(Bucket, BucketUpperPos), a=0.14, v=0.25)
+    $ 1285 "待機: 1.0"
+    sleep(1.0)
+    $ 1286 "If文 ( not ROVI_CAPTURE())"
+    if ((  not  ROVI_CAPTURE())):
+      $ 1287 "SubPrgResult:=rovi_err"
+      global SubPrgResult=rovi_err
+      $ 1288 "待機: 999999.0"
+      sleep(999999.0)
+    end
+    $ 1289 "JUDGEMENT"
+    $ 1290 "If文 (Y1[0]≟0)"
+    if ((Y1[0] == 0)):
+      $ 1291 "SubPrgResult:=990"
+      global SubPrgResult=990
+      $ 1292 "待機: 999999.0"
+      sleep(999999.0)
+    end
+    $ 1293 "CrankDepth:=(-1)*Y1[1]/1000.0"
+    global CrankDepth=(-1)*Y1[1]/1000.0
+    $ 1294 "CaptRowNo:=1+floor((CrankDepth-CrankDepthFull)/CaptStepZ)"
+    global CaptRowNo=1+floor((CrankDepth-CrankDepthFull)/CaptStepZ)
+    $ 1295 "If文 (CaptRowNo<1)"
+    if ((CaptRowNo<1)):
+      $ 1296 "CaptRowNo:=1"
+      global CaptRowNo=1
+    end
+    $ 1297 "設定 GPIO_CaptRowNo=CaptRowNo"
+    write_output_integer_register(20, CaptRowNo)
+  end
+  def SUB_161():
+    $ 1298 "SUB_161" "noBreak"
+    $ 1299 "FREE_DRIVE"
+    $ 1300 "freedrive_mode()"
+    freedrive_mode()
+    $ 1301 "荷重の設定: k2"
+    set_target_payload(0.100000, [0.000000, -0.135000, 0.225000], [2.000000, 2.000000, 2.000000, 0.000000, 0.000000, 0.000000])
+    $ 1302 "設定"
+    set_tcp(p[0.0,0.0,0.0,0.0,0.0,0.0])
+    $ 1303 "待機: 2.5"
+    sleep(2.5)
+    $ 1304 "end_freedrive_mode()"
+    end_freedrive_mode()
+    $ 1305 "荷重の設定: k05"
+    set_target_payload(0.100000, [0.000000, -0.135000, 0.225000], [0.500000, 0.500000, 0.500000, 0.000000, 0.000000, 0.000000])
+    $ 1306 "ForceStartZ:=CurrPos[2]"
+    global ForceStartZ=CurrPos[2]
+    $ 1307 "フォース"
+    sleep(0.02)
+    zero_ftsensor()
+    force_mode(p[0.0,0.0,0.0,0.0,0.0,0.0], [1, 1, 1, 1, 1, 1], [0.0, 0.0, -40.0, 0.0, 0.0, 0.0], 2, [0.005, 0.005, 0.015, 0.03490658503988659, 0.03490658503988659, 0.03490658503988659])
+    $ 1308 "待機 CurrPos[2]<ForceStartZ-0.05" "noBreak"
+    while (not(CurrPos[2]<ForceStartZ-0.05)):
+      sync()
+    end
+    $ 1309 "待機: 1.0" "noBreak"
+    sleep(1.0)
+    $ 1310 "end_force_mode()" "noBreak"
+    end_force_mode()
+    end_force_mode()
+    stopl(5.0)
+    $ 1311 "GO HOME"
+    $ 1312 "If文 (WorkPosNo≟0)"
+    if ((WorkPosNo == 0)):
+      $ 1313 "荷重の設定: k05"
+      set_target_payload(0.100000, [0.000000, -0.135000, 0.225000], [0.500000, 0.500000, 0.500000, 0.000000, 0.000000, 0.000000])
+      $ 1314 "ForceStartX:=CurrPos[0]"
+      global ForceStartX=CurrPos[0]
+      $ 1315 "MoveL"
+      $ 1316 "var_4:=pose_trans(CurrPos, TCP3100TL)"
+      global var_4= pose_trans (CurrPos, TCP3100TL)
+      $ 1317 "var_5:=p[0.,0.,-0.034,0.,0.,0.]"
+      global var_5=p[0.,0.,-0.034,0.,0.,0.]
+      $ 1318 "var_6:=pose_sub(pose_trans(var_4,var_5),var_4)"
+      global var_6= pose_sub (pose_trans(var_4,var_5),var_4)
+      $ 1319 "var_6" "breakAfter"
+      set_tcp(p[0.0,0.09,0.42,0.0,0.0,0.0])
+      movel(var_6, a=0.01, v=0.01)
+      $ 1320 "荷重の設定: k120"
+      set_target_payload(0.100000, [0.000000, -0.135000, 0.225000], [120.000000, 120.000000, 120.000000, 0.000000, 0.000000, 0.000000])
+      $ 1321 "MoveL"
+      $ 1322 "g2GD_pos4" "breakAfter"
+      set_tcp(p[0.0,0.09,0.42,0.0,0.0,0.0])
+      movel(g2GD_pos4, a=0.03, v=0.25)
+      $ 1323 "MoveL"
+      $ 1324 "荷重の設定: k10"
+      set_target_payload(0.100000, [0.000000, -0.135000, 0.225000], [10.000000, 10.000000, 10.000000, 0.000000, 0.000000, 0.000000])
+      $ 1325 "g2GD_pos5" "breakAfter"
+      set_tcp(p[0.0,0.09,0.42,0.0,0.0,0.0])
+      movel(g2GD_pos5, a=0.14, v=0.4)
+    else:
+      $ 1326 "ElseIf (WorkPosNo≟1)"
+      if ((WorkPosNo == 1)):
+        $ 1327 "If文 (is_popup)"
+        if ((is_popup)):
+          $ 1328 "ポップアップ: 1GD?"
+          popup("1GD?", "メッセージ", False, False, blocking=True)
+        end
+        $ 1329 "荷重の設定: k05"
+        set_target_payload(0.100000, [0.000000, -0.135000, 0.225000], [0.500000, 0.500000, 0.500000, 0.000000, 0.000000, 0.000000])
+        $ 1330 "ForceStartX:=CurrPos[0]"
+        global ForceStartX=CurrPos[0]
+        $ 1331 "MoveL"
+        $ 1332 "var_4:=pose_trans(CurrPos, TCP3100TL)"
+        global var_4= pose_trans (CurrPos, TCP3100TL)
+        $ 1333 "var_5:=p[0.,0.,-0.034,0.,0.,0.]"
+        global var_5=p[0.,0.,-0.034,0.,0.,0.]
+        $ 1334 "var_6:=pose_sub(pose_trans(var_4,var_5),var_4)"
+        global var_6= pose_sub (pose_trans(var_4,var_5),var_4)
+        $ 1335 "var_6" "breakAfter"
+        set_tcp(p[0.0,0.09,0.42,0.0,0.0,0.0])
+        movel(var_6, a=0.01, v=0.01)
+        $ 1336 "荷重の設定: k120"
+        set_target_payload(0.100000, [0.000000, -0.135000, 0.225000], [120.000000, 120.000000, 120.000000, 0.000000, 0.000000, 0.000000])
+        $ 1337 "MoveL"
+        $ 1338 "g1GD_pos3" "breakAfter"
+        set_tcp(p[0.0,0.09,0.42,0.0,0.0,0.0])
+        movel(g1GD_pos3, a=0.07, v=0.25)
+      end
+    end
+  end
+  def SUB_181():
+    $ 1339 "SUB_181" "noBreak"
+    $ 1340 "INITIALIZE"
+    $ 1341 "荷重の設定: k10"
+    set_target_payload(0.100000, [0.000000, -0.135000, 0.225000], [10.000000, 10.000000, 10.000000, 0.000000, 0.000000, 0.000000])
+    $ 1342 "BUCKET"
+    $ 1343 "SET_BUCKET_DEF()"
+    SET_BUCKET_DEF()
+    $ 1344 "BucketUpperPos:=GET_BUCKET_UPPER()"
+    global BucketUpperPos=GET_BUCKET_UPPER()
+    $ 1345 "MoveJ"
+    $ 1346 "BucketUpperPos" "breakAfter"
+    set_tcp(p[0.0,0.09,0.42,0.0,0.0,0.0])
+    movej(pose_trans(Bucket, BucketUpperPos), a=0.3490658503988659, v=0.6981317007977318)
+  end
+  def SUB_3100():
+    $ 1347 "SUB_3100" "noBreak"
+    $ 1348 "ループ"
+    while (True):
+      $ 1349 "Sub3100_Option:=Sub3100_GPII18"
+      global Sub3100_Option=Sub3100_GPII18
+      $ 1350 "If文 (Sub3100_Option≤14)"
+      if ((Sub3100_Option <= 14)):
+        $ 1351 "'MOVE'"
+        # 'MOVE'
+        $ 1352 "If文 GPBI_PrgRun"
+        global thread_flag_1352=0
+        thread Thread_if_1352():
+          $ 1353 "設定 GPBO_PrgRun= True "
+          write_output_boolean_register(6,   True  )
+          $ 1354 "If文 GPBI_BLLoad1"
+          if (read_input_boolean_register(10)):
+            $ 1355 "If文 (1≤Sub3100_Option and Sub3100_Option≤4)"
+            if ((1 <= Sub3100_Option  and  Sub3100_Option <= 4)):
+              $ 1356 "荷重の設定: k10"
+              set_target_payload(0.100000, [0.000000, -0.135000, 0.225000], [10.000000, 10.000000, 10.000000, 0.000000, 0.000000, 0.000000])
+            else:
+              $ 1357 "ElseIf (5≤Sub3100_Option and Sub3100_Option≤6)"
+              if ((5 <= Sub3100_Option  and  Sub3100_Option <= 6)):
+                $ 1358 "荷重の設定: k120"
+                set_target_payload(0.100000, [0.000000, -0.135000, 0.225000], [120.000000, 120.000000, 120.000000, 0.000000, 0.000000, 0.000000])
+              else:
+                $ 1359 "ElseIf (7≤Sub3100_Option and Sub3100_Option≤12)"
+                if ((7 <= Sub3100_Option  and  Sub3100_Option <= 12)):
+                  $ 1360 "荷重の設定: k10"
+                  set_target_payload(0.100000, [0.000000, -0.135000, 0.225000], [10.000000, 10.000000, 10.000000, 0.000000, 0.000000, 0.000000])
+                else:
+                  $ 1361 "ElseIf (13≤Sub3100_Option and Sub3100_Option≤14)"
+                  if ((13 <= Sub3100_Option  and  Sub3100_Option <= 14)):
+                    $ 1362 "荷重の設定: k10"
+                    set_target_payload(0.100000, [0.000000, -0.135000, 0.225000], [10.000000, 10.000000, 10.000000, 0.000000, 0.000000, 0.000000])
+                  end
+                end
+              end
+            end
+          else:
+            $ 1363 "Else" "noBreak"
+            $ 1364 "If文 (1≤Sub3100_Option and Sub3100_Option≤4)"
+            if ((1 <= Sub3100_Option  and  Sub3100_Option <= 4)):
+              $ 1365 "荷重の設定: k10"
+              set_target_payload(0.100000, [0.000000, -0.135000, 0.225000], [10.000000, 10.000000, 10.000000, 0.000000, 0.000000, 0.000000])
+            else:
+              $ 1366 "ElseIf (5≤Sub3100_Option and Sub3100_Option≤6)"
+              if ((5 <= Sub3100_Option  and  Sub3100_Option <= 6)):
+                $ 1367 "荷重の設定: k120"
+                set_target_payload(0.100000, [0.000000, -0.135000, 0.225000], [120.000000, 120.000000, 120.000000, 0.000000, 0.000000, 0.000000])
+              else:
+                $ 1368 "ElseIf (7≤Sub3100_Option and Sub3100_Option≤12)"
+                if ((7 <= Sub3100_Option  and  Sub3100_Option <= 12)):
+                  $ 1369 "荷重の設定: k10"
+                  set_target_payload(0.100000, [0.000000, -0.135000, 0.225000], [10.000000, 10.000000, 10.000000, 0.000000, 0.000000, 0.000000])
+                else:
+                  $ 1370 "ElseIf (13≤Sub3100_Option and Sub3100_Option≤14)"
+                  if ((13 <= Sub3100_Option  and  Sub3100_Option <= 14)):
+                    $ 1371 "荷重の設定: k10"
+                    set_target_payload(0.100000, [0.000000, -0.135000, 0.225000], [10.000000, 10.000000, 10.000000, 0.000000, 0.000000, 0.000000])
+                  end
+                end
+              end
+            end
+          end
+          $ 1372 "ループ"
+          while (True):
+            $ 1373 "Sub3100_Xd:=[0.,0.,0.,0.,0.,0.]"
+            global Sub3100_Xd=[0.,0.,0.,0.,0.,0.]
+            $ 1374 "Sub3100_q:=floor((Sub3100_Option-1) / 2)"
+            global Sub3100_q=floor((Sub3100_Option-1) / 2)
+            $ 1375 "Sub3100_e:=1-((Sub3100_Option-1) % 2)*2"
+            global Sub3100_e=1-((Sub3100_Option-1) % 2)*2
+            $ 1376 "Sub3100_t:=0.5"
+            global Sub3100_t=0.5
+            $ 1377 "If文 (1≤Sub3100_Option and Sub3100_Option≤6)"
+            if ((1 <= Sub3100_Option  and  Sub3100_Option <= 6)):
+              $ 1378 "'1:X+,2:X-,3:Y+,4:Y-,5:Z+,6:Z-'"
+              # '1:X+,2:X-,3:Y+,4:Y-,5:Z+,6:Z-'
+              $ 1379 "Sub3100_Xd[Sub3100_q]=Sub3100_XdV*Sub3100_e"
+              Sub3100_Xd[Sub3100_q]=Sub3100_XdV*Sub3100_e
+              $ 1380 "If文 Sub3100_Option≟5"
+              if (Sub3100_Option == 5):
+                $ 1381 "If文 CurrPos[2]<Sub3100_ZMax"
+                global thread_flag_1381=0
+                thread Thread_if_1381():
+                  $ 1382 "speedl(Sub3100_Xd,Sub3100_a,t=Sub3100_t)"
+                  speedl(Sub3100_Xd,Sub3100_a,t=Sub3100_t)
+                  thread_flag_1381 = 1
+                end
+                if (CurrPos[2]<Sub3100_ZMax):
+                  global thread_handler_1381=run Thread_if_1381()
+                  while (thread_flag_1381 == 0):
+                    if not(CurrPos[2]<Sub3100_ZMax):
+                      kill thread_handler_1381
+                      thread_flag_1381 = 2
+                    else:
+                      sync()
+                    end
+                  end
+                else:
+                  thread_flag_1381 = 2
+                end
+                $ 1383 "stopl(Sub3100_d)"
+                stopl(Sub3100_d)
+              else:
+                $ 1384 "Else" "noBreak"
+                $ 1385 "speedl(Sub3100_Xd,Sub3100_a,t=Sub3100_t)"
+                speedl(Sub3100_Xd,Sub3100_a,t=Sub3100_t)
+              end
+            else:
+              $ 1386 "ElseIf (7≤Sub3100_Option and Sub3100_Option≤12)"
+              if ((7 <= Sub3100_Option  and  Sub3100_Option <= 12)):
+                $ 1387 "'7:RX+,8:RX-,9:RY+,10:RY-,11:RZ+,12:RZ-'"
+                # '7:RX+,8:RX-,9:RY+,10:RY-,11:RZ+,12:RZ-'
+                $ 1388 "Sub3100_Xd[Sub3100_q]=d2r(Sub3100_XdRot)*Sub3100_e"
+                Sub3100_Xd[Sub3100_q]= d2r (Sub3100_XdRot)*Sub3100_e
+                $ 1389 "speedl(Sub3100_Xd,Sub3100_aRot,Sub3100_t)"
+                speedl(Sub3100_Xd,Sub3100_aRot,Sub3100_t)
+              else:
+                $ 1390 "ElseIf (Sub3100_Option≟13 or Sub3100_Option≟14)"
+                if ((Sub3100_Option == 13  or  Sub3100_Option == 14)):
+                  $ 1391 "'13:TZ+,14:TZ-'"
+                  # '13:TZ+,14:TZ-'
+                  $ 1393 "Sub3100_curr:=pose_trans(CurrPos, TCP3100TL)"
+                  global Sub3100_curr= pose_trans (CurrPos, TCP3100TL)
+                  $ 1394 "var_1:=p[0.,0.,0.,0.,0.,0.]"
+                  global var_1=p[0.,0.,0.,0.,0.,0.]
+                  $ 1395 "var_1[Sub3100_q-4]=0.25*Sub3100_e"
+                  var_1[Sub3100_q-4]=0.25*Sub3100_e
+                  $ 1396 "forceON:=pose_sub(pose_trans(Sub3100_curr,var_1),Sub3100_curr)"
+                  global forceON= pose_sub (pose_trans(Sub3100_curr,var_1),Sub3100_curr)
+                  $ 1397 "var_3:=0"
+                  global var_3=0
+                  $ 1398 "ループ6回"
+                  u12523u12540u12503_1 = 0
+                  while (u12523u12540u12503_1 < 6):
+                    $ 1399 "Sub3100_Xd[var_3]=forceON[var_3]"
+                    Sub3100_Xd[var_3]=forceON[var_3]
+                    $ 1400 "var_3:=var_3+1"
+                    global var_3=var_3+1
+                    u12523u12540u12503_1 = u12523u12540u12503_1 + 1
+                  end
+                  $ 1401 "speedl(Sub3100_Xd,Sub3100_a,Sub3100_t)"
+                  speedl(Sub3100_Xd,Sub3100_a,Sub3100_t)
+                end
+              end
+            end
+          end
+          thread_flag_1352 = 1
+        end
+        if (read_input_boolean_register(6)):
+          global thread_handler_1352=run Thread_if_1352()
+          while (thread_flag_1352 == 0):
+            if not(read_input_boolean_register(6)):
+              kill thread_handler_1352
+              thread_flag_1352 = 2
+            else:
+              sync()
+            end
+          end
+        else:
+          thread_flag_1352 = 2
+        end
+        $ 1402 "stopl(Sub3100_d)"
+        stopl(Sub3100_d)
+      else:
+        $ 1403 "ElseIf (Sub3100_Option≤44)"
+        if ((Sub3100_Option <= 44)):
+          $ 1404 "'FORCE'"
+          # 'FORCE'
+          $ 1405 "If文 GPBI_PrgRun"
+          if (read_input_boolean_register(6)):
+            $ 1406 "設定 GPBO_PrgRun= True "
+            write_output_boolean_register(6,   True  )
+            $ 1407 "If文 GPBI_BLLoad1"
+            if (read_input_boolean_register(10)):
+              $ 1408 "If文 (33≤Sub3100_Option and Sub3100_Option≤36)"
+              if ((33 <= Sub3100_Option  and  Sub3100_Option <= 36)):
+                $ 1409 "荷重の設定: k05"
+                set_target_payload(0.100000, [0.000000, -0.135000, 0.225000], [0.500000, 0.500000, 0.500000, 0.000000, 0.000000, 0.000000])
+              else:
+                $ 1410 "ElseIf (37≤Sub3100_Option and Sub3100_Option≤38)"
+                if ((37 <= Sub3100_Option  and  Sub3100_Option <= 38)):
+                  $ 1411 "荷重の設定: k05"
+                  set_target_payload(0.100000, [0.000000, -0.135000, 0.225000], [0.500000, 0.500000, 0.500000, 0.000000, 0.000000, 0.000000])
+                else:
+                  $ 1412 "ElseIf (39≤Sub3100_Option and Sub3100_Option≤44)"
+                  if ((39 <= Sub3100_Option  and  Sub3100_Option <= 44)):
+                    $ 1413 "荷重の設定: k05"
+                    set_target_payload(0.100000, [0.000000, -0.135000, 0.225000], [0.500000, 0.500000, 0.500000, 0.000000, 0.000000, 0.000000])
+                  end
+                end
+              end
+            else:
+              $ 1414 "Else" "noBreak"
+              $ 1415 "If文 (33≤Sub3100_Option and Sub3100_Option≤36)"
+              if ((33 <= Sub3100_Option  and  Sub3100_Option <= 36)):
+                $ 1416 "荷重の設定: k05"
+                set_target_payload(0.100000, [0.000000, -0.135000, 0.225000], [0.500000, 0.500000, 0.500000, 0.000000, 0.000000, 0.000000])
+              else:
+                $ 1417 "ElseIf (37≤Sub3100_Option and Sub3100_Option≤38)"
+                if ((37 <= Sub3100_Option  and  Sub3100_Option <= 38)):
+                  $ 1418 "荷重の設定: k05"
+                  set_target_payload(0.100000, [0.000000, -0.135000, 0.225000], [0.500000, 0.500000, 0.500000, 0.000000, 0.000000, 0.000000])
+                else:
+                  $ 1419 "ElseIf (39≤Sub3100_Option and Sub3100_Option≤44)"
+                  if ((39 <= Sub3100_Option  and  Sub3100_Option <= 44)):
+                    $ 1420 "荷重の設定: k05"
+                    set_target_payload(0.100000, [0.000000, -0.135000, 0.225000], [0.500000, 0.500000, 0.500000, 0.000000, 0.000000, 0.000000])
+                  end
+                end
+              end
+            end
+            $ 1421 "If文 (Sub3100_Option≟33)"
+            if ((Sub3100_Option == 33)):
+              $ 1422 "'33:X+'"
+              # '33:X+'
+              $ 1423 "フォース"
+              sleep(0.02)
+              zero_ftsensor()
+              force_mode(p[0.0,0.0,0.0,0.0,0.0,0.0], [1, 1, 1, 1, 1, 1], [40.0, 0.0, 0.0, 0.0, 0.0, 0.0], 2, [0.01, 0.005, 0.005, 0.03490658503988659, 0.03490658503988659, 0.03490658503988659])
+              $ 1424 "待機 GPBI_PrgRun=LO" "noBreak"
+              while (read_input_boolean_register(6) == True):
+                sync()
+              end
+              end_force_mode()
+              stopl(5.0)
+            else:
+              $ 1425 "ElseIf (Sub3100_Option≟34)"
+              if ((Sub3100_Option == 34)):
+                $ 1426 "'34:X-'"
+                # '34:X-'
+                $ 1427 "フォース"
+                sleep(0.02)
+                zero_ftsensor()
+                force_mode(p[0.0,0.0,0.0,0.0,0.0,0.0], [1, 1, 1, 1, 1, 1], [-40.0, 0.0, 0.0, 0.0, 0.0, 0.0], 2, [0.01, 0.005, 0.005, 0.03490658503988659, 0.03490658503988659, 0.03490658503988659])
+                $ 1428 "待機 GPBI_PrgRun=LO" "noBreak"
+                while (read_input_boolean_register(6) == True):
+                  sync()
+                end
+                end_force_mode()
+                stopl(5.0)
+              else:
+                $ 1429 "ElseIf (Sub3100_Option≟35)"
+                if ((Sub3100_Option == 35)):
+                  $ 1430 "'35:Y+'"
+                  # '35:Y+'
+                  $ 1431 "フォース"
+                  sleep(0.02)
+                  zero_ftsensor()
+                  force_mode(p[0.0,0.0,0.0,0.0,0.0,0.0], [1, 1, 1, 1, 1, 1], [0.0, 40.0, 0.0, 0.0, 0.0, 0.0], 2, [0.005, 0.01, 0.005, 0.03490658503988659, 0.03490658503988659, 0.03490658503988659])
+                  $ 1432 "待機 GPBI_PrgRun=LO" "noBreak"
+                  while (read_input_boolean_register(6) == True):
+                    sync()
+                  end
+                  end_force_mode()
+                  stopl(5.0)
+                else:
+                  $ 1433 "ElseIf (Sub3100_Option≟36)"
+                  if ((Sub3100_Option == 36)):
+                    $ 1434 "'36:Y-'"
+                    # '36:Y-'
+                    $ 1435 "フォース"
+                    sleep(0.02)
+                    zero_ftsensor()
+                    force_mode(p[0.0,0.0,0.0,0.0,0.0,0.0], [1, 1, 1, 1, 1, 1], [0.0, -40.0, 0.0, 0.0, 0.0, 0.0], 2, [0.005, 0.01, 0.005, 0.03490658503988659, 0.03490658503988659, 0.03490658503988659])
+                    $ 1436 "待機 GPBI_PrgRun=LO" "noBreak"
+                    while (read_input_boolean_register(6) == True):
+                      sync()
+                    end
+                    end_force_mode()
+                    stopl(5.0)
+                  else:
+                    $ 1437 "ElseIf (Sub3100_Option≟37)"
+                    if ((Sub3100_Option == 37)):
+                      $ 1438 "'37:Z+'"
+                      # '37:Z+'
+                      $ 1439 "フォース"
+                      sleep(0.02)
+                      zero_ftsensor()
+                      force_mode(p[0.0,0.0,0.0,0.0,0.0,0.0], [1, 1, 1, 1, 1, 1], [0.0, 0.0, 40.0, 0.0, 0.0, 0.0], 2, [0.005, 0.005, 0.01, 0.03490658503988659, 0.03490658503988659, 0.03490658503988659])
+                      $ 1440 "待機 GPBI_PrgRun=LO" "noBreak"
+                      while (read_input_boolean_register(6) == True):
+                        sync()
+                      end
+                      end_force_mode()
+                      stopl(5.0)
+                    else:
+                      $ 1441 "ElseIf (Sub3100_Option≟38)"
+                      if ((Sub3100_Option == 38)):
+                        $ 1442 "'38:Z-'"
+                        # '38:Z-'
+                        $ 1443 "フォース"
+                        sleep(0.02)
+                        zero_ftsensor()
+                        force_mode(p[0.0,0.0,0.0,0.0,0.0,0.0], [1, 1, 1, 1, 1, 1], [0.0, 0.0, -40.0, 0.0, 0.0, 0.0], 2, [0.005, 0.005, 0.01, 0.03490658503988659, 0.03490658503988659, 0.03490658503988659])
+                        $ 1444 "待機 GPBI_PrgRun=LO" "noBreak"
+                        while (read_input_boolean_register(6) == True):
+                          sync()
+                        end
+                        end_force_mode()
+                        stopl(5.0)
+                      else:
+                        $ 1445 "ElseIf (Sub3100_Option≟39)"
+                        if ((Sub3100_Option == 39)):
+                          $ 1446 "'39:RX+'"
+                          # '39:RX+'
+                          $ 1447 "フォース"
+                          sleep(0.02)
+                          zero_ftsensor()
+                          force_mode(p[0.0,0.0,0.0,0.0,0.0,0.0], [1, 1, 1, 1, 1, 1], [0.0, 0.0, 0.0, 40.0, 0.0, 0.0], 2, [0.005, 0.005, 0.005, 0.08726646259971647, 0.03490658503988659, 0.03490658503988659])
+                          $ 1448 "待機 GPBI_PrgRun=LO" "noBreak"
+                          while (read_input_boolean_register(6) == True):
+                            sync()
+                          end
+                          end_force_mode()
+                          stopl(5.0)
+                        else:
+                          $ 1449 "ElseIf (Sub3100_Option≟40)"
+                          if ((Sub3100_Option == 40)):
+                            $ 1450 "'40:RX-'"
+                            # '40:RX-'
+                            $ 1451 "フォース"
+                            sleep(0.02)
+                            zero_ftsensor()
+                            force_mode(p[0.0,0.0,0.0,0.0,0.0,0.0], [1, 1, 1, 1, 1, 1], [0.0, 0.0, 0.0, -40.0, 0.0, 0.0], 2, [0.005, 0.005, 0.005, 0.08726646259971647, 0.03490658503988659, 0.03490658503988659])
+                            $ 1452 "待機 GPBI_PrgRun=LO" "noBreak"
+                            while (read_input_boolean_register(6) == True):
+                              sync()
+                            end
+                            end_force_mode()
+                            stopl(5.0)
+                          else:
+                            $ 1453 "ElseIf (Sub3100_Option≟41)"
+                            if ((Sub3100_Option == 41)):
+                              $ 1454 "'41:RY+'"
+                              # '41:RY+'
+                              $ 1455 "フォース"
+                              sleep(0.02)
+                              zero_ftsensor()
+                              force_mode(p[0.0,0.0,0.0,0.0,0.0,0.0], [1, 1, 1, 1, 1, 1], [0.0, 0.0, 0.0, 0.0, 40.0, 0.0], 2, [0.005, 0.005, 0.005, 0.03490658503988659, 0.08726646259971647, 0.03490658503988659])
+                              $ 1456 "待機 GPBI_PrgRun=LO" "noBreak"
+                              while (read_input_boolean_register(6) == True):
+                                sync()
+                              end
+                              end_force_mode()
+                              stopl(5.0)
+                            else:
+                              $ 1457 "ElseIf (Sub3100_Option≟42)"
+                              if ((Sub3100_Option == 42)):
+                                $ 1458 "'42:RY-'"
+                                # '42:RY-'
+                                $ 1459 "フォース"
+                                sleep(0.02)
+                                zero_ftsensor()
+                                force_mode(p[0.0,0.0,0.0,0.0,0.0,0.0], [1, 1, 1, 1, 1, 1], [0.0, 0.0, 0.0, 0.0, -40.0, 0.0], 2, [0.005, 0.005, 0.005, 0.03490658503988659, 0.08726646259971647, 0.03490658503988659])
+                                $ 1460 "待機 GPBI_PrgRun=LO" "noBreak"
+                                while (read_input_boolean_register(6) == True):
+                                  sync()
+                                end
+                                end_force_mode()
+                                stopl(5.0)
+                              else:
+                                $ 1461 "ElseIf (Sub3100_Option≟43)"
+                                if ((Sub3100_Option == 43)):
+                                  $ 1462 "'43:RZ+'"
+                                  # '43:RZ+'
+                                  $ 1463 "フォース"
+                                  sleep(0.02)
+                                  zero_ftsensor()
+                                  force_mode(p[0.0,0.0,0.0,0.0,0.0,0.0], [1, 1, 1, 1, 1, 1], [0.0, 0.0, 0.0, 0.0, 0.0, 40.0], 2, [0.005, 0.005, 0.005, 0.03490658503988659, 0.03490658503988659, 0.08726646259971647])
+                                  $ 1464 "待機 GPBI_PrgRun=LO" "noBreak"
+                                  while (read_input_boolean_register(6) == True):
+                                    sync()
+                                  end
+                                  end_force_mode()
+                                  stopl(5.0)
+                                else:
+                                  $ 1465 "ElseIf (Sub3100_Option≟44)"
+                                  if ((Sub3100_Option == 44)):
+                                    $ 1466 "'44:RZ-'"
+                                    # '44:RZ-'
+                                    $ 1467 "フォース"
+                                    sleep(0.02)
+                                    zero_ftsensor()
+                                    force_mode(p[0.0,0.0,0.0,0.0,0.0,0.0], [1, 1, 1, 1, 1, 1], [0.0, 0.0, 0.0, 0.0, 0.0, -40.0], 2, [0.005, 0.005, 0.005, 0.03490658503988659, 0.03490658503988659, 0.08726646259971647])
+                                    $ 1468 "待機 GPBI_PrgRun=LO" "noBreak"
+                                    while (read_input_boolean_register(6) == True):
+                                      sync()
+                                    end
+                                    end_force_mode()
+                                    stopl(5.0)
+                                  end
+                                end
+                              end
+                            end
+                          end
+                        end
+                      end
+                    end
+                  end
+                end
+              end
+            end
+          end
+        else:
+          $ 1469 "ElseIf (Sub3100_Option≥90)"
+          if ((Sub3100_Option >= 90)):
+            $ 1470 "'FREEDRIVE'"
+            # 'FREEDRIVE'
+            $ 1471 "If文 GPBI_PrgRun"
+            if (read_input_boolean_register(6)):
+              $ 1472 "設定 GPBO_PrgRun= True "
+              write_output_boolean_register(6,   True  )
+              $ 1473 "If文 GPBI_BLLoad1"
+              if (read_input_boolean_register(10)):
+                $ 1474 "荷重の設定: k05"
+                set_target_payload(0.100000, [0.000000, -0.135000, 0.225000], [0.500000, 0.500000, 0.500000, 0.000000, 0.000000, 0.000000])
+              else:
+                $ 1475 "Else" "noBreak"
+                $ 1476 "荷重の設定: k05"
+                set_target_payload(0.100000, [0.000000, -0.135000, 0.225000], [0.500000, 0.500000, 0.500000, 0.000000, 0.000000, 0.000000])
+              end
+              $ 1477 "If文 (Sub3100_Option≟90)"
+              if ((Sub3100_Option == 90)):
+                $ 1478 "'90:FreeDrive'"
+                # '90:FreeDrive'
+                $ 1479 "freedrive_mode()"
+                freedrive_mode()
+                $ 1480 "待機 GPBI_PrgRun=LO"
+                while (read_input_boolean_register(6) == True):
+                  sync()
+                end
+                $ 1481 "end_freedrive_mode()"
+                end_freedrive_mode()
+              end
+            end
+          end
+        end
+      end
+      $ 1482 "stopl(Sub3100_d)"
+      stopl(Sub3100_d)
+      $ 1483 "待機: 0.01"
+      sleep(0.01)
+      $ 1484 "荷重の設定: k10"
+      set_target_payload(0.100000, [0.000000, -0.135000, 0.225000], [10.000000, 10.000000, 10.000000, 0.000000, 0.000000, 0.000000])
+      $ 1485 "設定 GPBO_PrgRun= False "
+      write_output_boolean_register(6,   False  )
+    end
+  end
+  def SUB_6001():
+    $ 1486 "SUB_6001" "noBreak"
+    $ 1487 "荷重の設定: k10"
+    set_target_payload(0.100000, [0.000000, -0.135000, 0.225000], [10.000000, 10.000000, 10.000000, 0.000000, 0.000000, 0.000000])
+    $ 1488 "If文 ( not ROVI_RESET())"
+    if ((  not  ROVI_RESET())):
+      $ 1489 "SubPrgResult:=rovi_err"
+      global SubPrgResult=rovi_err
+      $ 1490 "待機: 999999.0"
+      sleep(999999.0)
+    end
+    $ 1491 "MoveJ"
+    $ 1492 "CaptPos0" "breakAfter"
+    set_tcp(p[0.0,0.0,0.0,0.0,0.0,0.0])
+    movej(get_inverse_kin(CaptPos0_p, qnear=CaptPos0_q), a=0.2617993877991494, v=0.15707963267948966)
+    $ 1493 "CaptPos:=CaptPos0_p"
+    global CaptPos=CaptPos0_p
+    $ 1494 "ループ (CaptPos[0]≠10000.0)"
+    while ((CaptPos[0] != 10000.0)):
+      $ 1495 "MoveJ"
+      $ 1496 "CaptPos" "breakAfter"
+      set_tcp(p[0.0,0.0,0.0,0.0,0.0,0.0])
+      movej(CaptPos, a=0.2617993877991494, v=0.15707963267948966)
+      $ 1497 "待機: 4.0"
+      sleep(4.0)
+      $ 1498 "If文 ( not ROVI_CAPTURE())"
+      if ((  not  ROVI_CAPTURE())):
+        $ 1499 "SubPrgResult:=rovi_err"
+        global SubPrgResult=rovi_err
+        $ 1500 "待機: 999999.0"
+        sleep(999999.0)
+      end
+      $ 1501 "CaptPos:=ROVI_SOLVE(is_popup=False)"
+      global CaptPos=ROVI_SOLVE(is_popup=False)
+    end
+    $ 1502 "MoveJ"
+    $ 1503 "CaptPos0" "breakAfter"
+    set_tcp(p[0.0,0.0,0.0,0.0,0.0,0.0])
+    movej(get_inverse_kin(CaptPos0_p, qnear=CaptPos0_q), a=0.2617993877991494, v=0.15707963267948966)
+  end
+  def SUB_6101():
+    $ 1504 "SUB_6101" "noBreak"
+    $ 1505 "ROVI_RECIPE"
+    $ 1506 "If文 (not ROVI_RECIPE(GPII_WorkNo))"
+    if ((not ROVI_RECIPE(read_input_integer_register(2)))):
+      $ 1507 "SubPrgResult:=rovi_err"
+      global SubPrgResult=rovi_err
+      $ 1508 "待機: 999999.0"
+      sleep(999999.0)
+    end
+    $ 1509 "ROVI_RESET"
+    $ 1510 "If文 ( not ROVI_RESET())"
+    if ((  not  ROVI_RESET())):
+      $ 1511 "SubPrgResult:=rovi_err"
+      global SubPrgResult=rovi_err
+      $ 1512 "待機: 999999.0"
+      sleep(999999.0)
+    end
+    $ 1513 "ROVI_CAPTURE_1"
+    $ 1514 "MoveJ"
+    $ 1515 "スイッチ文 CheckMST"
+    switch_1 = CheckMST
+    $ 1516 "ケース 0"
+    if (0 == switch_1):
+      $ 1517 "Master_pos" "breakAfter"
+      set_tcp(p[0.0,0.09,0.42,0.0,0.0,0.0])
+      movej(Master_pos, a=0.20943951023931953, v=0.10471975511965977)
+    elif (1 == switch_1):
+      $ 1518 "ケース 1"
+      $ 1519 "Master_pos" "breakAfter"
+      set_tcp(p[0.0,0.09,0.42,0.0,0.0,0.0])
+      movej(Master_pos, a=0.20943951023931953, v=0.10471975511965977)
+    elif (2 == switch_1):
+      $ 1520 "ケース 2"
+      $ 1521 "Master_posL" "breakAfter"
+      set_tcp(p[0.0,0.09,0.42,0.0,0.0,0.0])
+      movej(Master_posL, a=0.20943951023931953, v=0.10471975511965977)
+    elif (3 == switch_1):
+      $ 1522 "ケース 3"
+      $ 1523 "Master_posR" "breakAfter"
+      set_tcp(p[0.0,0.09,0.42,0.0,0.0,0.0])
+      movej(Master_posR, a=0.20943951023931953, v=0.10471975511965977)
+    end
+    $ 1525 "待機: 3.0"
+    sleep(3.0)
+    $ 1526 "If文 ( not ROVI_CAPTURE())"
+    if ((  not  ROVI_CAPTURE())):
+      $ 1527 "SubPrgResult:=rovi_err"
+      global SubPrgResult=rovi_err
+      $ 1528 "待機: 999999.0"
+      sleep(999999.0)
+    end
+  end
+  def SUB_6102RXFF():
+    $ 1698 "SUB_6102RXFF" "noBreak"
+    $ 1699 "荷重の設定: k10"
+    set_target_payload(0.100000, [0.000000, -0.135000, 0.225000], [10.000000, 10.000000, 10.000000, 0.000000, 0.000000, 0.000000])
+    $ 1700 "UF:=ベース_const"
+    global UF=p[0.0,0.0,0.0,0.0,0.0,0.0]
+    $ 1701 "If文 (GPII_CheckMST>0)"
+    if ((read_input_integer_register(23)>0)):
+      $ 1702 "ROVI_SOLVE"
+      $ 1703 "If文 (CandCnt>0)"
+      if ((CandCnt>0)):
+        $ 1704 "Y2:=ROVI_SOLVE()"
+        global Y2=ROVI_SOLVE()
+        $ 1705 "If文 (Y2[0]≟10000.)"
+        if ((Y2[0] == 10000.)):
+          $ 1706 "SubPrgResult:=rovi_err"
+          global SubPrgResult=rovi_err
+          $ 1707 "待機: 999999.0"
+          sleep(999999.0)
+        end
+      end
+      $ 1708 "UF:=Y2"
+      global UF=Y2
+    end
+    $ 1709 "M"
+    $ 1710 "MoveL"
+    $ 1711 "gGD_3_M_RX" "breakAfter"
+    set_tcp(p[0.0,0.09,0.42,1.894,0.0,0.0])
+    movel(pose_trans(UF, gGD_3_M_RX), a=0.07, v=0.12)
+    $ 1712 "待機: 1.0"
+    sleep(1.0)
+    $ 1713 "gGD_2_M_RX" "breakAfter"
+    set_tcp(p[0.0,0.09,0.42,1.894,0.0,0.0])
+    movel(pose_trans(UF, gGD_2_M_RX), a=0.07, v=0.12)
+    $ 1714 "待機: 1.0"
+    sleep(1.0)
+    $ 1715 "設定 GPBO_BLStop=HI:Pulse 1.0"
+    thread SinglePulse671():
+      write_output_boolean_register(14, True)
+      sleep(1.0)
+      write_output_boolean_register(14, False)
+    end
+    singlePulse671 = run SinglePulse671()
+    $ 1716 "ポップアップ: ok?"
+    popup("ok?", "メッセージ", False, False, blocking=True)
+    $ 1717 "tm_6102_01: リセット"
+    tm_6102_01 = 0
+    $ 1718 "tm_6102_01: 起動"
+    tm_6102_01_is_counting = True
+    $ 1759 "tm_6102_01: 停止"
+    tm_6102_01_is_counting = False
+    $ 1760 "設定 GPBO_BLStart=HI:Pulse 1.0"
+    thread SinglePulse672():
+      write_output_boolean_register(15, True)
+      sleep(1.0)
+      write_output_boolean_register(15, False)
+    end
+    singlePulse672 = run SinglePulse672()
+    $ 1761 "待機: 1.0"
+    sleep(1.0)
+    $ 1762 "ポップアップ: ok?"
+    popup("ok?", "メッセージ", False, False, blocking=True)
+    $ 1763 "MoveL"
+    $ 1764 "gGD_2_M_RX" "breakAfter"
+    set_tcp(p[0.0,0.09,0.42,1.894,0.0,0.0])
+    movel(pose_trans(UF, gGD_2_M_RX), a=0.07, v=0.12)
+    $ 1765 "待機: 1.0"
+    sleep(1.0)
+    $ 1766 "gGD_3_M_RX" "breakAfter"
+    set_tcp(p[0.0,0.09,0.42,1.894,0.0,0.0])
+    movel(pose_trans(UF, gGD_3_M_RX), a=0.07, v=0.12)
+    $ 1767 "待機: 1.0"
+    sleep(1.0)
+    $ 1768 "LM"
+    $ 1769 "MoveL"
+    $ 1770 "gGD_3_LM_RX" "breakAfter"
+    set_tcp(p[0.0,0.09,0.42,1.894,0.0,0.0])
+    movel(pose_trans(UF, gGD_3_LM_RX), a=0.07, v=0.12)
+    $ 1771 "待機: 1.0"
+    sleep(1.0)
+    $ 1772 "gGD_2_LM_RX" "breakAfter"
+    set_tcp(p[0.0,0.09,0.42,1.894,0.0,0.0])
+    movel(pose_trans(UF, gGD_2_LM_RX), a=0.07, v=0.12)
+    $ 1773 "待機: 1.0"
+    sleep(1.0)
+    $ 1774 "設定 GPBO_BLStop=HI:Pulse 1.0"
+    thread SinglePulse673():
+      write_output_boolean_register(14, True)
+      sleep(1.0)
+      write_output_boolean_register(14, False)
+    end
+    singlePulse673 = run SinglePulse673()
+    $ 1775 "ポップアップ: ok?"
+    popup("ok?", "メッセージ", False, False, blocking=True)
+    $ 1776 "tm_6102_01: リセット"
+    tm_6102_01 = 0
+    $ 1777 "tm_6102_01: 起動"
+    tm_6102_01_is_counting = True
+    $ 1780 "tm_6102_01: 停止"
+    tm_6102_01_is_counting = False
+    $ 1781 "設定 GPBO_BLStart=HI:Pulse 1.0"
+    thread SinglePulse674():
+      write_output_boolean_register(15, True)
+      sleep(1.0)
+      write_output_boolean_register(15, False)
+    end
+    singlePulse674 = run SinglePulse674()
+    $ 1782 "待機: 1.0"
+    sleep(1.0)
+    $ 1783 "ポップアップ: ok?"
+    popup("ok?", "メッセージ", False, False, blocking=True)
+    $ 1784 "MoveL"
+    $ 1785 "gGD_2_LM_RX" "breakAfter"
+    set_tcp(p[0.0,0.09,0.42,1.894,0.0,0.0])
+    movel(pose_trans(UF, gGD_2_LM_RX), a=0.07, v=0.12)
+    $ 1786 "待機: 1.0"
+    sleep(1.0)
+    $ 1787 "gGD_3_LM_RX" "breakAfter"
+    set_tcp(p[0.0,0.09,0.42,1.894,0.0,0.0])
+    movel(pose_trans(UF, gGD_3_LM_RX), a=0.07, v=0.12)
+    $ 1788 "待機: 1.0"
+    sleep(1.0)
+    $ 1789 "RM"
+    $ 1790 "MoveL"
+    $ 1791 "gGD_3_RM_RX" "breakAfter"
+    set_tcp(p[0.0,0.09,0.42,1.894,0.0,0.0])
+    movel(pose_trans(UF, gGD_3_RM_RX), a=0.07, v=0.12)
+    $ 1792 "待機: 1.0"
+    sleep(1.0)
+    $ 1793 "gGD_2_RM_RX" "breakAfter"
+    set_tcp(p[0.0,0.09,0.42,1.894,0.0,0.0])
+    movel(pose_trans(UF, gGD_2_RM_RX), a=0.07, v=0.12)
+    $ 1794 "待機: 1.0"
+    sleep(1.0)
+    $ 1795 "設定 GPBO_BLStop=HI:Pulse 1.0"
+    thread SinglePulse675():
+      write_output_boolean_register(14, True)
+      sleep(1.0)
+      write_output_boolean_register(14, False)
+    end
+    singlePulse675 = run SinglePulse675()
+    $ 1796 "ポップアップ: ok?"
+    popup("ok?", "メッセージ", False, False, blocking=True)
+    $ 1797 "tm_6102_01: リセット"
+    tm_6102_01 = 0
+    $ 1798 "tm_6102_01: 起動"
+    tm_6102_01_is_counting = True
+    $ 1801 "tm_6102_01: 停止"
+    tm_6102_01_is_counting = False
+    $ 1802 "設定 GPBO_BLStart=HI:Pulse 1.0"
+    thread SinglePulse676():
+      write_output_boolean_register(15, True)
+      sleep(1.0)
+      write_output_boolean_register(15, False)
+    end
+    singlePulse676 = run SinglePulse676()
+    $ 1803 "待機: 1.0"
+    sleep(1.0)
+    $ 1804 "ポップアップ: ok?"
+    popup("ok?", "メッセージ", False, False, blocking=True)
+    $ 1805 "MoveL"
+    $ 1806 "gGD_2_RM_RX" "breakAfter"
+    set_tcp(p[0.0,0.09,0.42,1.894,0.0,0.0])
+    movel(pose_trans(UF, gGD_2_RM_RX), a=0.07, v=0.12)
+    $ 1807 "待機: 1.0"
+    sleep(1.0)
+    $ 1808 "gGD_3_RM_RX" "breakAfter"
+    set_tcp(p[0.0,0.09,0.42,1.894,0.0,0.0])
+    movel(pose_trans(UF, gGD_3_RM_RX), a=0.07, v=0.12)
+    $ 1809 "待機: 1.0"
+    sleep(1.0)
+    $ 1810 "MoveL"
+    $ 1811 "gHome_Position" "breakAfter"
+    set_tcp(p[0.0,0.09,0.42,0.0,0.0,0.0])
+    movel(gHome_Position, a=0.07, v=0.12)
+  end
+  def SUB_6402():
+    $ 1812 "SUB_6402" "noBreak"
+    $ 1813 "INITIALIZE"
+    $ 1814 "荷重の設定: k10"
+    set_target_payload(0.100000, [0.000000, -0.135000, 0.225000], [10.000000, 10.000000, 10.000000, 0.000000, 0.000000, 0.000000])
+    $ 1815 "ROVI_RECIPE"
+    $ 1816 "If文 ( not ROVI_RECIPE(GPII_ConveyorNo))"
+    if ((  not  ROVI_RECIPE(read_input_integer_register(1)))):
+      $ 1817 "SubPrgResult:=rovi_err"
+      global SubPrgResult=rovi_err
+      $ 1818 "待機: 999999.0"
+      sleep(999999.0)
+    end
+    $ 1819 "ROVI_RESET"
+    $ 1820 "If文 ( not ROVI_RESET())"
+    if ((  not  ROVI_RESET())):
+      $ 1821 "SubPrgResult:=rovi_err"
+      global SubPrgResult=rovi_err
+      $ 1822 "待機: 999999.0"
+      sleep(999999.0)
+    end
+    $ 1823 "ROVI_CAPTURE"
+    $ 1824 "MoveL"
+    $ 1825 "Capt_CV_M" "breakAfter"
+    set_tcp(p[0.0,0.09,0.42,0.0,0.0,0.0])
+    movel(Capt_CV_M, a=0.07, v=0.2)
+    $ 1826 "待機: 2.0"
+    sleep(2.0)
+    $ 1827 "If文 ( not ROVI_CAPTURE())"
+    if ((  not  ROVI_CAPTURE())):
+      $ 1828 "SubPrgResult:=rovi_err"
+      global SubPrgResult=rovi_err
+      $ 1829 "待機: 999999.0"
+      sleep(999999.0)
+    end
+  end
+  def SUB_7001():
+    $ 1830 "SUB_7001" "noBreak"
+    $ 1831 "荷重の設定: k10"
+    set_target_payload(0.100000, [0.000000, -0.135000, 0.225000], [10.000000, 10.000000, 10.000000, 0.000000, 0.000000, 0.000000])
+    $ 1832 "MoveL"
+    $ 1833 "gTAIHI_pos1" "breakAfter"
+    set_tcp(p[0.0,0.09,0.42,0.0,0.0,0.0])
+    movel(gTAIHI_pos1, a=0.07, v=0.12)
+    $ 1834 "gTAIHI_pos2" "breakAfter"
+    set_tcp(p[0.0,0.09,0.42,0.0,0.0,0.0])
+    movel(gTAIHI_pos2, a=0.07, v=0.12)
+    $ 1835 "gTAIHI_pos3" "breakAfter"
+    set_tcp(p[0.0,0.09,0.42,0.0,0.0,0.0])
+    movel(gTAIHI_pos3, a=0.07, v=0.12)
+    $ 1836 "gTAIHI_pos4" "breakAfter"
+    set_tcp(p[0.0,0.09,0.42,0.0,0.0,0.0])
+    movel(gTAIHI_pos4, a=0.07, v=0.12)
+    $ 1837 "荷重の設定: k120"
+    set_target_payload(0.100000, [0.000000, -0.135000, 0.225000], [120.000000, 120.000000, 120.000000, 0.000000, 0.000000, 0.000000])
+    $ 1838 "gTAIHI_pos5" "breakAfter"
+    set_tcp(p[0.0,0.09,0.42,0.0,0.0,0.0])
+    movel(gTAIHI_pos5, a=0.07, v=0.12)
+    $ 1839 "FREE_DRIVE"
+    $ 1840 "荷重の設定: k2"
+    set_target_payload(0.100000, [0.000000, -0.135000, 0.225000], [2.000000, 2.000000, 2.000000, 0.000000, 0.000000, 0.000000])
+    $ 1841 "freedrive_mode()"
+    freedrive_mode()
+    $ 1842 "設定"
+    set_tcp(p[0.0,0.0,0.0,0.0,0.0,0.0])
+    $ 1843 "待機: 0.5"
+    sleep(0.5)
+    $ 1844 "end_freedrive_mode()"
+    end_freedrive_mode()
+  end
+  def SUB_7002():
+    $ 1845 "SUB_7002" "noBreak"
+    $ 1846 "荷重の設定: k10"
+    set_target_payload(0.100000, [0.000000, -0.135000, 0.225000], [10.000000, 10.000000, 10.000000, 0.000000, 0.000000, 0.000000])
+    $ 1847 "MoveL"
+    $ 1848 "gTAIHI_pos5" "breakAfter"
+    movel(gTAIHI_pos5, a=0.07, v=0.12)
+    $ 1849 "gTAIHI_pos4" "breakAfter"
+    movel(gTAIHI_pos4, a=0.07, v=0.12)
+    $ 1850 "gTAIHI_pos3" "breakAfter"
+    movel(gTAIHI_pos3, a=0.07, v=0.12)
+    $ 1851 "gTAIHI_pos2" "breakAfter"
+    movel(gTAIHI_pos2, a=0.07, v=0.12)
+    $ 1852 "gTAIHI_pos1" "breakAfter"
+    movel(gTAIHI_pos1, a=0.07, v=0.12)
+    $ 1853 "gHome_Position" "breakAfter"
+    movel(gHome_Position, a=0.07, v=0.12)
+  end
+  $ 2 "開始前シーケンス"
+  $ 3 "スクリプト: ROVI_RESET.script"
+  def ROVI_RESET():
+    if (not socket_open(host,port,socket_name)):
+      rovi_err=902
+      return False
+    end
+    socket_send_line("X0()",socket_name)
+    ret=socket_read_line(socket_name,socket_timeout)
+    if (ret == "OK"):
+      rovi_err=0
+    elif (ret == "NG"):
+      rovi_err=to_num(socket_read_line(socket_name,socket_timeout))
+    else:
+      ret="NG"
+      rovi_err=903
+    end
+    socket_close(socket_name)
+    if (rovi_err != 0):
+      if (is_popup):
+        popup(str_cat(ret,rovi_err),title="X0",warning=True,blocking=True)
+      end
+      return False
+    else:
+      return True
+    end
+  end
+  $ 4 "スクリプト: ROVI_CAPTURE.script"
+  def ROVI_CAPTURE():
+    Y1=[0.0,0.0,0.0,0.0]
+  #  p=get_actual_tool_flange_pose()
+    p=Bucket
+    if (not socket_open(host,port,socket_name)):
+      rovi_err=902
+      return False
+    end
+    socket_send_string("X1(",socket_name)
+    socket_send_string(p[0],socket_name)
+    socket_send_string(",",socket_name)
+    socket_send_string(p[1],socket_name)
+    socket_send_string(",",socket_name)
+    socket_send_string(p[2],socket_name)
+    socket_send_string(",",socket_name)
+    socket_send_string(p[3],socket_name)
+    socket_send_string(",",socket_name)
+    socket_send_string(p[4],socket_name)
+    socket_send_string(",",socket_name)
+    socket_send_string(p[5],socket_name)
+    socket_send_line(")",socket_name)
+    ret=socket_read_line(socket_name,socket_timeout)
+    if (ret == "OK"):
+      rovi_err=0
+      f=socket_read_ascii_float(4,socket_name,socket_timeout)
+      while (f[0]!=4):
+        sleep(0.3)
+        f=socket_read_ascii_float(4,socket_name,socket_timeout)
+      end
+      i=0
+      while (i<4):
+        Y1[i]=f[i+1]
+        i=i+1
+      end
+    elif (ret == "NG"):
+      rovi_err=to_num(socket_read_line(socket_name,socket_timeout))
+    else:
+      ret="NG"
+      rovi_err=903
+    end
+    socket_close(socket_name)
+    if (rovi_err != 0):
+      if (is_popup):
+        popup(str_cat(ret,rovi_err),title="X1",warning=True,blocking=True)
+      end
+      return False
+    else:
+      return True
+    end
+  end
+  $ 5 "スクリプト: ROVI_SOLVE.script"
+  def ROVI_SOLVE(is_popup=is_popup):
+    buf=p[10000.0,0.0,0.0,0.0,0.0,0.0]
+    if (not socket_open(host,port,socket_name)):
+      rovi_err=902
+      return False
+    end
+    socket_send_line("X2()",socket_name)
+    ret=socket_read_line(socket_name,socket_timeout)
+    if (ret == "OK"):
+      rovi_err=0
+      f=socket_read_ascii_float(6,socket_name,socket_timeout)
+      while (f[0]!=6):
+        sleep(0.3)
+        f=socket_read_ascii_float(6,socket_name,socket_timeout)
+      end
+      counter=0
+      while (counter<6):
+        buf[counter]=f[counter+1]
+        counter=counter+1
+      end
+    elif (ret == "NG"):
+      rovi_err=to_num(socket_read_line(socket_name,socket_timeout))
+    else:
+      ret="NG"
+      rovi_err=903
+    end
+    sleep(1.0)
+    socket_close(socket_name)
+    if (rovi_err != 0):
+      if (is_popup):
+        popup(str_cat(ret,rovi_err),title="X2",warning=True,blocking=True)
+      end
+    end
+    return buf
+  end
+  $ 6 "スクリプト: ROVI_RECIPE.script"
+  def ROVI_RECIPE(recipe):
+    if (not socket_open(host,port,socket_name)):
+      rovi_err=902
+      return False
+    end
+    socket_send_line(str_cat(str_cat("X3(",recipe),")"),socket_name)
+    ret=socket_read_line(socket_name,socket_timeout)
+    if (ret == "OK"):
+      rovi_err=0
+    elif (ret == "NG"):
+      rovi_err=to_num(socket_read_line(socket_name,socket_timeout))
+    else:
+      ret="NG"
+      rovi_err=903
+    end
+    socket_close(socket_name)
+    if (rovi_err != 0):
+      if (is_popup):
+        popup(str_cat(ret,rovi_err),title="X3",warning=True,blocking=True)
+      end
+      return False
+    else:
+      return True
+    end
+  end
+  $ 7 "スクリプト: ROVI_PARAM.script"
+  def ROVI_PARAM(prm_name,prm_value=None):
+    Y8=0.0
+    if (not socket_open(host,port,socket_name)):
+      rovi_err=902
+      return False
+    end
+    socket_send_string("X8(",socket_name)
+    socket_send_string(prm_name,socket_name)
+    if (prm_value != None):
+      socket_send_string(" ",socket_name)
+      socket_send_string(prm_value,socket_name)
+    end
+    socket_send_line(")",socket_name)
+    ret=socket_read_line(socket_name,socket_timeout)
+    if (ret == "OK"):
+      rovi_err=0
+      if (prm_value == None):  # rosparam get
+        Y8=to_num(socket_read_line(socket_name,socket_timeout))
+      else:    # rosparam set
+        f=1
+      end
+    elif (ret == "NG"):
+      rovi_err=to_num(socket_read_line(socket_name,socket_timeout))
+    else:
+      ret="NG"
+      rovi_err=903
+    end
+    socket_close(socket_name)
+    if (rovi_err != 0):
+      if (is_popup):
+        popup(str_cat(ret,rovi_err),title="X8",warning=True,blocking=True)
+      end
+      return False
+    else:
+      return True
+    end
+  end
+  $ 8 "スクリプト: STATUS_CONTROL.script"
+  def CHECK_VT_STATUS():
+    write_output_boolean_register(8, read_input_boolean_register(64))   # GPBO_PCOK
+    write_output_boolean_register(9, read_input_boolean_register(65))   # GPBO_YCAMOK
+    write_output_boolean_register(10, read_input_boolean_register(66))  # GPBO_DFOK
+    write_output_integer_register(5, read_input_integer_register(24))   # GPIO_PayloadNo
+  end
+  $ 9 "スクリプト: CYCLE_CONTROL.script"
+  def GET_REG(prg_no):
+    WorkPosNo=read_input_integer_register(4)-1                       # GPII_WorkPosNo
+    CaptIndex[WorkPosNo]=read_input_integer_register(21)-1           # GPII_CaptColNo
+    CaptRowNo=read_input_integer_register(20)-1        # GPII_CaptRowNo
+    CaptStepZ=read_input_integer_register(6) / 1000.0         # GPII_CaptStepZ
+    ReCaptNo=0
+    if (prg_no==1203):
+      ReCaptNo=read_input_integer_register(22)                # GPII_ReCaptNo
+    end
+    ReCaptZ=read_input_integer_register(7) / 1000.0         # GPII_ReCaptZ
+    CutOffZDef=read_input_integer_register(11) / 1000.0          # GPII_CutOffZ
+    CrankDepthFull=read_input_integer_register(10) / 1000.0   # GPII_FullDepth
+  end
+  
+  def POSE_SUB(p, teach_frame):
+    return pose_trans(inv(teach_frame), p)
+  end
+  
+  def GET_BUCKET_UPPER(pos=0):
+    if UseNewCaptPos:
+      p=POSE_SUB(CaptPoint_C, BucketM)
+      pX=[BKWidth/2,CaptPointL_dX,BKWidth-CaptPointR_dX]
+      p[0]=pX[pos]
+    else:
+      captpos=[CaptPoint_C,CaptPoint_L,CaptPoint_R]
+      p=captpos[pos]
+      p=POSE_SUB(p, BucketM)
+    end
+    return p
+  end
+  
+  def SET_BUCKET_DEF():
+    BucketM=pBucketM
+    if (WorkPosNo<0):
+      Bucket=pBucketC
+    else:
+      Bucket=pBucket[WorkPosNo]
+    end
+  end
+  
+  def SET_BUCKET():
+    SET_BUCKET_DEF()
+    Bucket[2]=Bucket[2]-CaptStepZ*CaptRowNo
+  end
+  
+  def SET_CV():
+    CV=pCV
+  end
+  
+  def SET_CAPT_INDEX():
+    CaptIndexWk=CaptIndex[WorkPosNo]
+    ReCaptZWk=0
+    if (prg_no==1203):
+      if   (ReCaptNo==0):
+        if (CaptIndexWk==0):
+          if (0<=DistPillarBak):
+            CaptIndexWk=1
+          else:
+            CaptIndexWk=2
+          end
+          ReCaptZWk=0
+        else:
+          CaptIndexWk=0
+          ReCaptZWk=0
+        end
+      elif (ReCaptNo==1):
+        if (CaptIndexWk==0):
+          CaptIndexWk=0
+          ReCaptZWk=-ReCaptZ
+        else:
+          CaptIndexWk=CaptIndexWk
+          ReCaptZWk=-ReCaptZ
+        end
+      else:
+        if (CaptIndexWk==0):
+          CaptIndexWk=0
+          ReCaptZWk=ReCaptZ
+        else:
+          CaptIndexWk=CaptIndexWk
+          ReCaptZWk=ReCaptZ
+        end
+      end
+    end
+  end
+  
+  def GET_CAPTPOS():
+    SET_BUCKET()
+    SET_CAPT_INDEX()
+    if UseNewCaptPos:
+      p=GET_BUCKET_UPPER(CaptIndexWk)
+      p[2]=p[2]-ReCaptZWk
+    else:
+      captpos=[CaptPoint_C,CaptPoint_L,CaptPoint_R]
+      p=captpos[CaptIndexWk]
+      p[2]=p[2]-ReCaptZWk
+      p=POSE_SUB(p, BucketM)
+    end
+    return p
+  end
+  
+  def CHECK_CAPTPOS():
+    isOK=((CaptStepZ*(read_input_integer_register(20)-1)) < (read_input_integer_register(9) / 1000.0))
+    return isOK
+  end
+  
+  def GET_ZSLIDE_POS(p):
+    p[2]=p[2]-CaptStepZ*CaptRowNo
+    return p
+  end
+  
+  def END_CYCLE():
+    stopl(1.2)
+    end_force_mode()
+    end_freedrive_mode()
+    socket_close(socket_name)
+  end
+  
+  def CHECK_SPEED(smax,f=[1,1,1,1,1,1]):
+    s=TCPSpeed
+    i=0
+    while (i<6):
+      if ((f[i]==1) and (smax[i]<s[i])):
+        return False
+      end
+      i=i+1
+    end
+    return True
+  end
+  $ 10 "スクリプト: ZONE_CONTROL.script"
+  def GET_DIST(P1, P2):
+    return pose_dist(P1, P2)
+  end
+  def CHECK_DIST_NEAR(P1, P2, th):
+    return (GET_DIST(P1, P2) < th)
+  end
+  def DIST_HOME():
+    return pose_dist(gHome_Position,CurrPos_p)
+  end
+  
+  def CHECK_HOME():
+    return (DIST_HOME()<ZoneDistTh)
+  end
+  
+  def GET_DEST_FLANGE(target, feature, tcp):
+    return pose_trans(pose_trans(feature, target), pose_inv(tcp))
+  end
+  
+  def DIST_CVFront():
+    if (read_input_integer_register(4)==1):
+      p=g2GD_pos1
+    else:
+      p=g1GD_pos1
+    end
+    return pose_dist(p,CurrPos_p)
+  end
+  
+  def CHECK_CVFront():
+    return (DIST_CVFront()<ZoneDistTh)
+  end
+  
+  def CHECK_RB_POS(prg_no):
+    ret=True
+    if (prg_no==1001):
+      ret=CHECK_ALLOW_GO_HOME(0)
+    end
+    if ((prg_no==1201) or (prg_no==1401) or (prg_no==1402) or (prg_no==6001) or (prg_no==6101) or (prg_no==6401) or (prg_no==6102) or (prg_no==7001)):
+      ret=CHECK_HOME()
+    end
+    if ((prg_no==1002) or (prg_no==1241) or (prg_no==1261)):
+      ret=CHECK_BKInside()
+    end
+    if (prg_no==1251):
+      ret=(CHECK_HOME() or CHECK_CVUpper())
+    end
+    if (ret != True):
+      SubPrgResult=801
+      sleep(999999.0)
+    end
+  end
+  
+  def DIST_ORIGIN():
+    p=CurrPos_p
+    o=p
+    o[0]=0.0
+    o[1]=0.0
+    DistOrigin=pose_dist(o,p)
+    return pose_dist(o,p)
+  end
+  
+  def CHECK_EVAC_ORG():
+    return (EvacRadiusTh<DIST_ORIGIN())
+  end
+  
+  def CHECK_EVAC_X():
+    return (EvacXTh[0]<CurrPos_p[0] and CurrPos_p[0]<EvacXTh[1])
+  end
+  
+  def CHECK_EVAC_Y():
+    return (EvacYTh[0]<CurrPos_p[1] and CurrPos_p[1]<EvacYTh[1])
+  end
+  
+  def CHECK_EVAC_Z():
+    return (EvacZTh[0]<CurrPos_p[2] and CurrPos_p[2]<EvacZTh[1])
+  end
+  
+  def CHECK_EVAC():
+    ret=True
+    ret=(ret and CHECK_EVAC_ORG())
+    ret=(ret and CHECK_EVAC_X())
+    ret=(ret and CHECK_EVAC_Y())
+    ret=(ret and CHECK_EVAC_Z())
+    return ret
+  end
+  
+  def CHECK_BKInside():
+    ret=True
+    pos=read_input_integer_register(4)
+    if (pos>2):
+      ret=False
+    else:
+      if (not read_input_boolean_register(13+pos)):
+        ret=False
+        ver_3=read_input_boolean_register(13+pos)
+      else:
+        bk=pBucket[pos-1]
+        if (pos==1):
+          ret=(ret and CurrPos_p[0]>ZoneHomeX)
+          ret=(ret and bk[1]-(BucketWidth-ZoneBucketGap)<CurrPos_p[1] and CurrPos_p[1]<bk[1]-ZoneBucketGap)
+        elif (pos==2):
+          ret=(ret and CurrPos_p[0]<-ZoneHomeX)
+          ret=(ret and bk[1]+ZoneBucketGap<CurrPos_p[1] and CurrPos_p[1]<bk[1]+(BucketWidth-ZoneBucketGap))
+        end
+      end
+    end
+    return ret
+  end
+  
+  def CHECK_CVOutside():
+    ret=True
+    ret=(ret and gCV_11_M[0]-Zone6ThX<CurrPos_p[0])
+    ret=(ret and CurrPos_p[0]<gCV_11_M[0]+Zone6ThX)
+    ret=(ret and gCV_11_M[1]-Zone6ThY<CurrPos_p[1])
+    ret=(ret and CurrPos_p[1]<gCV_11_M[1]+Zone6ThY)
+    return (not ret)
+  end
+  
+  def CHECK_CVUpper():
+    ret=True
+    ret=(ret and (CVXTh[0]<CurrPos_p[0] and CurrPos_p[0]<CVXTh[1]))
+    ret=(ret and (CVYTh[0]<CurrPos_p[1] and CurrPos_p[1]<CVYTh[1]))
+    ret=(ret and (CVZTh[0]<CurrPos_p[2] and CurrPos_p[2]<CVZTh[1]))
+    return ret
+  end
+  
+  def CHECK_ALLOW_GO_HOME(no=0):
+    ret=False
+    if (no==0 or no==1):
+      ret=(ret or CHECK_EVAC())
+      v1=ret
+    end
+    if (no==0 or no==2):
+      ret=(ret or CHECK_BKInside())
+      v2=ret
+    end
+    if (no==0 or no==3):
+      ret=(ret or CHECK_CVUpper())
+      v3=ret
+    end
+    return ret
+  end
+  
+  def CHECK_ZONE(no):
+    if (no==1):
+      return (CurrPos_p[2]>=Zone1ZTh)
+    elif (no==2):
+      return (CurrPos_p[0]>ZoneHomeX)
+    elif (no==3):
+      return (CurrPos_p[0]<-ZoneHomeX)
+    elif (no==4):
+      return CHECK_CVFront()
+    elif (no==5):
+      return CHECK_BKInside()
+    elif (no==6):
+      return CHECK_CVOutside()
+    elif (no==7):
+      return CHECK_CVUpper()
+    end
+  end
+  $ 11 "スクリプト: ALIGN_AXIS.script"
+  def GET_NORM_VEC(p,axis=2):
+    rot=p[0.0, 0.0, 0.0, p[3], p[4], p[5]]
+    vec=p[0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+    vec[axis]=1.0
+    norm_p=pose_trans(rot,vec)
+    return [norm_p[0], norm_p[1], norm_p[2]]
+  end
+  
+  def GET_INNER_PRODUCT(v1,v2):
+    return v1[0]*v2[0]+v1[1]*v2[1]+v1[2]*v2[2]
+  end
+  def GET_OUTER_PRODUCT(v1,v2):
+    x=v1[1]*v2[2]-v1[2]*v2[1]
+    y=v1[2]*v2[0]-v1[0]*v2[2]
+    z=v1[0]*v2[1]-v1[1]*v2[0]
+    return [x,y,z]
+  end
+  def GET_THETA(v1,v2):
+  #  cos=GET_INNER_PRODUCT(v1,v2) / norm(v1) / norm(v2)
+    cos=GET_INNER_PRODUCT(v1,v2)
+    g_cos=cos
+    theta=norm(acos(cos))
+    return theta
+  end
+  
+  def GET_ALIGNED_POSE(target,feature,axis=2):
+    feature_from_target=pose_trans(pose_inv(target),feature)
+    g_f_from_t=feature_from_target
+    nz_feature_from_target=GET_NORM_VEC(feature_from_target,axis)
+    g_nz_f_from_t=nz_feature_from_target
+    nz_target_from_target=[0.0, 0.0, 0.0]
+    nz_target_from_target[axis]=1.0
+    g_nz_t_from_t=nz_target_from_target
+  
+    theta=GET_THETA(nz_feature_from_target,nz_target_from_target)
+    g_theta=theta
+    rot_vec_n=normalize(GET_OUTER_PRODUCT(nz_target_from_target,nz_feature_from_target))
+  
+    if theta>d2r(90.0):
+      theta=theta-d2r(180.0)
+    end
+    rot_vec=rot_vec_n * (theta)
+    rot_p=p[0.0,0.0,0.0,rot_vec[0],rot_vec[1],rot_vec[2]]
+    return pose_trans(target,rot_p)
+  end
+  def GET_ALIGNED_TCP(feature,axis=2):
+    tcp=get_actual_tcp_pose()
+    return GET_ALIGNED_POSE(tcp,feature,axis)
+  end
+  
+  $ 12 "スクリプト: ROTATE_CONTROL.script"
+  def GET_TCP_FORCE_TOOL():
+    force_torque=get_tcp_force()
+    force_B=p[force_torque[0], force_torque[1], force_torque[2], 0, 0, 0]
+    torque_B=p[force_torque[3], force_torque[4], force_torque[5], 0, 0, 0]
+    tcp=get_actual_tcp_pose()
+    rotation_BT=p[0, 0, 0, tcp[3], tcp[4], tcp[5]]
+    force_T=pose_trans(pose_inv(rotation_BT), force_B)
+    torque_T=pose_trans(pose_inv(rotation_BT), torque_B)
+    force_torque_T=p[force_T[0], force_T[1], force_T[2], torque_T[0], torque_T[1], torque_T[2]]
+    return force_torque_T
+  end
+  
+  def CHECK_VALUE_RZ():
+    return True
+  end
+  
+  def GET_FORCE_VALUE_RZ(target):
+    PoseSub= pose_sub (CurrPos_p,target)
+    RYSub=r2d(PoseSub[4])
+    RZSub=r2d(PoseSub[5])
+  #  if (RYSub<RZSupRYRange[0] or RZSupRYRange[1]<RYSub):
+  #    RZSupForceVal=0.0
+  #    return RZSupForceVal
+  #  end
+    if (RZSub<0):
+      RZMin=RZSupDegMin[0]
+      RZRatio=RZSupRatio[0]
+      RZOffset=RZSupOffset[0]
+    else:
+      RZMin=RZSupDegMin[1]
+      RZRatio=RZSupRatio[1]
+      RZOffset=-RZSupOffset[1]
+    end
+    if (norm(RZSub) >= norm(RZMin)):
+      RZSupForceVal=(RZMin-RZSub)*RZRatio+RZOffset
+    else:
+      RZSupForceVal=0
+    end
+    if (RZSupForceVal<RZSupForceRange[0]):
+      RZSupForceVal=RZSupForceRange[0]
+    elif (RZSupForceRange[1]<RZSupForceVal):
+      RZSupForceVal=RZSupForceRange[1]
+    end
+    if (RYSub<RZSupRYRange[0] or RZSupRYRange[1]<RYSub):
+      RZSupForceVal=0
+    end
+    if ((not UseRZSupStep1) and (ForceStep==1)):
+      RZSupForceVal=0
+    end
+    return RZSupForceVal
+  end
+  
+  def GET_CVCORR_VALUE(target):
+    CVCorrYVal=0
+    CVCorrRZVal=0
+    if (UseCVCorr and (not UseCVCorrCam)):
+      PoseSub=pose_sub(CurrPos_p,target)
+      RYSub=r2d(PoseSub[4])
+      CVCorrRYSub=RYSub
+      if (RYSub<0):
+        RYMin=-CVCorrDegMin[0]
+        RZRatio=CVCorrRatio[0]
+        RZOffset=-CVCorrOffset[0]
+      else:
+        RYMin=-CVCorrDegMin[1]
+        RZRatio=CVCorrRatio[1]
+        RZOffset=CVCorrOffset[1]
+      end
+      if (norm(RYSub) >= norm(RYMin)):
+        t=get_tcp_offset()
+        CVCorrYVal=-t[2]*sin(d2r(RYSub))
+        CVCorrRZVal=RYSub*RZRatio+RZOffset
+      else:
+        CVCorrYVal=0
+        CVCorrRZVal=0
+      end
+    end
+  end
+  
+  def GET_CVCORR_POS(target):
+    if UseCVCorr:
+      if (not UseCVCorrCam):
+        pos= pose_add (p[0,0,0,0,0,d2r(-CVCorrRZVal)],p[0,0,0,target[3],target[4],target[5]])
+        pos=p[target[0],target[1],target[2],pos[3],pos[4],pos[5]]
+      else:
+        pos=target
+      end
+    else:
+      pos=target
+    end
+    return pos
+  end
+  
+  def CHECK_RX_TILT(target):
+    PosSub=pose_sub(CurrPos_p,target)
+    RXSub=r2d(PoseSub[3])
+    return (RXTiltDegMin[0]<RXSub and RXSub<RXTiltDegMin[1])
+  end
+  $ 14 "スクリプト: THREAD_ROVI.script"
+  thread THREAD_ROVI():
+    THREAD_ROVI_FLG=0
+    THREAD_ROVI_ERR=0
+    if ((THREAD_ROVI_ERR==0) and (not ROVI_RECIPE(read_input_integer_register(2)+WorkNoOffset))):
+      THREAD_ROVI_ERR=rovi_err
+    end
+    if ((THREAD_ROVI_ERR==0) and (not ROVI_RESET())):
+      THREAD_ROVI_ERR=rovi_err
+    end
+    if ((THREAD_ROVI_ERR==0) and (not  ROVI_CAPTURE())):
+      THREAD_ROVI_ERR=rovi_err
+    end
+    if (THREAD_ROVI_ERR==0):
+      global Y2=ROVI_SOLVE()
+      if ((Y2[0] == 10000.)):
+        THREAD_ROVI_ERR=rovi_err
+      end
+    end
+    THREAD_ROVI_FLG=1
+  end
+  def RUN_THREAD_ROVI():
+    return run THREAD_ROVI()
+  end
+  def JOIN_THREAD_ROVI(thrd):
+    if (thrd>0):
+      join thrd
+    end
+  end
+  def RESET_THREAD_ROVI():
+    THREAD_ROVI_FLG=2
+    THREAD_ROVI_ERR=-1
+  end
+  def KILL_THREAD_ROVI(thrd):
+    if (THREAD_ROVI_FLG==0):
+      kill thrd
+    end
+  end
+  $ 231 "u12473u12524u12483u12489_2"
+  thread u12473u12524u12483u12489_2():
+    while (True):
+      $ 232 "Sub3100_GPII18:=GPII_RunOption"
+      global Sub3100_GPII18=read_input_integer_register(18)
+      $ 233 "CurrPos=get_actual_tool_flange_pose()"
+      CurrPos=get_actual_tool_flange_pose()
+      $ 234 "CurrPos_p=get_actual_tcp_pose()"
+      CurrPos_p= get_actual_tcp_pose ()
+      $ 235 "Currpos_p_UF0=pose_trans(pose_inv(UF), CurrPos_p)"
+      Currpos_p_UF0= pose_trans ( pose_inv (UF), CurrPos_p)
+      $ 236 "TCPSpeed:=get_actual_tcp_speed()"
+      global TCPSpeed=get_actual_tcp_speed()
+      $ 237 "TCPForce:=get_tcp_force()"
+      global TCPForce=get_tcp_force()
+      $ 238 "TCPForceTL:=GET_TCP_FORCE_TOOL()"
+      global TCPForceTL=GET_TCP_FORCE_TOOL()
+      $ 239 "設定 GPBO_RBHome=CHECK_HOME()"
+      write_output_boolean_register(12, CHECK_HOME())
+      $ 240 "設定 GPBO_AllowGoHom=CHECK_ALLOW_GO_HOME(0)"
+      write_output_boolean_register(16, CHECK_ALLOW_GO_HOME(0))
+      $ 241 "設定 GPBO_Zone01=CHECK_ZONE(1)"
+      write_output_boolean_register(24, CHECK_ZONE(1))
+      $ 242 "設定 GPBO_Zone02=CHECK_ZONE(2)"
+      write_output_boolean_register(25, CHECK_ZONE(2))
+      $ 243 "設定 GPBO_Zone03=CHECK_ZONE(3)"
+      write_output_boolean_register(26, CHECK_ZONE(3))
+      $ 244 "設定 GPBO_Zone04=CHECK_ZONE(4)"
+      write_output_boolean_register(27, CHECK_ZONE(4))
+      $ 245 "設定 GPBO_Zone05=CHECK_ZONE(5)"
+      write_output_boolean_register(28, CHECK_ZONE(5))
+      $ 246 "設定 GPBO_Zone06=CHECK_ZONE(6)"
+      write_output_boolean_register(29, CHECK_ZONE(6))
+      $ 247 "設定 GPBO_Zone07=CHECK_ZONE(7)"
+      write_output_boolean_register(30, CHECK_ZONE(7))
+      $ 248 "設定 GPBO_Zone08=CHECK_ALLOW_GO_HOME(1)"
+      write_output_boolean_register(31, CHECK_ALLOW_GO_HOME(1))
+      $ 249 "CHECK_VT_STATUS()"
+      CHECK_VT_STATUS()
+      $ 250 "sync()"
+      sync()
+    end
+  end
+  threadId_u12473u12524u12483u12489_2 = run u12473u12524u12483u12489_2()
+  while (True):
+    $ 15 "ロボットプログラム"
+    $ 16 "position_deviation_warning(True,0.4)"
+    position_deviation_warning(True,0.4)
+    $ 17 "PREPARE_PICK_TCP"
+    $ 18 "設定"
+    set_tcp(p[0.0,0.09,0.42,1.894,0.0,0.0])
+    $ 19 "PickTCP:=get_tcp_offset()"
+    global PickTCP=get_tcp_offset()
+    $ 20 "荷重の設定: k10"
+    set_target_payload(0.100000, [0.000000, -0.135000, 0.225000], [10.000000, 10.000000, 10.000000, 0.000000, 0.000000, 0.000000])
+    $ 21 "設定"
+    set_tcp(p[0.0,0.09,0.42,0.0,0.0,0.0])
+    $ 22 "CutOffTCP:=get_tcp_offset()"
+    global CutOffTCP=get_tcp_offset()
+    $ 23 "RESET_THREAD_ROVI()"
+    RESET_THREAD_ROVI()
+    $ 24 "thrd108:=0"
+    global thrd108=0
+    $ 25 "設定 GPIO_PrgNo=0"
+    write_output_integer_register(0, 0)
+    $ 26 "設定 GPBO_PrgBegin=オフ"
+    write_output_boolean_register(4, False)
+    $ 27 "設定 GPBO_PrgEnd=オフ"
+    write_output_boolean_register(5, False)
+    $ 28 "設定 GPBO_PrgRun=オフ"
+    write_output_boolean_register(6, False)
+    $ 29 "設定 GPBO_BKPosDone=オフ"
+    write_output_boolean_register(13, False)
+    $ 30 "設定 GPBO_BLStop=オフ"
+    write_output_boolean_register(14, False)
+    $ 31 "設定 GPBO_BLStart=オフ"
+    write_output_boolean_register(15, False)
+    $ 32 "設定 GPBO_Released=オフ"
+    write_output_boolean_register(17, False)
+    $ 33 "待機 GPBI_PrgStart=LO"
+    while (read_input_boolean_register(4) == True):
+      sync()
+    end
+    $ 34 "待機 GPBI_PrgStart=HI"
+    while (read_input_boolean_register(4) == False):
+      sync()
+    end
+    $ 35 "設定 GPIO_PrgResult=0"
+    write_output_integer_register(1, 0)
+    $ 36 "prg_no:=GPII_PrgNo"
+    global prg_no=read_input_integer_register(0)
+    $ 37 "If文 ( not GPBI_PrgStop≠ False )"
+    global thread_flag_37=0
+    thread Thread_if_37():
+      $ 38 "CHECK_RB_POS(prg_no)"
+      CHECK_RB_POS(prg_no)
+      $ 39 "設定 GPIO_PrgNo=prg_no"
+      write_output_integer_register(0, prg_no)
+      $ 40 "待機: 0.1"
+      sleep(0.1)
+      $ 41 "設定 GPBO_PrgBegin=HI:Pulse 1.0"
+      thread SinglePulse677():
+        write_output_boolean_register(4, True)
+        sleep(1.0)
+        write_output_boolean_register(4, False)
+      end
+      singlePulse677 = run SinglePulse677()
+      $ 42 "SubPrgResult:=100"
+      global SubPrgResult=100
+      $ 43 "If文 (SubPrgResult≟100)"
+      global thread_flag_43=0
+      thread Thread_if_43():
+        $ 44 "GET_REG(prg_no)"
+        GET_REG(prg_no)
+        $ 45 "スイッチ文 prg_no"
+        switch_1 = prg_no
+        $ 46 "ケース 1001"
+        if (1001 == switch_1):
+          $ 47 "CHECK_RB_POS(prg_no)"
+          CHECK_RB_POS(prg_no)
+          $ 48 "設定 GPIO_SubPrgNo=109"
+          write_output_integer_register(2, 109)
+          $ 49 "呼び出し SUB_109"
+          SUB_109()
+          $ 50 "設定 GPIO_SubPrgNo=003"
+          write_output_integer_register(2, 003)
+          $ 51 "呼び出し SUB_003"
+          SUB_003()
+        elif (1201 == switch_1):
+          $ 57 "ケース 1201"
+          $ 58 "設定 GPIO_SubPrgNo=101"
+          write_output_integer_register(2, 101)
+          $ 59 "呼び出し SUB_101"
+          SUB_101()
+          $ 60 "設定 GPIO_SubPrgNo=102"
+          write_output_integer_register(2, 102)
+          $ 61 "呼び出し SUB_102"
+          SUB_102()
+          $ 62 "設定 GPIO_SubPrgNo=104"
+          write_output_integer_register(2, 104)
+          $ 66 "呼び出し SUB_104RXFF"
+          SUB_104RXFF()
+          $ 67 "設定 GPIO_SubPrgNo=105"
+          write_output_integer_register(2, 105)
+          $ 68 "呼び出し SUB_105"
+          SUB_105()
+          $ 69 "設定 GPIO_SubPrgNo=106"
+          write_output_integer_register(2, 106)
+          $ 70 "呼び出し SUB_106"
+          SUB_106()
+          $ 71 "設定 GPIO_SubPrgNo=108"
+          write_output_integer_register(2, 108)
+          $ 72 "呼び出し SUB_108"
+          SUB_108()
+          $ 73 "設定 GPIO_SubPrgNo=121"
+          write_output_integer_register(2, 121)
+          $ 74 "呼び出し SUB_121"
+          SUB_121()
+          $ 75 "設定 GPIO_SubPrgNo=122"
+          write_output_integer_register(2, 122)
+          $ 76 "呼び出し SUB_122"
+          SUB_122()
+          $ 77 "設定 GPIO_SubPrgNo=001"
+          write_output_integer_register(2, 001)
+          $ 78 "呼び出し SUB_001"
+          SUB_001()
+          $ 79 "If文 (CandCnt≟1)"
+          if ((CandCnt == 1)):
+            $ 80 "SubPrgResult:=990"
+            global SubPrgResult=990
+            $ 81 "待機: 999999.0"
+            sleep(999999.0)
+          end
+        elif (1202 == switch_1):
+          $ 82 "ケース 1202"
+          $ 83 "設定 GPIO_SubPrgNo=102"
+          write_output_integer_register(2, 102)
+          $ 84 "呼び出し SUB_102"
+          SUB_102()
+          $ 85 "設定 GPIO_SubPrgNo=104"
+          write_output_integer_register(2, 104)
+          $ 90 "呼び出し SUB_104RXFF"
+          SUB_104RXFF()
+          $ 91 "設定 GPIO_SubPrgNo=105"
+          write_output_integer_register(2, 105)
+          $ 92 "呼び出し SUB_105"
+          SUB_105()
+          $ 93 "設定 GPIO_SubPrgNo=106"
+          write_output_integer_register(2, 106)
+          $ 94 "呼び出し SUB_106"
+          SUB_106()
+          $ 95 "設定 GPIO_SubPrgNo=108"
+          write_output_integer_register(2, 108)
+          $ 96 "呼び出し SUB_108"
+          SUB_108()
+          $ 97 "設定 GPIO_SubPrgNo=121"
+          write_output_integer_register(2, 121)
+          $ 98 "呼び出し SUB_121"
+          SUB_121()
+          $ 99 "設定 GPIO_SubPrgNo=122"
+          write_output_integer_register(2, 122)
+          $ 100 "呼び出し SUB_122"
+          SUB_122()
+          $ 101 "設定 GPIO_SubPrgNo=001"
+          write_output_integer_register(2, 001)
+          $ 102 "呼び出し SUB_001"
+          SUB_001()
+          $ 103 "If文 (CandCnt≟1)"
+          if ((CandCnt == 1)):
+            $ 104 "SubPrgResult:=990"
+            global SubPrgResult=990
+            $ 105 "待機: 999999.0"
+            sleep(999999.0)
+          end
+        elif (1203 == switch_1):
+          $ 106 "ケース 1203"
+          $ 107 "設定 GPIO_SubPrgNo=103"
+          write_output_integer_register(2, 103)
+          $ 108 "呼び出し SUB_103"
+          SUB_103()
+          $ 109 "設定 GPIO_SubPrgNo=104"
+          write_output_integer_register(2, 104)
+          $ 113 "呼び出し SUB_104RXFF"
+          SUB_104RXFF()
+          $ 114 "設定 GPIO_SubPrgNo=105"
+          write_output_integer_register(2, 105)
+          $ 115 "呼び出し SUB_105"
+          SUB_105()
+          $ 116 "設定 GPIO_SubPrgNo=106"
+          write_output_integer_register(2, 106)
+          $ 117 "呼び出し SUB_106"
+          SUB_106()
+          $ 118 "設定 GPIO_SubPrgNo=108"
+          write_output_integer_register(2, 108)
+          $ 119 "呼び出し SUB_108"
+          SUB_108()
+          $ 120 "設定 GPIO_SubPrgNo=121"
+          write_output_integer_register(2, 121)
+          $ 121 "呼び出し SUB_121"
+          SUB_121()
+          $ 122 "設定 GPIO_SubPrgNo=122"
+          write_output_integer_register(2, 122)
+          $ 123 "呼び出し SUB_122"
+          SUB_122()
+          $ 124 "設定 GPIO_SubPrgNo=001"
+          write_output_integer_register(2, 001)
+          $ 125 "呼び出し SUB_001"
+          SUB_001()
+          $ 126 "If文 (CandCnt≟1)"
+          if ((CandCnt == 1)):
+            $ 127 "SubPrgResult:=990"
+            global SubPrgResult=990
+            $ 128 "待機: 999999.0"
+            sleep(999999.0)
+          end
+        elif (1241 == switch_1):
+          $ 129 "ケース 1241"
+          $ 130 "設定 GPIO_SubPrgNo=107"
+          write_output_integer_register(2, 107)
+          $ 131 "呼び出し SUB_107"
+          SUB_107()
+          $ 132 "設定 GPIO_SubPrgNo=106"
+          write_output_integer_register(2, 106)
+          $ 133 "呼び出し SUB_106"
+          SUB_106()
+          $ 134 "設定 GPIO_SubPrgNo=108"
+          write_output_integer_register(2, 108)
+          $ 135 "呼び出し SUB_108"
+          SUB_108()
+          $ 136 "設定 GPIO_SubPrgNo=121"
+          write_output_integer_register(2, 121)
+          $ 137 "呼び出し SUB_121"
+          SUB_121()
+          $ 138 "設定 GPIO_SubPrgNo=122"
+          write_output_integer_register(2, 122)
+          $ 139 "呼び出し SUB_122"
+          SUB_122()
+          $ 140 "設定 GPIO_SubPrgNo=001"
+          write_output_integer_register(2, 001)
+          $ 141 "呼び出し SUB_001"
+          SUB_001()
+        elif (1251 == switch_1):
+          $ 142 "ケース 1251"
+          $ 143 "設定 GPIO_SubPrgNo=107"
+          write_output_integer_register(2, 107)
+          $ 144 "呼び出し SUB_107"
+          SUB_107()
+          $ 145 "設定 GPIO_SubPrgNo=120"
+          write_output_integer_register(2, 120)
+          $ 146 "呼び出し SUB_120"
+          SUB_120()
+          $ 147 "設定 GPIO_SubPrgNo=108"
+          write_output_integer_register(2, 108)
+          $ 148 "呼び出し SUB_108"
+          SUB_108()
+          $ 149 "設定 GPIO_SubPrgNo=121"
+          write_output_integer_register(2, 121)
+          $ 150 "呼び出し SUB_121"
+          SUB_121()
+          $ 151 "設定 GPIO_SubPrgNo=122"
+          write_output_integer_register(2, 122)
+          $ 152 "呼び出し SUB_122"
+          SUB_122()
+          $ 153 "設定 GPIO_SubPrgNo=001"
+          write_output_integer_register(2, 001)
+          $ 154 "呼び出し SUB_001"
+          SUB_001()
+        elif (1261 == switch_1):
+          $ 155 "ケース 1261"
+          $ 156 "設定 GPIO_SubPrgNo=161"
+          write_output_integer_register(2, 161)
+          $ 157 "呼び出し SUB_161"
+          SUB_161()
+          $ 158 "設定 GPIO_SubPrgNo=001"
+          write_output_integer_register(2, 001)
+          $ 159 "呼び出し SUB_001"
+          SUB_001()
+        elif (1281 == switch_1):
+          $ 160 "ケース 1281"
+          $ 161 "設定 GPIO_SubPrgNo=181"
+          write_output_integer_register(2, 181)
+          $ 162 "呼び出し SUB_181"
+          SUB_181()
+          $ 163 "設定 GPIO_SubPrgNo=001"
+          write_output_integer_register(2, 001)
+          $ 164 "呼び出し SUB_001"
+          SUB_001()
+        elif (1401 == switch_1):
+          $ 165 "ケース 1401"
+          $ 166 "設定 GPIO_SubPrgNo=141"
+          write_output_integer_register(2, 141)
+          $ 167 "呼び出し SUB_141"
+          SUB_141()
+          $ 168 "pBucket[WorkPosNo]=Y2"
+          pBucket[WorkPosNo]=Y2
+          $ 169 "設定 GPIO_SubPrgNo=143"
+          write_output_integer_register(2, 143)
+          $ 170 "呼び出し SUB_143"
+          SUB_143()
+          $ 171 "設定 GPBO_BKPosDone=HI:Pulse 1.0"
+          thread SinglePulse678():
+            write_output_boolean_register(13, True)
+            sleep(1.0)
+            write_output_boolean_register(13, False)
+          end
+          singlePulse678 = run SinglePulse678()
+        elif (1402 == switch_1):
+          $ 172 "ケース 1402"
+          $ 173 "設定 GPIO_SubPrgNo=142"
+          write_output_integer_register(2, 142)
+          $ 174 "呼び出し SUB_142"
+          SUB_142()
+          $ 175 "設定 GPIO_SubPrgNo=001"
+          write_output_integer_register(2, 001)
+          $ 176 "呼び出し SUB_001"
+          SUB_001()
+          $ 177 "pCV=Y2"
+          pCV=Y2
+        elif (3100 == switch_1):
+          $ 178 "ケース 3100"
+          $ 179 "設定 GPIO_SubPrgNo=3100"
+          write_output_integer_register(2, 3100)
+          $ 180 "呼び出し SUB_3100"
+          SUB_3100()
+        elif (6001 == switch_1):
+          $ 181 "ケース 6001"
+          $ 182 "設定 GPIO_SubPrgNo=6001"
+          write_output_integer_register(2, 6001)
+          $ 183 "呼び出し SUB_6001"
+          SUB_6001()
+        elif (6101 == switch_1):
+          $ 184 "ケース 6101"
+          $ 185 "CheckMST:=0"
+          global CheckMST=0
+          $ 186 "設定 GPIO_SubPrgNo=6101"
+          write_output_integer_register(2, 6101)
+          $ 187 "呼び出し SUB_6101"
+          SUB_6101()
+        elif (6102 == switch_1):
+          $ 188 "ケース 6102"
+          $ 189 "If文 (GPII_CheckMST>0)"
+          if ((read_input_integer_register(23)>0)):
+            $ 190 "CheckMST:=GPII_CheckMST"
+            global CheckMST=read_input_integer_register(23)
+            $ 191 "WorkPosNo:=-1"
+            global WorkPosNo=-1
+            $ 192 "CaptRowNo:=5"
+            global CaptRowNo=5
+            $ 194 "SET_BUCKET()"
+            SET_BUCKET()
+            $ 195 "設定 GPIO_SubPrgNo=6101"
+            write_output_integer_register(2, 6101)
+            $ 196 "呼び出し SUB_6101"
+            SUB_6101()
+          end
+          $ 197 "設定 GPIO_SubPrgNo=6102"
+          write_output_integer_register(2, 6102)
+          $ 201 "呼び出し SUB_6102RXFF"
+          SUB_6102RXFF()
+        elif (6401 == switch_1):
+          $ 202 "ケース 6401"
+          $ 203 "設定 GPIO_SubPrgNo=141"
+          write_output_integer_register(2, 141)
+          $ 204 "呼び出し SUB_141"
+          SUB_141()
+          $ 205 "pBucketM=Y2"
+          pBucketM=Y2
+          $ 206 "pBucket[WorkPosNo]=Y2"
+          pBucket[WorkPosNo]=Y2
+        elif (6402 == switch_1):
+          $ 207 "ケース 6402"
+          $ 208 "設定 GPIO_SubPrgNo=142"
+          write_output_integer_register(2, 142)
+          $ 209 "呼び出し SUB_6402"
+          SUB_6402()
+        elif (7001 == switch_1):
+          $ 210 "ケース 7001"
+          $ 211 "設定 GPIO_SubPrgNo=7001"
+          write_output_integer_register(2, 7001)
+          $ 212 "呼び出し SUB_7001"
+          SUB_7001()
+        elif (7002 == switch_1):
+          $ 213 "ケース 7002"
+          $ 214 "設定 GPIO_SubPrgNo=7002"
+          write_output_integer_register(2, 7002)
+          $ 215 "呼び出し SUB_7002"
+          SUB_7002()
+        end
+        thread_flag_43 = 1
+      end
+      if ((SubPrgResult == 100)):
+        global thread_handler_43=run Thread_if_43()
+        while (thread_flag_43 == 0):
+          if not((SubPrgResult == 100)):
+            kill thread_handler_43
+            thread_flag_43 = 2
+          else:
+            sync()
+          end
+        end
+      else:
+        thread_flag_43 = 2
+      end
+      $ 216 "設定 GPIO_PrgResult=SubPrgResult"
+      write_output_integer_register(1, SubPrgResult)
+      thread_flag_37 = 1
+    end
+    if ((  not  read_input_boolean_register(5) !=   False  )):
+      global thread_handler_37=run Thread_if_37()
+      while (thread_flag_37 == 0):
+        if not((  not  read_input_boolean_register(5) !=   False  )):
+          kill thread_handler_37
+          thread_flag_37 = 2
+        else:
+          sync()
+        end
+      end
+    else:
+      thread_flag_37 = 2
+    end
+    $ 217 "END_CYCLE()"
+    END_CYCLE()
+    $ 218 "If文 GPBI_PrgStop≟ True "
+    if (read_input_boolean_register(5) ==   True  ):
+      $ 219 "SubPrgResult:=800"
+      global SubPrgResult=800
+      $ 220 "設定 GPIO_PrgResult=SubPrgResult"
+      write_output_integer_register(1, SubPrgResult)
+      $ 221 "設定 GPBO_PrgRun= False "
+      write_output_boolean_register(6,   False  )
+    end
+    $ 222 "待機: 0.1"
+    sleep(0.1)
+    $ 223 "prg_no:=0"
+    global prg_no=0
+    $ 224 "荷重の設定: k10"
+    set_target_payload(0.100000, [0.000000, -0.135000, 0.225000], [10.000000, 10.000000, 10.000000, 0.000000, 0.000000, 0.000000])
+    $ 225 "設定"
+    set_tcp(p[0.0,0.09,0.42,0.0,0.0,0.0])
+    $ 226 "If文 (GPIO_PrgNo≠0)"
+    if ((read_output_integer_register(0) != 0)):
+      $ 227 "設定 GPBO_PrgEnd=HI:Pulse 1.0"
+      thread SinglePulse679():
+        write_output_boolean_register(5, True)
+        sleep(1.0)
+        write_output_boolean_register(5, False)
+      end
+      singlePulse679 = run SinglePulse679()
+      $ 228 "設定 GPIO_PrgNo=0"
+      write_output_integer_register(0, 0)
+    end
+    $ 229 "待機 GPBI_PrgStart=LO"
+    while (read_input_boolean_register(4) == True):
+      sync()
+    end
+    $ 230 "待機 GPBI_PrgStop=LO"
+    while (read_input_boolean_register(5) == True):
+      sync()
+    end
+  end
+end

@@ -1,0 +1,752 @@
+def SUB_108():
+  global _hidden_verificationVariable=0
+  step_count_a6cd6c0f_80fa_4339_b4a4_798e60203660 = 0.0
+  thread Step_Counter_Thread_ad8ca63e_3def_495c_9ac4_c63ac2c5e8b0():
+    while (True):
+      step_count_a6cd6c0f_80fa_4339_b4a4_798e60203660 = step_count_a6cd6c0f_80fa_4339_b4a4_798e60203660 + 1.0
+      sync()
+    end
+  end
+  run Step_Counter_Thread_ad8ca63e_3def_495c_9ac4_c63ac2c5e8b0()
+  set_safety_mode_transition_hardness(1)
+  set_gravity([0.0, 0.0, 9.82])
+  set_target_payload(0.100000, [0.135000, 0.000000, 0.225000], [10.000000, 10.000000, 10.000000, 0.000000, 0.000000, 0.000000])
+  set_tool_communication(False, 115200, 0, 1, 1.5, 3.5)
+  set_tool_output_mode(0)
+  set_tool_digital_output_mode(0, 1)
+  set_tool_digital_output_mode(1, 1)
+  set_tool_voltage(0)
+  set_tcp(p[0.0,0.09,0.42,0.0,0.0,0.0])
+  set_standard_analog_input_domain(0, 1)
+  set_standard_analog_input_domain(1, 1)
+  set_tool_analog_input_domain(0, 1)
+  set_tool_analog_input_domain(1, 1)
+  set_analog_outputdomain(0, 0)
+  set_analog_outputdomain(1, 0)
+  set_input_actions_to_default()
+  set_runstate_gp_boolean_output_to_value(0, 3)
+  global DistPillar=0.41094
+  global CandCnt=1
+  global ReCaptZ=0.05
+  global port=3000
+  global socket_timeout=120
+  global host="192.168.1.2"
+  global is_popup=False
+  global pBucket=[p[0.79996, 0.43525, 0.31785, 0, 0, -1.6011], p[0, 0, 0, 0, 0, 0], p[0, 0, 0, 0, 0, 0]]
+  global CaptStepZ=0.085
+  global CaptIndex=[0, 0, 0]
+  global pBucketM=p[-0.74555, -0.4962, 0.3233, 0, 0, 1.58584]
+  global socket_name="vt"
+  global rovi_err=0
+  global SubPrgResult=800
+  global CurrPos=p[-0.17593, -0.51742, 0.60776, -2.18662, 2.17747, -0.00947]
+  global CurrPos_p=p[-0.24752, -0.50298, 0.18448, -2.18662, 2.17747, -0.00947]
+  global ForceStartZ=0.49526
+  global CutOffZ=0.16635
+  global Sub3100_ZMax=0.74
+  global ForceStartX=-0.90368
+  global Sub3100_aRot=0.2
+  global Sub3100_d=0.3
+  global Sub3100_Option=90
+  global Sub3100_a=0.2
+  global Sub3100_XdV=0.1
+  global Sub3100_XdRot=8
+  global ZoneDistTh=0.05
+  global BucketWidth=0.95
+  global ZoneBucketGap=0
+  global ZoneHomeX=0.2
+  global UnloadZ=0.072
+  global CaptPos=p[0.471, -0.41797, -0.0318, 3.14155, 0.01172, 0.00005]
+  global BucketUpperPos=p[0.471, -0.41797, -0.0318, 3.14155, 0.01172, 0.00005]
+  global Sub3100_GPII18=90
+  global Zone6ThX=0.1
+  global Zone6ThY=0.05
+  global pCV=p[0.00461, -0.00024, -0.00036, 0.00209, -0.00399, -0.00235]
+  global CaptRowNo=7
+  global CrankDepthFull=0.025
+  global CrankDepth=0.67842
+  global Y1=[0, 0, 0, 0]
+  global Y2=p[0.01316, -0.00865, 0.00062, -0.00053, -0.02604, 0.04282]
+  global EvacRadiusTh=0.3
+  global EvacXTh=[-0.5, 0.5]
+  global EvacYTh=[-0.8, 1]
+  global EvacZTh=[-0.1, 5]
+  global WorkPosNo=0
+  global Zone1ZTh=0.1
+  global ReCaptNo=0
+  global DistPillarBak=0.41094
+  global CaptIndexWk=0
+  global PoseSub=p[0.36845, -0.00171, -0.71895, -0.03343, 0.03129, -0.04872]
+  global PoseAdd=p[-0.25104, -0.50301, 0.07503, -2.13577, 2.22705, -0.012]
+  global RZTh=15
+  global pBucketC=p[0.45, -0.8, 0.35, 0, 0, 3.1415]
+  global ReCaptZWk=0
+  global CheckMST=1
+  global RZSub=-2.79122
+  global DistPillarCOTh=0.16
+  global DistPillarAPTh=0.26
+  global CutOffZAdd=0.15954
+  global CutOffZDef=0.09
+  global Y8=0
+  global BKWidth_Value=[955, 974, 0]
+  global BKWidth_Name="/prepro/bucket_width"
+  global LevelZ=0.00681
+  global NeighborZ=-0.04046
+  global Currpos_p_UF0=p[-0.24752, -0.50298, 0.18448, -2.18662, 2.17747, -0.00947]
+  global TCPSpeed=p[0, 0, 0, 0, 0, 0]
+  global Sub3100_Xd=[0, 0, 0.1, 0, 0, 0]
+  global Sub3100_q=2
+  global Sub3100_e=1
+  global Sub3100_t=0.5
+  global IsShake=False
+  global BeyondZ=0.2
+  global ShakeCnt=-1
+  global IsSteady_01=False
+  global IsSteady_02=True
+  global HandInZ=0.05
+  global TCPSpeedThZ=0.0005
+  global ShakeWaitSec=1
+  global CutOffPos=p[0.74495, -0.05741, 0.23647, -2.14909, 2.29151, 0]
+  global RelMoveZ=0.075
+  global ForceFeature=p[0.79996, 0.43525, -0.27715, 0, 0, -1.6011]
+  global ForceAxis=[1, 1, 1, 1, 1, 1]
+  global ForceValue=[0, 0, -0.04, 0, 0, 0]
+  global ForceType=2
+  global ForceLimit=[0.01, 0.01, -0.00005, 0.17453, 0.17453, 0.17453]
+  global ForceStep=3
+  global IsBLLoad=False
+  global TM_BLLoad=0.5
+  global Sub104__TiltZTh=[0.25, 0.4]
+  global Sub104_TiltZTh=[-0.5, 0.5]
+  global BucketDef=p[0.79996, 0.43525, 0.31785, 0, 0, -1.6011]
+  global ForceLimitZ=[0.015, 0.05, 0.05]
+  global gGD_pos5=p[0.74849, -0.00183, 0.50817, 2.21308, -2.18326, -0.03191]
+  global CutOffTCP=p[-0.00163, 0.08126, 0.42038, -0.00053, -0.02604, 0.04282]
+  global UseCutOffTCP=False
+  global UseZSlide=False
+  global UseBaseZRotate=True
+  global BKWidth=0.942
+  global Test01=1
+  global CaptPointL_dX=0.185
+  global CaptPointR_dX=0.185
+  global UseShake=False
+  global UseNewCaptPos=True
+  global RZSupDegMin=[-5, 5]
+  global RZSupForceVal=0
+  global UseRZSuppress=False
+  global TCPForce=p[1.00342, -6.76841, -14.88855, 0.14131, 0.11997, 0.00458]
+  global TCPForceBak=p[7.82492, 1.91341, -9.17412, 0.72764, -3.13616, -0.3997]
+  global CVCorrDegMin=[-0.1, 0.1]
+  global RZSupRatio=[1, 1]
+  global RZSupOffset=[0, 0]
+  global CVCorrRatio=[1.5, 1.5]
+  global CVCorrOffset=[0, 0]
+  global CVCorrRZVal=2.6398
+  global RYSub=1.75987
+  global UseCVCorr=True
+  global RZSupForceRange=[-5, 5]
+  global DistBKUpperTh=0.1
+  global DistBKUpper=0.76924
+  global StopSpeed=[0.005, 0.005, 0.005, 99999, 99999, 0.054]
+  global RZSupRYRange=[-5, 5]
+  global UseRZSupStep1=False
+  global UseZRotate=True
+  global CVCorrRYSub=1.75987
+  global CVCorrYVal=-0.0129
+  global DistOrigin=0.56058
+  global v1=True
+  global v2=True
+  global v3=True
+  global CVXTh=[-0.45, 0.45]
+  global CVYTh=[-1, -0.7]
+  global CVZTh=[-0.07, 5]
+  global ForceVZDecay=0.04
+  global ForceVZDecayWk=0.04
+  global ForceLZDecay=0.00005
+  global ForceLZDecayWk=0.00005
+  global gGD_2_LM_Offset=p[0.001, 0, -0.00365, 0, 0, 0]
+  global gGD_2_RM_Offset=p[0.0027, 0, -0.0018, 0, 0, 0]
+  global ForceValueBak=[0, 0, 0, 0, 0]
+  global TCPForceBak2=p[0.41848, -1.89155, -10.05542, 0.03169, -0.26481, 0.12798]
+  global TCPSpeedBak2=p[-0.00035, -0.00053, -0.0005, 0.00186, -0.01031, 0.00566]
+  global gGD_2_LM_p=p[-0.12522, -0.77707, -0.3404, 0.21124, 1.94111, -2.18927]
+  global gGD_2_RM_p=p[-0.12529, -0.77743, -0.33452, 0.33321, -2.01114, 2.23487]
+  global gGD_2_M_p=p[-0.12643, -0.77733, -0.33798, -0.06562, 2.06421, -2.31067]
+  global gGD_2_M_Offset=p[0.00149, 0, -0.00403, 0, 0, 0]
+  global RXSub=0.37787
+  global RXTiltDegMin=[-15, 15]
+  global UseChkRXTilt=True
+  global RBArmLength=1.2
+  global gGD_2_p=p[-0.12643, -0.77733, -0.33798, -0.06562, 2.06421, -2.31067]
+  global PickPosFlange=p[0.8476, 0.02501, -0.01771, 2.15369, -2.06963, -0.20471]
+  global PickTCP=p[0, 0.09, 0.42, 1.894, 0, 0]
+  global RBArmOffset=-0.05
+  global PickPosDist=0.84815
+  global WorkNoCV=10000
+  global WorkNoTL=20000
+  global Bucket=p[0.32604,0.49174,0.0,-1.882900624652718E-5,2.8304179127934987E-5,-1.593185305749222]
+  global BucketM=p[0.32604,0.49174,0.0,2.2353980716304163E-16,-3.5868426080024975E-16,-1.5931853071795856]
+  global CV=p[0.0,0.0,0.0,0.0,0.0,0.0]
+  global CaptPoint_C=p[-0.335,0.0,0.2915,-2.1962990605814006,-2.246289190961992,-5.664481053350347E-5]
+  global CaptPoint_C2=p[0.32796661698047924,-0.010768520544682924,0.01931625281283378,2.2288103429550152,-2.213636886217198,8.598462540813273E-5]
+  global CaptPoint_L=p[-0.335,-0.29,0.4,2.196198431950414,2.246349774520516,5.8693989933774055E-5]
+  global CaptPoint_L2=p[0.327894307417917,-0.010799940826224014,0.01928712668893995,2.087717047309385,-2.0736781215133306,0.27365839887453103]
+  global CaptPoint_R=p[-0.335,0.29,0.4,-2.1963472338807764,-2.2462285075856694,3.086531389441326E-5]
+  global CaptPoint_R2=p[0.327926308680866,-0.010795166414457658,0.019300245403843563,-2.1186306375223185,2.1040550557443427,0.22023197678473694]
+  global Capt_1BK_L=p[-0.395,-0.47,0.35,-2.1961210242572884,-2.2463362846055,-2.908274762447041E-4]
+  global Capt_1BK_R=p[-0.395,0.51,0.35,2.196067754706757,2.246288285862388,2.8411291050601595E-5]
+  global Capt_1BK_pos1=p[-0.4218793038724447,-0.003154429464978058,0.2915499891144615,-2.1963422029204875,-2.2438663520270015,-0.02197160668673838]
+  global Capt_1BK_pos2=p[-0.42187829024618434,-0.0031710253373066375,0.29156503858953065,-2.196324918349679,-2.2439040699490773,-0.021928444416953782]
+  global Capt_2BK_L=p[0.42186661528427194,0.4254738068040517,0.35042275762909847,2.239156309475874,-2.1837044610999294,0.002643817066643282]
+  global Capt_2BK_R=p[0.4218208572756906,-0.5427676723257963,0.350372239919558,2.2392697861179327,-2.183553596194912,0.002410470905346486]
+  global Capt_2BK_pos1=p[0.42193501458435656,0.004742683868356356,0.35045865974037793,2.2391012408536453,-2.1839704655717003,0.002677867056024068]
+  global Capt_2BK_pos2=p[0.421903984494575,0.004707988774967922,0.35045218900915065,2.239114367170047,-2.183895515396197,0.002684056681074047]
+  global Capt_CV_M=p[0.08968928492271795,-0.12413036042932779,0.03605996226072461,0.0172909443336724,-2.9219658445394603,0.06660949983235195]
+  global Capt_GD_M=p[-0.004053197679954899,-0.25261725691632436,-0.01970497430780127,0.0332779454553888,-3.140179196376707,-0.0034093680964018282]
+  global HomePointL=p[-0.36789,-0.5117344641471838,0.78,-0.6278857271586024,3.0680899128661667,-8.649957362498864E-4]
+  global Master_pos=p[-0.14656110430366184,-0.40121332381976205,-0.25541513378900926,0.02091736213152114,3.1415027599995287,1.7399500014305747E-4]
+  global Master_posL=p[-0.003,-0.27,0.109,0.02094395102393583,3.0543261909900803,-5.235987755386035E-4]
+  global Master_posR=p[-0.003,-0.27,0.109,-0.019810987664379186,-3.054193931591229,4.952746915529204E-4]
+  global Master_pos_1=p[0.11094339812903395,-0.23710672065782984,0.08047378202276018,-0.05666752666458696,3.1228966394147033,0.01312068089365201]
+  global PickPos=p[0.10830682331105715,-1.3709505888096256,-0.18404188875951455,-0.00622194000158997,2.880236948927292,-0.00383636509397631]
+  global Solve=p[-0.00368,-0.0021000000000000003,0.25739999999999996,0.0,0.0,0.0]
+  global TCP3100TL=p[0.0,0.08,0.42,1.8939999999999997,0.0,0.0]
+  global TEST=p[0.1,0.0,0.2,0.0,0.0,0.0]
+  global TEST_ROTSUP=p[-0.07293017509777999,-0.3201239472424659,0.14015840016860298,-0.014967413338418362,-3.108805898474534,-0.035972414862118114]
+  global UF=p[0.0,0.0,0.0,0.0,0.0,0.0]
+  global g1CV_posL1=p[0.05028133628211688,-0.4526481033729615,0.1221845548632916,-2.213335080948508,-2.1937561336067057,-0.3280056759040735]
+  global g1CV_posR1=p[0.03743870476062511,-0.53119407812668,0.11301901343688614,2.073418671558482,2.153257467049566,0.11656306439039889]
+  global g1GD_pos1=p[0.15518019183109402,-0.6360044329537242,0.2714505325043806,2.2006040244311444,2.21554807672813,0.0172874948472804]
+  global g1GD_pos2=p[-0.007337834145666841,-0.42324245412060646,0.5079212006678052,2.6760532764902814,-1.567764413679873,-0.022285842798931445]
+  global g1GD_pos3=p[0.4429625218178085,-0.18661696083035195,0.507920984048331,3.062514306867408,-0.47452543714459344,0.0021233057719386404]
+  global g1GD_pos4=p[-0.25628841794770224,-0.020630481098425146,0.45,2.148716725221303,2.2918109407224354,-1.3854918368741778E-5]
+  global g1GD_pos5=p[0.7484901674867033,-0.0018297926392197685,0.5081725586813144,2.2130770752861575,-2.1832592879104133,-0.03191009416933778]
+  global g1GD_pos5_NEAR=p[-0.5143300000000001,-0.023002183632447833,0.4499678963159493,2.1476150413314157,2.292837734093618,6.185870865614646E-5]
+  global g1GD_posL1=p[-0.08276848269606216,-0.3996147100031649,0.1488453551331823,2.286527078917204,1.8420745504477611,0.33698451773695576]
+  global g1GD_posL2=p[-0.3253977027403738,-0.3024804624281039,0.16332814085945146,2.72312820760317,0.9631021078169197,0.32447452035226126]
+  global g1GD_posL3=p[-0.6791033397183219,0.06787475590683856,0.16337212788108813,2.1383125299263996,2.086116032377724,0.4536080263755059]
+  global g1GD_posR1=p[-0.09893370538053747,-0.4999608954567234,0.14329885217724153,2.43311852414254,1.4238397520832589,0.08559216753941556]
+  global g1GD_posR2=p[-0.3729565201882258,-0.3752983669473301,0.143299052800563,2.6951655216297596,0.8130506811102118,-0.02387549506099888]
+  global g1GD_posR3=p[-0.7385929502572233,-0.029472684480355026,0.1499650660949685,2.0484522752014467,1.9493695704119496,0.18368227556562683]
+  global g2CV_posL1=p[0.3409386496330911,-0.4656338066361442,0.1250074988128972,2.209372209162659,2.1945371304665926,0.3160714960040194]
+  global g2CV_posR1=p[0.3400736278759575,-0.531334269888987,0.1183415684753657,2.07314649492589,2.1532617466521136,0.11638666128062146]
+  global g2GD_pos1=p[0.2541388115968006,-0.677503610088671,0.18526502532787942,-2.037688671369965,-2.388999479520465,-0.002109631087665523]
+  global g2GD_pos2=p[-0.35818885211753737,-0.02943312719532195,0.47096116840044344,1.4568595267171867,-2.7784847445572702,-0.04463229023299353]
+  global g2GD_pos3=p[-0.4833827965475489,-0.029425102582844323,0.47095045097290333,-1.0117734245024659,2.973384260184764,0.045160195756964006]
+  global g2GD_pos4=p[-0.42371242620081334,0.2837179199112165,0.4709483139805065,0.22202778566798673,3.1218816959712297,0.041166705465153206]
+  global g2GD_pos5=p[-0.6855743316304203,0.007655128458448821,0.4709662668563723,2.1596568846228914,2.2459763146302074,0.019957508663967272]
+  global g2GD_pos5_NEAR=p[0.5968300000000001,0.0128,0.44997000000000004,2.250000000000808,-2.1920000000007867,0.0]
+  global gCV_11_M=p[-0.25529127511068256,-0.5054363067016254,0.059713194070025455,2.172547775310992,-2.0543807332467776,-0.20689503523223662]
+  global gCV_12_M=p[-0.32798198641631016,-0.5054430921610745,0.0597385249105592,2.1725162457200136,-2.0544113970711013,-0.20686174850074496]
+  global gCV_13_M=p[-0.3279869311970022,-0.30904932556140796,0.327790798794813,2.1725214372210315,-2.0544374082466135,-0.20693835373303507]
+  global gCV_1_M=p[-0.2475,-0.503,0.089,-2.1866540420179374,2.177425269448946,-0.009536979088884972]
+  global gCV_2_M=p[-0.2475,-0.503,0.173,-2.18666899575799,2.1773957732922034,-0.0092075302569393]
+  global gCV_3_M=p[0.29099390607376485,-0.6570558385379063,0.0722153583041818,1.9884242634571576,2.2321538498123994,0.15249643504377583]
+  global gCV_pos5=p[0.3400172856834047,-0.9722754606605235,-0.18287928563575456,2.073394561413637,2.1531827558666565,0.11639000988241816]
+  global gGD_1_LM=p[-0.1262726774829559,-0.8174796109614044,-0.33674474349080696,0.2112308085288475,1.9411003456530644,-2.189361541035385]
+  global gGD_1_LM_RX=p[0.02416,-0.7290503881876362,-0.11492000000000001,0.3044368416109271,1.9674275598429376,-2.2260150226690767]
+  global gGD_1_LM_RXF=p[0.02413503458160308,-0.74534,-0.11578000000000001,0.2411332216392182,1.7407173006243832,-2.3674279033231747]
+  global gGD_1_M=p[-0.12790897057458256,-0.8163945918901088,-0.3339352168380901,-0.06564671433948589,2.0641140670937284,-2.3107165177144764]
+  global gGD_1_M_RX=p[0.023469999999999998,-0.7267389086136226,-0.11653,-0.01497665825746678,-2.067091763806016,2.343829767295237]
+  global gGD_1_M_RXF=p[0.02415523713330076,-0.7453200000000001,-0.11578426509069895,-0.012477314995716382,-1.853515977408631,2.515027308648709]
+  global gGD_1_RM=p[-0.12796264783334627,-0.8170040054802514,-0.3327014080312014,0.3330003793653333,-2.011013267279091,2.2349649464137435]
+  global gGD_1_RM_RX=p[0.023710000000000002,-0.7266791760279572,-0.11328,0.25928042729790574,-1.9492131299374433,2.2165015837642534]
+  global gGD_1_RM_RXF=p[0.024158234647744328,-0.74536,-0.11577,0.21548497967238725,-1.726437707763004,2.3373117534316665]
+  global gGD_2_LM=p[-0.12626091917068796,-0.7770718184501533,-0.33675206663125395,0.21126438812149884,1.941138303042577,-2.1893018665831705]
+  global gGD_2_LM_RX=p[-0.12622167300668477,-0.7770733915204613,-0.3367525439163409,0.21124271364283437,1.9411095263424887,-2.189269564555082]
+  global gGD_2_LM_RXF=p[0.02518,-0.6822999999999999,-0.11982,0.24121310672797797,1.7407223643292684,-2.3672997334921986]
+  global gGD_2_M=p[-0.12793663429450833,-0.7773574522869395,-0.33394984132626776,-0.06564938424273538,2.0641504849705377,-2.310716408308342]
+  global gGD_2_M_RX=p[-0.12792060392374285,-0.7773260278196468,-0.3339521330192938,-0.06561991950134864,2.0642084722765492,-2.310668232603192]
+  global gGD_2_M_RXF=p[0.02469,-0.68228,-0.11781,-0.012625584579695818,-1.8536977166603092,2.514979910589354]
+  global gGD_2_RM=p[-0.12797997067477326,-0.7774642074255058,-0.3326985441311473,0.3331080421315927,-2.011076556025046,2.2349323444148403]
+  global gGD_2_RM_RX=p[-0.1279888071960027,-0.7774326949213927,-0.3327158765162092,0.3332105331271039,-2.0111436319814047,2.2348749092984104]
+  global gGD_2_RM_RXF=p[0.02418,-0.68221,-0.11985,0.21545635593876583,-1.7267658137434814,2.337110041109278]
+  global gGD_3_LM=p[-0.12626263348363476,-0.7523471898125464,-0.33672438220212647,0.2113545755416301,1.9410950423777906,-2.189376566934867]
+  global gGD_3_LM_RX=p[-0.1262597439367239,-0.7523008235587403,-0.3367451236899513,0.21134901869078732,1.9411703795546333,-2.1893125730656444]
+  global gGD_3_LM_RXF=p[0.02387752228160463,-0.5964211774687285,-0.05792315514989682,0.2704410553277331,1.9481847980902196,-2.214876983085744]
+  global gGD_3_M=p[-0.12796878859129748,-0.7523962905598761,-0.33394267665045857,-0.065684617478086,2.064145141054345,-2.310780011243594]
+  global gGD_3_M_RX=p[-0.12796590688641776,-0.7523659646398019,-0.33395828369950487,-0.06567787060921883,2.0642136183902786,-2.31073004100884]
+  global gGD_3_M_RXF=p[0.02383447419609676,-0.5964085561522618,-0.0579509198373786,-0.014600929068906539,-2.066655165579624,2.3438719244209403]
+  global gGD_3_RM=p[-0.12796470550898337,-0.7539002261774197,-0.332710102172522,0.3331226170896438,-2.011158416153169,2.2349148299901898]
+  global gGD_3_RM_RX=p[-0.12797344473606456,-0.753866206538325,-0.33272136941398783,0.33319377875257145,-2.0112199536812905,2.2348581435409565]
+  global gGD_3_RM_RXF=p[0.023773322279514588,-0.5964087734876792,-0.05795139315103717,0.24060086319727583,-1.933030903056379,2.187075285864524]
+  global gGD_4_LM=p[-0.2831707309426354,-0.7523399739382765,-0.17268041941129486,0.21129413233041766,1.941106382784679,-2.1893088292394003]
+  global gGD_4_LM_RX=p[-0.12533199352487323,-0.6346108123799734,-0.003643920282847657,0.304552460658092,1.9670859988240124,-2.226395027960848]
+  global gGD_4_RM=p[0.024250680701946692,-0.7538595065032672,-0.16481934555404132,0.3331677741969971,-2.011186486457638,2.234806160821488]
+  global gHome_Position=p[-0.0028799999999999997,-0.33081,0.1087,-0.02099958342773921,-3.141491282453575,3.986162810876369E-4]
+  global gTAIHI_pos1=p[0.034435296708333146,-0.2890869270984411,0.28697762766096685,-0.9517096680276043,2.9907327255336362,-0.006242657270483182]
+  global gTAIHI_pos2=p[0.46041690381401934,0.09562026346103787,0.3409455343940188,-2.575428180750575,1.7504967205574518,-0.009370784990557466]
+  global gTAIHI_pos3=p[0.4777514786587304,0.10855417509450788,0.25667938190447326,-3.115092130529677,-0.059113053813058626,0.017060902648732133]
+  global gTAIHI_pos4=p[0.47773948064032057,0.10853581553326999,-0.15133852019421468,-3.1151611852917296,-0.05914313994407087,0.017149581050184888]
+  global gTAIHI_pos5=p[0.30588450070104545,0.17870028478253597,-0.38750721344025674,-3.115302721311487,-0.05927431563397507,0.01725874757592571]
+  global p0507=p[-0.335,0.29,0.4,-2.152,-2.1999999999999993,-0.09000000000000297]
+  rtde_set_watchdog("speed_slider_mask", 10.0, "ignore")
+  # begin: URCap Installation Node
+  #   Source: Ethernet/IP I/O Monitor URCap, 1.2.0, 
+  #   Type: Ethernet/IP I/O Monitor
+  conn = rpc_factory("xmlrpc", "http://127.0.0.1:" + to_str(61101) + "/RPC2")
+  
+  def show_monitor():
+    return conn.eip_monitor.show()
+  end
+  # end: URCap Installation Node
+  $ 2 "開始前シーケンス"
+  $ 3 "スクリプト: ROVI_RESET.script"
+  def ROVI_RESET():
+    if (not socket_open(host,port,socket_name)):
+      rovi_err=902
+      return False
+    end
+    socket_send_line("X0()",socket_name)
+    ret=socket_read_line(socket_name,socket_timeout)
+    if (ret == "OK"):
+      rovi_err=0
+    elif (ret == "NG"):
+      rovi_err=to_num(socket_read_line(socket_name,socket_timeout))
+    else:
+      ret="NG"
+      rovi_err=903
+    end
+    socket_close(socket_name)
+    if (rovi_err != 0):
+      if (is_popup):
+        popup(str_cat(ret,rovi_err),title="X0",warning=True,blocking=True)
+      end
+      return False
+    else:
+      return True
+    end
+  end
+  $ 4 "スクリプト: ROVI_CAPTURE.script"
+  def ROVI_CAPTURE():
+    Y1=[0.0,0.0,0.0,0.0]
+  #  p=get_actual_tool_flange_pose()
+    p=Bucket
+    if (not socket_open(host,port,socket_name)):
+      rovi_err=902
+      return False
+    end
+    socket_send_string("X1(",socket_name)
+    socket_send_string(p[0],socket_name)
+    socket_send_string(",",socket_name)
+    socket_send_string(p[1],socket_name)
+    socket_send_string(",",socket_name)
+    socket_send_string(p[2],socket_name)
+    socket_send_string(",",socket_name)
+    socket_send_string(p[3],socket_name)
+    socket_send_string(",",socket_name)
+    socket_send_string(p[4],socket_name)
+    socket_send_string(",",socket_name)
+    socket_send_string(p[5],socket_name)
+    socket_send_line(")",socket_name)
+    ret=socket_read_line(socket_name,socket_timeout)
+    if (ret == "OK"):
+      rovi_err=0
+      f=socket_read_ascii_float(4,socket_name,socket_timeout)
+      while (f[0]!=4):
+        sleep(0.3)
+        f=socket_read_ascii_float(4,socket_name,socket_timeout)
+      end
+      i=0
+      while (i<4):
+        Y1[i]=f[i+1]
+        i=i+1
+      end
+    elif (ret == "NG"):
+      rovi_err=to_num(socket_read_line(socket_name,socket_timeout))
+    else:
+      ret="NG"
+      rovi_err=903
+    end
+    socket_close(socket_name)
+    if (rovi_err != 0):
+      if (is_popup):
+        popup(str_cat(ret,rovi_err),title="X1",warning=True,blocking=True)
+      end
+      return False
+    else:
+      return True
+    end
+  end
+  $ 5 "スクリプト: ROVI_SOLVE.script"
+  def ROVI_SOLVE(is_popup=is_popup):
+    buf=p[10000.0,0.0,0.0,0.0,0.0,0.0]
+    if (not socket_open(host,port,socket_name)):
+      rovi_err=902
+      return False
+    end
+    socket_send_line("X2()",socket_name)
+    ret=socket_read_line(socket_name,socket_timeout)
+    if (ret == "OK"):
+      rovi_err=0
+      f=socket_read_ascii_float(6,socket_name,socket_timeout)
+      while (f[0]!=6):
+        sleep(0.3)
+        f=socket_read_ascii_float(6,socket_name,socket_timeout)
+      end
+      counter=0
+      while (counter<6):
+        buf[counter]=f[counter+1]
+        counter=counter+1
+      end
+    elif (ret == "NG"):
+      rovi_err=to_num(socket_read_line(socket_name,socket_timeout))
+    else:
+      ret="NG"
+      rovi_err=903
+    end
+    sleep(1.0)
+    socket_close(socket_name)
+    if (rovi_err != 0):
+      if (is_popup):
+        popup(str_cat(ret,rovi_err),title="X2",warning=True,blocking=True)
+      end
+    end
+    return buf
+  end
+  $ 6 "スクリプト: ROVI_RECIPE.script"
+  def ROVI_RECIPE(recipe):
+    if (not socket_open(host,port,socket_name)):
+      rovi_err=902
+      return False
+    end
+    socket_send_line(str_cat(str_cat("X3(",recipe),")"),socket_name)
+    ret=socket_read_line(socket_name,socket_timeout)
+    if (ret == "OK"):
+      rovi_err=0
+    elif (ret == "NG"):
+      rovi_err=to_num(socket_read_line(socket_name,socket_timeout))
+    else:
+      ret="NG"
+      rovi_err=903
+    end
+    socket_close(socket_name)
+    if (rovi_err != 0):
+      if (is_popup):
+        popup(str_cat(ret,rovi_err),title="X3",warning=True,blocking=True)
+      end
+      return False
+    else:
+      return True
+    end
+  end
+  $ 7 "スクリプト: ROVI_PARAM.script"
+  def ROVI_PARAM(prm_name,prm_value=None):
+    Y8=0.0
+    if (not socket_open(host,port,socket_name)):
+      rovi_err=902
+      return False
+    end
+    socket_send_string("X8(",socket_name)
+    socket_send_string(prm_name,socket_name)
+    if (prm_value != None):
+      socket_send_string(" ",socket_name)
+      socket_send_string(prm_value,socket_name)
+    end
+    socket_send_line(")",socket_name)
+    ret=socket_read_line(socket_name,socket_timeout)
+    if (ret == "OK"):
+      rovi_err=0
+      if (prm_value == None):  # rosparam get
+        Y8=to_num(socket_read_line(socket_name,socket_timeout))
+      else:    # rosparam set
+        f=1
+      end
+    elif (ret == "NG"):
+      rovi_err=to_num(socket_read_line(socket_name,socket_timeout))
+    else:
+      ret="NG"
+      rovi_err=903
+    end
+    socket_close(socket_name)
+    if (rovi_err != 0):
+      if (is_popup):
+        popup(str_cat(ret,rovi_err),title="X8",warning=True,blocking=True)
+      end
+      return False
+    else:
+      return True
+    end
+  end
+  $ 8 "スクリプト: CYCLE_CONTROL.script"
+  def GET_REG(prg_no):
+    WorkPosNo=read_input_integer_register(4)-1                       # GPII_WorkPosNo
+    CaptIndex[WorkPosNo]=read_input_integer_register(21)-1           # GPII_CaptColNo
+    CaptRowNo=read_input_integer_register(20)-1        # GPII_CaptRowNo
+    CaptStepZ=read_input_integer_register(6) / 1000.0         # GPII_CaptStepZ
+    ReCaptNo=0
+    if (prg_no==1203):
+      ReCaptNo=read_input_integer_register(22)                # GPII_ReCaptNo
+    end
+    ReCaptZ=read_input_integer_register(7) / 1000.0         # GPII_ReCaptZ
+    CutOffZDef=read_input_integer_register(11) / 1000.0          # GPII_CutOffZ
+    CrankDepthFull=read_input_integer_register(10) / 1000.0   # GPII_FullDepth
+  end
+  
+  def POSE_SUB(p, teach_frame):
+    return pose_trans(inv(teach_frame), p)
+  end
+  
+  def GET_BUCKET_UPPER(pos=0):
+    if UseNewCaptPos:
+      p=POSE_SUB(CaptPoint_C, BucketM)
+      pX=[BKWidth/2,CaptPointL_dX,BKWidth-CaptPointR_dX]
+      p[0]=pX[pos]
+    else:
+      captpos=[CaptPoint_C,CaptPoint_L,CaptPoint_R]
+      p=captpos[pos]
+      p=POSE_SUB(p, BucketM)
+    end
+    return p
+  end
+  
+  def SET_BUCKET_DEF():
+    BucketM=pBucketM
+    if (WorkPosNo<0):
+      Bucket=pBucketC
+    else:
+      Bucket=pBucket[WorkPosNo]
+    end
+  end
+  
+  def SET_BUCKET():
+    SET_BUCKET_DEF()
+    Bucket[2]=Bucket[2]-CaptStepZ*CaptRowNo
+  end
+  
+  def SET_CV():
+    CV=pCV
+  end
+  
+  def SET_CAPT_INDEX():
+    CaptIndexWk=CaptIndex[WorkPosNo]
+    ReCaptZWk=0
+    if (prg_no==1203):
+      if   (ReCaptNo==0):
+        if (CaptIndexWk==0):
+          if (0<=DistPillarBak):
+            CaptIndexWk=1
+          else:
+            CaptIndexWk=2
+          end
+          ReCaptZWk=0
+        else:
+          CaptIndexWk=0
+          ReCaptZWk=0
+        end
+      elif (ReCaptNo==1):
+        if (CaptIndexWk==0):
+          CaptIndexWk=0
+          ReCaptZWk=-ReCaptZ
+        else:
+          CaptIndexWk=CaptIndexWk
+          ReCaptZWk=-ReCaptZ
+        end
+      else:
+        if (CaptIndexWk==0):
+          CaptIndexWk=0
+          ReCaptZWk=ReCaptZ
+        else:
+          CaptIndexWk=CaptIndexWk
+          ReCaptZWk=ReCaptZ
+        end
+      end
+    end
+  end
+  
+  def GET_CAPTPOS():
+    SET_BUCKET()
+    SET_CAPT_INDEX()
+    if UseNewCaptPos:
+      p=GET_BUCKET_UPPER(CaptIndexWk)
+      p[2]=p[2]-ReCaptZWk
+    else:
+      captpos=[CaptPoint_C,CaptPoint_L,CaptPoint_R]
+      p=captpos[CaptIndexWk]
+      p[2]=p[2]-ReCaptZWk
+      p=POSE_SUB(p, BucketM)
+    end
+    return p
+  end
+  
+  def CHECK_CAPTPOS():
+    isOK=((CaptStepZ*(read_input_integer_register(20)-1)) < (read_input_integer_register(9) / 1000.0))
+    return isOK
+  end
+  
+  def GET_ZSLIDE_POS(p):
+    p[2]=p[2]-CaptStepZ*CaptRowNo
+    return p
+  end
+  
+  def END_CYCLE():
+    stopl(1.2)
+    end_force_mode()
+    end_freedrive_mode()
+    socket_close(socket_name)
+  end
+  
+  def CHECK_SPEED(smax,f=[1,1,1,1,1,1]):
+    s=TCPSpeed
+    i=0
+    while (i<6):
+      if ((f[i]==1) and (smax[i]<s[i])):
+        return False
+      end
+      i=i+1
+    end
+    return True
+  end
+  $ 9 "スクリプト: ROTATE_CONTROL.script"
+  def GET_TCP_FORCE_TOOL():
+    force_torque=get_tcp_force()
+    force_B=p[force_torque[0], force_torque[1], force_torque[2], 0, 0, 0]
+    torque_B=p[force_torque[3], force_torque[4], force_torque[5], 0, 0, 0]
+    tcp=get_actual_tcp_pose()
+    rotation_BT=p[0, 0, 0, tcp[3], tcp[4], tcp[5]]
+    force_T=pose_trans(pose_inv(rotation_BT), force_B)
+    torque_T=pose_trans(pose_inv(rotation_BT), torque_B)
+    force_torque_T=p[force_T[0], force_T[1], force_T[2], torque_T[0], torque_T[1], torque_T[2]]
+    return force_torque_T
+  end
+  
+  def CHECK_VALUE_RZ():
+    return True
+  end
+  
+  def GET_FORCE_VALUE_RZ(target):
+    PoseSub= pose_sub (CurrPos_p,target)
+    RYSub=r2d(PoseSub[4])
+    RZSub=r2d(PoseSub[5])
+  #  if (RYSub<RZSupRYRange[0] or RZSupRYRange[1]<RYSub):
+  #    RZSupForceVal=0.0
+  #    return RZSupForceVal
+  #  end
+    if (RZSub<0):
+      RZMin=RZSupDegMin[0]
+      RZRatio=RZSupRatio[0]
+      RZOffset=RZSupOffset[0]
+    else:
+      RZMin=RZSupDegMin[1]
+      RZRatio=RZSupRatio[1]
+      RZOffset=-RZSupOffset[1]
+    end
+    if (norm(RZSub) >= norm(RZMin)):
+      RZSupForceVal=(RZMin-RZSub)*RZRatio+RZOffset
+    else:
+      RZSupForceVal=0
+    end
+    if (RZSupForceVal<RZSupForceRange[0]):
+      RZSupForceVal=RZSupForceRange[0]
+    elif (RZSupForceRange[1]<RZSupForceVal):
+      RZSupForceVal=RZSupForceRange[1]
+    end
+    if (RYSub<RZSupRYRange[0] or RZSupRYRange[1]<RYSub):
+      RZSupForceVal=0
+    end
+    if ((not UseRZSupStep1) and (ForceStep==1)):
+      RZSupForceVal=0
+    end
+    return RZSupForceVal
+  end
+  
+  def GET_CVCORR_VALUE(target):
+    PoseSub=pose_sub(CurrPos_p,target)
+    RYSub=r2d(PoseSub[4])
+    CVCorrRYSub=RYSub
+    if (RYSub<0):
+      RYMin=-CVCorrDegMin[0]
+      RZRatio=CVCorrRatio[0]
+      RZOffset=-CVCorrOffset[0]
+    else:
+      RYMin=-CVCorrDegMin[1]
+      RZRatio=CVCorrRatio[1]
+      RZOffset=CVCorrOffset[1]
+    end
+    if (norm(RYSub) >= norm(RYMin)):
+      t=get_tcp_offset()
+      CVCorrYVal=-t[2]*sin(d2r(RYSub))
+      CVCorrRZVal=RYSub*RZRatio+RZOffset
+    else:
+      CVCorrYVal=0
+      CVCorrRZVal=0
+    end
+  end
+  
+  def GET_CVCORR_POS(target):
+    if UseCVCorr:
+      pos= pose_add (p[0,0,0,0,0,d2r(-CVCorrRZVal)],p[0,0,0,target[3],target[4],target[5]])
+      pos=p[target[0],target[1],target[2],pos[3],pos[4],pos[5]]
+    else:
+      pos=target
+    end
+    return pos
+  end
+  
+  def CHECK_RX_TILT(target):
+    PosSub=pose_sub(CurrPos_p,target)
+    RXSub=r2d(PoseSub[3])
+    return (RXTiltDegMin[0]<RXSub and RXSub<RXTiltDegMin[1])
+  end
+  $ 10 "ロボットプログラム"
+  $ 11 "prg_no:=1201"
+  global prg_no=1201
+  $ 12 "設定"
+  set_tcp(p[0.0,0.09,0.42,0.0,0.0,0.0])
+  $ 13 "ROVI_RECIPE"
+  $ 14 "If文 (not ROVI_RECIPE(GPII_WorkNo+WorkNoCV))"
+  if ((not ROVI_RECIPE(read_input_integer_register(2)+WorkNoCV))):
+    $ 15 "SubPrgResult:=rovi_err"
+    global SubPrgResult=rovi_err
+    $ 16 "待機: 999999.0"
+    sleep(999999.0)
+  end
+  $ 17 "ROVI_RESET"
+  $ 18 "If文 (not ROVI_RESET())"
+  if ((not ROVI_RESET())):
+    $ 19 "SubPrgResult:=rovi_err"
+    global SubPrgResult=rovi_err
+    $ 20 "待機: 999999.0"
+    sleep(999999.0)
+  end
+  $ 21 "ROVI_CAPTURE"
+  $ 22 "待機: 3.0"
+  sleep(3.0)
+  $ 23 "If文 ( not ROVI_CAPTURE())"
+  if ((  not  ROVI_CAPTURE())):
+    $ 24 "SubPrgResult:=rovi_err"
+    global SubPrgResult=rovi_err
+    $ 25 "待機: 999999.0"
+    sleep(999999.0)
+  end
+  $ 26 "ROVI_SOLVE"
+  $ 27 "Y2:=ROVI_SOLVE()"
+  global Y2=ROVI_SOLVE()
+  $ 28 "If文 (Y2[0]≟10000.)"
+  if ((Y2[0] == 10000.)):
+    $ 29 "SubPrgResult:=rovi_err"
+    global SubPrgResult=rovi_err
+    $ 30 "待機: 999999.0"
+    sleep(999999.0)
+  end
+  $ 31 "荷重の設定: k10"
+  set_target_payload(0.100000, [0.135000, 0.000000, 0.225000], [10.000000, 10.000000, 10.000000, 0.000000, 0.000000, 0.000000])
+  $ 32 "荷重の設定: k120"
+  set_target_payload(0.100000, [0.135000, 0.000000, 0.225000], [120.000000, 120.000000, 120.000000, 0.000000, 0.000000, 0.000000])
+  $ 33 "CutOffTCP:=pose_trans(Y2, get_tcp_offset())"
+  global CutOffTCP= pose_trans (Y2, get_tcp_offset())
+  $ 34 "var_1:=pose_trans(get_tcp_offset(), Y2)"
+  global var_1= pose_trans (get_tcp_offset(), Y2)
+  $ 35 "set_tcp(CutOffTCP)"
+  set_tcp(CutOffTCP)
+  $ 36 "MoveL"
+  $ 37 "gCV_2_M" "breakAfter"
+  movel(pose_trans(CV, gCV_2_M), a=0.03, v=0.25)
+  $ 38 "MoveL"
+  $ 39 "gCV_1_M" "breakAfter"
+  movel(pose_trans(CV, gCV_1_M), a=0.02, v=0.25)
+  $ 40 "待機: 3.0"
+  sleep(3.0)
+  $ 41 "停止"
+  halt
+end

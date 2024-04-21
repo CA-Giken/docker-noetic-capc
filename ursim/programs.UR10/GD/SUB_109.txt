@@ -1,0 +1,59 @@
+ プログラム
+   変数設定
+   開始前シーケンス
+     スクリプト: ROVI_RESET.script
+     スクリプト: ROVI_CAPTURE.script
+     スクリプト: ROVI_SOLVE.script
+     スクリプト: ROVI_RECIPE.script
+     スクリプト: ROVI_PARAM.script
+     スクリプト: CYCLE_CONTROL.script
+     スクリプト: ROTATE_CONTROL.script
+     スクリプト: ZONE_CONTROL.script
+   ロボットプログラム
+     If文 CHECK_ALLOW_GO_HOME(2) or CHECK_ALLOW_GO_HOME(3)
+       If文 GPBI_WorkExists and GPBI_BLLoad0
+         設定
+         荷重の設定: k2
+         ROVI_RECIPE
+           If文 (not ROVI_RECIPE(GPII_WorkNo+WorkNoTL))
+             SubPrgResult:=rovi_err
+             待機: 999999.0
+         ROVI_RESET
+           If文 (not ROVI_RESET())
+             SubPrgResult:=rovi_err
+             待機: 999999.0
+         設定 GPBO_BLStop=HI:Pulse 1.0
+         ROVI_CAPTURE
+           force_mode_set_damping(0)
+           force_mode_set_gain_scaling(0.5)
+           待機: 0.02
+           zero_ftsensor()
+           フォース
+             forceON:= True 
+             ループ forceON
+               If文 TCPForceTL[3]<-2
+                 待機: 1.0
+                 forceON:= False 
+               待機: 0.1
+           待機: 3.0
+           force_mode_set_gain_scaling(1)
+           force_mode_set_damping(0)
+           If文 ( not ROVI_CAPTURE())
+             SubPrgResult:=rovi_err
+             待機: 999999.0
+         ROVI_SOLVE
+           Y2:=ROVI_SOLVE()
+           If文 (Y2[0]≟10000.)
+             SubPrgResult:=rovi_err
+             待機: 999999.0
+         荷重の設定: k10
+         UF:=Y2
+         MoveL
+           待機: 1.0
+           gCV_11_M
+           gCV_12_M
+         MoveL
+           gCV_13_M
+           gCV_14_M
+         設定 GPBO_BLStart=HI:Pulse 1.0
+   'スレッド_1'

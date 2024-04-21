@@ -1,0 +1,60 @@
+ プログラム
+   変数設定
+   開始前シーケンス
+     SETTINGS
+       curr:=p[0.,0.,0.,0.,0.,0.]
+       'tm_500: リセット'
+       'tm_600: リセット'
+       'tm_700: リセット'
+       'tm_800: リセット'
+   ロボットプログラム
+     'tm_600: 起動'
+     If文 (DistPillar>0)
+       If文 (is_popup)
+         ポップアップ: pillar L
+       MoveL
+         'gCV_3_M'
+         gCV_2_M
+       MoveL
+         g2CV_1_M
+     ElseIf (DistPillar<0)
+       'ポップアップ: pillar R'
+       MoveL
+         'gCV_3_M'
+         gCV_2_M
+       MoveL
+         g2CV_1_M
+     'tm_600: 停止'
+     'tm_700: 起動'
+     荷重の設定: Payload_1
+     stt_z:=curr[2]
+     フォース
+       待機 curr[2]<stt_z-0.035
+       待機: 0.5
+       'ポップアップ: Landed!'
+     'stt_rx:=curr[3]'
+     end_force_mode()
+     荷重の設定: k10
+     MoveL
+       待機: 1.0
+       gCV_11_M
+       gCV_12_M
+     MoveL
+       tm_700: 停止
+       tm_800: 起動
+       gCV_13_M
+     'フォース'
+     'If文 ((pillar≟1) or (pillar≟0 and DistPillar≥0))'
+     FINALIZE
+       荷重の設定: k10
+       HOME
+         MoveJ
+           gHome_Position
+       '停止'
+     'tm_800: 停止'
+     'tm_all: 停止'
+   スレッド_1
+     curr=get_actual_tool_flange_pose()
+     'curr_force=get_tcp_force()'
+     'curr_p=get_actual_tcp_pose()'
+     待機: 0.05

@@ -1,0 +1,64 @@
+ プログラム
+   変数設定
+   ロボットプログラム
+     SET_BUCKET()
+     ROVI_CAPTURE
+       If文 ( not ROVI_CAPTURE())
+         SubPrgResult:=rovi_err
+         待機: 999999.0
+       CandCnt:=Y1[0]
+       DistPillar:=Y1[1] / 1000.0
+       If文 (GPII_PrgNo==1201)
+         DistPillarBak:=DistPillar
+       If文 (CandCnt<1)
+         SubPrgResult:=990
+         待機: 999999.0
+     ROVI_SOLVE
+       If文 (CandCnt>0)
+         Y2:=ROVI_SOLVE()
+         If文 (Y2[0]≟10000.)
+           SubPrgResult:=rovi_err
+           待機: 999999.0
+     UF:=Y2
+     PICK
+       荷重の設定: k10
+       If文 (0≤DistPillar and DistPillar≤DistPillarAPTh)
+         MoveL
+           gGD_4_LM
+         MoveL
+           gGD_3_LM_RXF
+           gGD_2_LM_RXF
+           設定 GPBO_BLStop=HI:Pulse 1.0
+           待機: 0.5
+           'ポップアップ: ok?'
+         フォース
+           MoveL
+             gGD_1_LM_RXF
+         設定 GPBO_BLStart=HI:Pulse 1.0
+       ElseIf (-DistPillarAPTh≤DistPillar and DistPillar≤0)
+         MoveL
+           gGD_4_RM
+         MoveL
+           gGD_3_RM_RXF
+           gGD_2_RM_RXF
+           設定 GPBO_BLStop=HI:Pulse 1.0
+           待機: 0.5
+           'ポップアップ: ok?'
+         フォース
+           MoveL
+             gGD_1_RM_RXF
+         設定 GPBO_BLStart=HI:Pulse 1.0
+       Else
+         MoveL
+           gGD_3_M_RXF
+           gGD_2_M_RXF
+           設定 GPBO_BLStop=HI:Pulse 1.0
+           待機: 0.5
+           'ポップアップ: ok?'
+         フォース
+           MoveL
+             gGD_1_M_RXF
+         設定 GPBO_BLStart=HI:Pulse 1.0
+       If文 ( not GPBI_WorkExists)
+         SubPrgResult:=821
+         待機: 999999.0

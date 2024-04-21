@@ -1,0 +1,98 @@
+def GET_TCP_FORCE_TOOL():
+  force_torque=get_tcp_force()
+  force_B=p[force_torque[0], force_torque[1], force_torque[2], 0, 0, 0]
+  torque_B=p[force_torque[3], force_torque[4], force_torque[5], 0, 0, 0]
+  tcp=get_actual_tcp_pose()
+  rotation_BT=p[0, 0, 0, tcp[3], tcp[4], tcp[5]]
+  force_T=pose_trans(pose_inv(rotation_BT), force_B)
+  torque_T=pose_trans(pose_inv(rotation_BT), torque_B)
+  force_torque_T=p[force_T[0], force_T[1], force_T[2], torque_T[0], torque_T[1], torque_T[2]]
+  return force_torque_T
+end
+
+def CHECK_VALUE_RZ():
+  return True
+end
+
+def GET_FORCE_VALUE_RZ(target):
+  PoseSub= pose_sub (CurrPos_p,target)
+  RYSub=r2d(PoseSub[4])
+  RZSub=r2d(PoseSub[5])
+#  if (RYSub<RZSupRYRange[0] or RZSupRYRange[1]<RYSub):
+#    RZSupForceVal=0.0
+#    return RZSupForceVal
+#  end
+  if (RZSub<0):
+    RZMin=RZSupDegMin[0]
+    RZRatio=RZSupRatio[0]
+    RZOffset=RZSupOffset[0]
+  else:
+    RZMin=RZSupDegMin[1]
+    RZRatio=RZSupRatio[1]
+    RZOffset=-RZSupOffset[1]
+  end
+  if (norm(RZSub) >= norm(RZMin)):
+    RZSupForceVal=(RZMin-RZSub)*RZRatio+RZOffset
+  else:
+    RZSupForceVal=0
+  end
+  if (RZSupForceVal<RZSupForceRange[0]):
+    RZSupForceVal=RZSupForceRange[0]
+  elif (RZSupForceRange[1]<RZSupForceVal):
+    RZSupForceVal=RZSupForceRange[1]
+  end
+  if (RYSub<RZSupRYRange[0] or RZSupRYRange[1]<RYSub):
+    RZSupForceVal=0
+  end
+  if ((not UseRZSupStep1) and (ForceStep==1)):
+    RZSupForceVal=0
+  end
+  return RZSupForceVal
+end
+
+def GET_CVCORR_VALUE(target):
+  CVCorrYVal=0
+  CVCorrRZVal=0
+  if (UseCVCorr and (not UseCVCorrCam)):
+    PoseSub=pose_sub(CurrPos_p,target)
+    RYSub=r2d(PoseSub[4])
+    CVCorrRYSub=RYSub
+    if (RYSub<0):
+      RYMin=-CVCorrDegMin[0]
+      RZRatio=CVCorrRatio[0]
+      RZOffset=-CVCorrOffset[0]
+    else:
+      RYMin=-CVCorrDegMin[1]
+      RZRatio=CVCorrRatio[1]
+      RZOffset=CVCorrOffset[1]
+    end
+    if (norm(RYSub) >= norm(RYMin)):
+      t=get_tcp_offset()
+      CVCorrYVal=-t[2]*sin(d2r(RYSub))
+      CVCorrRZVal=RYSub*RZRatio+RZOffset
+    else:
+      CVCorrYVal=0
+      CVCorrRZVal=0
+    end
+  end
+end
+
+def GET_CVCORR_POS(target):
+  if UseCVCorr:
+    if (not UseCVCorrCam):
+      pos= pose_add (p[0,0,0,0,0,d2r(-CVCorrRZVal)],p[0,0,0,target[3],target[4],target[5]])
+      pos=p[target[0],target[1],target[2],pos[3],pos[4],pos[5]]
+    else:
+      pos=target
+    end
+  else:
+    pos=target
+  end
+  return pos
+end
+
+def CHECK_RX_TILT(target):
+  PosSub=pose_sub(CurrPos_p,target)
+  RXSub=r2d(PoseSub[3])
+  return (RXTiltDegMin[0]<RXSub and RXSub<RXTiltDegMin[1])
+end

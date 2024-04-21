@@ -1,0 +1,110 @@
+def GET_REG(prg_no):
+  WorkPosNo=read_input_integer_register(4)-1                       # GPII_WorkPosNo
+  CaptIndex[WorkPosNo]=read_input_integer_register(21)-1           # GPII_CaptColNo
+  CaptRowNo=read_input_integer_register(20)-1        # GPII_CaptRowNo
+  CaptStepZ=read_input_integer_register(6) / 1000.0         # GPII_CaptStepZ
+  ReCaptNo=0
+  if (prg_no==1203):
+    ReCaptNo=read_input_integer_register(22)                # GPII_ReCaptNo
+  end
+  ReCaptZ=read_input_integer_register(7) / 1000.0         # GPII_ReCaptZ
+  CutOffZDef=read_input_integer_register(11) / 1000.0          # GPII_CutOffZ
+  CrankDepthFull=read_input_integer_register(10) / 1000.0   # GPII_FullDepth
+end
+
+def POSE_SUB(p, teach_frame):
+  return pose_trans(inv(teach_frame), p)
+end
+
+def GET_BUCKET_UPPER(pos=0):
+  p=POSE_SUB(CaptPoint_C, BucketM)
+  pX=[BKWidth/2,CaptPointL_dX,BKWidth-CaptPointR_dX]
+  p[0]=pX[CaptIndexWk]
+  return p
+end
+
+def SET_BUCKET_DEF():
+  BucketM=pBucketM
+  if (WorkPosNo<0):
+    Bucket=pBucketC
+  else:
+    Bucket=pBucket[WorkPosNo]
+  end
+  BKWidth=BKWidth_Value[WorkPosNo] / 1000.0
+end
+
+def SET_BUCKET():
+  SET_BUCKET_DEF()
+  Bucket[2]=Bucket[2]-CaptStepZ*CaptRowNo
+end
+
+def SET_CV():
+  CV=pCV
+end
+
+def SET_CAPT_INDEX():
+  CaptIndexWk=CaptIndex[WorkPosNo]
+  ReCaptZWk=0
+  if (prg_no==1203):
+    if   (ReCaptNo==0):
+      if (CaptIndexWk==0):
+        if (0<=DistPillarBak):
+          CaptIndexWk=1
+        else:
+          CaptIndexWk=2
+        end
+        ReCaptZWk=0
+      else:
+        CaptIndexWk=0
+        ReCaptZWk=0
+      end
+    elif (ReCaptNo==1):
+      if (CaptIndexWk==0):
+        if (0<=DistPillarBak):
+          CaptIndexWk=1
+        else:
+          CaptIndexWk=2
+        end
+        ReCaptZWk=ReCaptZ
+      else:
+        CaptIndexWk=CaptIndexWk
+        ReCaptZWk=ReCaptZ
+      end
+    else:
+      if (CaptIndexWk==0):
+        CaptIndexWk=0
+        ReCaptZWk=ReCaptZ
+      else:
+        CaptIndexWk=CaptIndexWk
+        ReCaptZWk=-ReCaptZ
+      end
+    end
+  end
+end
+
+def GET_CAPTPOS():
+  SET_BUCKET()
+  SET_CAPT_INDEX()
+  p=POSE_SUB(CaptPoint_C, BucketM)
+  pX=[BKWidth/2,CaptPointL_dX,BKWidth-CaptPointR_dX]
+  p[0]=pX[CaptIndexWk]
+  p[2]=p[2]-ReCaptZWk
+  return p
+end
+
+def CHECK_CAPTPOS():
+  isOK=((CaptStepZ*(read_input_integer_register(20)-1)) < (read_input_integer_register(9) / 1000.0))
+  return isOK
+end
+
+def GET_ZSLIDE_POS(p):
+  p[2]=p[2]-CaptStepZ*CaptRowNo
+  return p
+end
+
+def END_CYCLE():
+  stopl(1.2)
+  end_force_mode()
+  end_freedrive_mode()
+  socket_close(socket_name)
+end

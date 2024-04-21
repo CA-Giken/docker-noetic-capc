@@ -7,9 +7,8 @@ WORKDIR /root/
 # URSim Setup
 RUN apt-get update && \
     apt-get install -y psmisc openjdk-8-jdk libjava3d-java policykit-1
-# SSH Setup
-RUN apt-get install -y openssh-server
-
+# COPY ./ursim-dependencies /root/ursim-dependencies
+# RUN dpkg -i ./ursim-dependencies/*.deb
 
 # ROSの環境整理
 # ROSのセットアップシェルスクリプトを.bashrcファイルに追記
@@ -25,23 +24,26 @@ RUN cd && cd catkin_ws && . /opt/ros/noetic/setup.sh && catkin_make
 # 自分のワークスペースが反映されるように，.bashrcファイルに追記．
 RUN echo "source ./catkin_ws/devel/setup.bash" >> .bashrc
 
+# SSH Setup
+RUN apt-get install -y openssh-server
+
 # Python
 RUN apt-get update && \
     apt-get install -y software-properties-common
 RUN add-apt-repository universe && apt-get update   
 RUN apt-get install -y git build-essential python3 python3-venv python3-pip python3-tk tk-dev
 
+# Pyenv
+RUN python3 -m venv ursim-env
+RUN chmod +x ursim-env
+
 # Python packages
 RUN python3 -m pip install git+https://github.com/UniversalRobots/RTDE_Python_Client_Library.git
 RUN python3 -m pip install PySimpleGUI pytk
 
 
-# Pyenv
-RUN python3 -m venv ursim-env
-
 RUN apt-get clean && \
     rm -rf /var/lib/apt/lists/* 
-
 
 # Command copy
 COPY ./run.sh /root/

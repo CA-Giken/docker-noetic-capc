@@ -1,0 +1,26 @@
+ プログラム
+   変数設定
+   ロボットプログラム
+     ROVI_RECIPE
+       If文 (not ROVI_RECIPE(GPII_WorkNo))
+         SubPrgResult:=rovi_err
+         待機: 999999.0
+     ROVI_PARAM
+       If文 ( not ROVI_PARAM(BKWidth_Name,BKWidth_Value[WorkPosNo]))
+         SubPrgResult:=rovi_err
+         待機: 999999.0
+     ROVI_RESET
+       If文 (not ROVI_RESET())
+         SubPrgResult:=rovi_err
+         待機: 999999.0
+     荷重の設定: k120
+     ROVI_CAPTURE
+       If文 ( not CHECK_CAPTPOS())
+         SubPrgResult:=802
+         待機: 999999.0
+       荷重の設定: k120
+       CaptPos:=GET_CAPTPOS()
+       MoveJ
+         CaptPos
+       待機: 1.0
+       'POPUP_CAPT_OPTION()'

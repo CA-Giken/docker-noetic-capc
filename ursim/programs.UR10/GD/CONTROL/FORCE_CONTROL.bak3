@@ -1,0 +1,26 @@
+def GET_TCP_FORCE_TOOL():
+  force_torque=get_tcp_force()
+  force_B=p[force_torque[0], force_torque[1], force_torque[2], 0, 0, 0]
+  torque_B=p[force_torque[3], force_torque[4], force_torque[5], 0, 0, 0]
+  tcp=get_actual_tcp_pose()
+  rotation_BT=p[0, 0, 0, tcp[3], tcp[4], tcp[5]]
+  force_T=pose_trans(pose_inv(rotation_BT), force_B)
+  torque_T=pose_trans(pose_inv(rotation_BT), torque_B)
+  force_torque_T=p[force_T[0], force_T[1], force_T[2], torque_T[0], torque_T[1], torque_T[2]]
+  return force_torque_T
+end
+
+def GET_FORCE_VALUE_RZ(target):
+  PoseSub= pose_sub (CurrPos_p,target)
+  RZSub=r2d(PoseSub[5])
+  if (PoseSub[5]>=0):
+    RZMin=RotSupDegMin
+  else:
+    RZMin=-RotSupDegMin
+  end
+#  if (r2d(norm(PoseSub[5])) >= RotSupDegMin):
+  return (RZMin-RZSub)*RotSupForceVal*RotSupForceRati
+#  else:
+#    return 0
+#  end
+end

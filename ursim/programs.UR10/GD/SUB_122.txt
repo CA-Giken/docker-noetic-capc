@@ -1,0 +1,29 @@
+ プログラム
+   変数設定
+   ロボットプログラム
+     SET_CV()
+     設定 GPBO_BLStart=HI:Pulse 1.0
+     荷重の設定: k05
+     ForceStartZ:=CurrPos[2]
+     tm_landed: リセット
+     tm_landed: 起動
+     設定 DO[5]=オン
+     フォース
+       待機 GPII_TMLanded<tm_landed or GPBI_BLLoad0 or CurrPos[2]<ForceStartZ-UnloadZ
+       待機: 0.5
+     設定 DO[5]=オフ
+     end_force_mode()
+     tm_landed: 停止
+     If文 ( not GPBI_BLLoad0)
+       SubPrgResult:=824
+       待機: 999999.0
+     荷重の設定: k10
+     MoveL
+       待機: 1.0
+       gCV_11_M
+       gCV_12_M
+     設定 GPBO_Released=HI:Pulse 3.0
+     MoveL
+       gCV_13_M
+       gCV_14_M
+     荷重の設定: k10
