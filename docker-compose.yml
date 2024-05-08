@@ -3,20 +3,19 @@ services:
     container_name: rosnoetic
     hostname: rosnoetic
     build:
-      context: .
+      context: ./
       dockerfile: Dockerfile
       shm_size: 2gb
     shm_size: 2gb
     environment:
       - RESOLUTION=1920x1080
     volumes:
-      - ~/ursim:/root/ursim
-      - ~/catkin_ws/src:/root/catkin_ws/src
+      - /catkin_ws/src:/root/catkin_ws/src
       - ~/src:/root/src
-    command: bash run.sh
     stdin_open: true
     tty: true
-    ports:  
+    ports:
       - 6080:80
+      - 6079:6079
       - 46375:46375
       - 11311:11311
