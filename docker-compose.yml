@@ -1,17 +1,19 @@
+version: "3.9"
+
 services:
   rosnoetic:
     container_name: rosnoetic
     hostname: rosnoetic
     build:
-      context: ./
+      context: ./ros
       dockerfile: Dockerfile
       shm_size: 2gb
     shm_size: 2gb
     environment:
-      - RESOLUTION=1920x1080
+      - RESOLUTION=1440x900
     volumes:
-      - /catkin_ws/src:/root/catkin_ws/src
-      - ~/src:/root/src
+      - ~/catkin_ws/src:/app/catkin_ws/src
+      - ~/src:/app/src
     stdin_open: true
     tty: true
     ports:
@@ -19,3 +21,27 @@ services:
       - 6079:6079
       - 46375:46375
       - 11311:11311
+    networks:
+      - default
+  ursim:
+    container_name: ursim
+    hostname: ursim
+    build:
+      context: ./ursim
+      dockerfile: Dockerfile
+    environment:
+      - ROBOT_MODEL=UR10
+    volumes:
+      - ~/programs.$ROBOT_MODEL:/ursim/programs
+    stdin_open: true
+    tty: true
+    command: bash -c "source ./venv/bin/activate"
+    ports:
+      - 5900:5900
+      - 8080:6080
+    networks:
+      - default
+
+networks:
+  default:
+    driver: bridge
