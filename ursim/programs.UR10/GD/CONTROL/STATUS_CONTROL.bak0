@@ -1,8 +1,0 @@
-def CHECK_VT_STATUS():
-  return (read_output_boolean_register(8) and read_output_boolean_register(9))
-end
-
-def GET_VT_STATUS():
-  write_output_boolean_register(8, read_input_boolean_register(64))
-  write_output_boolean_register(9, read_input_boolean_register(65))
-end

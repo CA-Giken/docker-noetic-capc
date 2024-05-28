@@ -1,43 +1,6 @@
-# ROS1 Noetic + URSim コンテナ環境構築
+# ROS1 Noetic コンテナ環境構築
 
-- ROS1 Noetic VNC: [https://github.com/Tiryoh/docker-ros-desktop-vnc]
-- URSim VNC: [https://hub.docker.com/r/universalrobots/ursim_e-series]
-
-この 2 つの Docker イメージを起動し、相互通信できるようにセットアップする。
-
-# 当レポジトリの目的
-
-ROS1 の開発は終了しており、ROS1 の最終バージョン Noetic は Ubuntu 20.04 環境まででしか動作しません。(サポート終了 2025 年 5 月)
-そのため、これまでは Ubuntu 20.04 環境を用意して、そこで ROS1 を動かすのが通例でした。
-
-しかし、CPU のバージョンアップに伴い Linux Kernel 6 以上への対応が求められます。
-Intel 第 13 世代以降の CPU は Linux Kernel 6 で対応されており、これは Ubuntu 23 や Linux Mint 21.3 Edge Edition 等になります。
-
-試しに Intel i7 13700K (Z790) を採用した PC に Linux Mint 20.3(Ubuntu 20.04)を導入すると、以下の不具合が発生しました。
-
-- オンボード LAN ポートの使用不可 (I219-V, I220-V)
-- マルチディスプレイの利用不可
-
-また、P コア / E コアの利用が運任せになり、思ったより計算速度が出ない現象もあるようです。[https://qiita.com/KazuhisaFujita/items/d6fb61c7d67e07039bc5]
-
-CPU の調達や計算能力の向上を検討すると Intel 第 13 世代以降を採用したくなる場合は多いと思いますが、これらの理由により採用が難しいです。
-
-そこで解決方法としては、
-
-- VMWare 等の仮想マシンを利用する
-- Docker コンテナを利用する
-- ROS Noetic を Ubuntu22.04 環境(Jammy) でビルドする [https://tech.groove-x.com/entry/noetic-on-jammy], [https://medium.com/@jean.guillaume.durand/installing-ros-noetic-on-ubuntu-22-04-1678e9dab1f5]
-- そのまま Ubuntu 20.04 を使う(PCI-E に LAN ポート増設、DisplayLink によるマルチディスプレイ対応、E コアの利用停止)
-
-が挙げられます。
-下２つは茨の道なので、上２つを検討する事になりますが、今回は計算速度の向上が目的なので VMWare より Docker を利用することにしました。
-
-# 当レポジトリの注意点
-
-x
-当レポジトリの Docker 環境は、スタンドアローンな環境で利用する前提で作られています。
-そのため、ネットワークに常時接続して利用する事を想定しておらず、セキュリティ面は考慮しておりません。
-利用の際には、適宜改修をお願いいたします。
+- [当レポジトリの作成経緯](docs/purpose.md)
 
 # 動作環境
 
@@ -49,12 +12,112 @@ x
 
 ## Docker インストール
 
+https://docs.docker.com/engine/install/ubuntu/
+
+### 0. コンフリクトの可能性のあるパッケージを削除
+
+```sh
+for pkg in docker.io docker-doc docker-compose docker-compose-v2 podman-docker containerd runc; do sudo apt-get remove $pkg; done
+```
+
+### 1. Docker の apt レポジトリを追加
+
+```sh
+# Add Docker's official GPG key:
+sudo apt-get update
+sudo apt-get install ca-certificates curl
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+# Add the repository to Apt sources:
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+  $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt-get update
+```
+
+### 2. Docker インストール
+
+```sh
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+```
+
+### 3. Docker 起動テスト
+
+```sh
+sudo docker run hello-world
+```
+
+MX Linux では、ここで
+
+```sh
+Cannot connect to the Docker daemon at unix:///var/run/docker.sock
+```
+
+のエラーが発生します。
+
+### 4. systemd を設定
+
+`sudo service docker start`を実行するとエラーなく開始されますが、
+`sudo service docker status`でステータスを確認すると、daemon の起動に失敗しているようです。
+
+この原因は分かりませんが、MX Linux では SysVinit を init プロセスとして利用しており、Ubuntu のように systemd を利用していません。
+とりあえず、ここを Ubuntu に合わせることで対応します。
+
+https://e-penguiner.com/mx-linux-troubleshooting-system-has-not-been-booted-with-systemd-as-init-system/
+こちらの URL を参考に、MX Linux で systemd を利用するように設定します。
+
+- メニューで「`boot`」で検索 -> 「`MX 起動設定ツール`」を選択
+- 起動先を, `MX 23.2 Libretto, with Linux 6.6.12-1-liquorix-amd64 (systemd)`に変更
+- 再起動
+
+再起動後、`sudo docker run hello-world`でテストが通ります。
+
+## ROS 環境構築
+
+```sh
+git clone https://github.com/CA-Giken/docker-noetic-ursim.git
+```
+
+### catkin_ws ディレクトリの作成
+
+```sh
+mkdir -p ~/catkin_ws/src
+```
+
+### 初回ビルド
+
+```sh
+cd /path/to/docker-noetic-ursim
+docker compose up --build
+```
+
+### catkin workspace の初期化
+
+```sh
+cd path/to/docker-noetic-ursim
+docker compose exec rosnoetic bash -c "cd /app/catkin_ws && catkin build"
+```
+
 # 利用方法
 
-- ブラウザから`localhost:6080`に接続
-- VNC 接続後、F11 キーで全画面表示
-- ターミナルから`roscore`等
-- 別画面にて、`localhost:8080/vnc.html`に接続し、URSim の GUI を表示
+1. ホスト側で、Xserver のアクセスを許可
+
+```sh
+xhost +
+```
+
+2. コンテナに入り、roscore, rviz 等を立ち上げ
+
+```sh
+cd path/to/docker-noetic-ursim
+docker compose exec rosnoetic bash
+```
+
+ここで roscore, rviz など実行
+`source /app/catkin_ws/devel/setup.bash`が必要かもしれない
 
 # 設定
 
@@ -64,26 +127,6 @@ x
 
 1440x900, 1280x760
 
-## URSim programs の変更
+## USB ポートを共有
 
-`docker-compose.yml`の`ursim`サービスの環境変数`ROBOT_MODEL=UR10`を変更
-
-# MEMO
-
-## Java JDK 8
-
-```
-sudo apt-get update
-sudo apt-get install openjdk-8-jdk -y
-sudo update-alternatives --config java # Select JDK 8
-```
-
-# URSim environment
-
-```
-docker run --rm -it -p 5900:5900 -p 6080:6080 --name ursim -v ~/src:/opt/src universalrobots/ursim_e-series
-```
-
-```
-docker exec -it ursim bash
-```
+`docker-compose.yml`の`rosnoetic`サービス、`devices`以下にホストと共有するシリアルポート追加

@@ -7,10 +7,9 @@ services:
     build:
       context: ./ros
       dockerfile: Dockerfile
-      shm_size: 2gb
-    shm_size: 2gb
     environment:
       - RESOLUTION=1440x900
+      - DISPLAY=display:0
     volumes:
       - ~/catkin_ws/src:/app/catkin_ws/src
       - ~/src:/app/src
@@ -21,26 +20,13 @@ services:
       - 6079:6079
       - 46375:46375
       - 11311:11311
+    extra_hosts:
+      - "display:host-gateway"
     networks:
       - default
-  ursim:
-    container_name: ursim
-    hostname: ursim
-    build:
-      context: ./ursim
-      dockerfile: Dockerfile
-    environment:
-      - ROBOT_MODEL=UR10
-    volumes:
-      - ~/programs.$ROBOT_MODEL:/ursim/programs
-    stdin_open: true
-    tty: true
-    command: bash -c "source ./venv/bin/activate"
-    ports:
-      - 5900:5900
-      - 8080:6080
-    networks:
-      - default
+    devices:
+      - /dev/ttyUSB0:/dev/ttyUSB0
+      - /dev/ttyACM0:/dev/ttyACM0
 
 networks:
   default:
