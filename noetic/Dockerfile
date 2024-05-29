@@ -35,4 +35,4 @@ RUN apt-get clean && \
 
 # Command copy
 COPY ./entrypoint.sh /app/
-ENTRYPOINT ["/bin/sh", "-c", "./entrypoint.sh"]
+CMD ["/bin/sh", "-c", "./entrypoint.sh"]

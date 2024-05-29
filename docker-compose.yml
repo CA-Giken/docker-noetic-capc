@@ -44,7 +44,7 @@ services:
       - RESOLUTION=1440x900
       - DISPLAY=display:0
     volumes:
-      - ~/catkin_ws/src:/app/catkin_ws/src
+      - ~/noetic/catkin_ws/src:/app/catkin_ws/src
       - ~/src:/app/src
     stdin_open: true
     tty: true

@@ -11,16 +11,16 @@
 # インストール手順
 
 ## Dockerインストール
-[docs/docker.md]
+[docs/docker.md](docs/docker.md)
 
 ## ROS Kinetic + PhoXi Camera 環境構築 と PhoXi利用方法
-[docs/PhoXi.md]
+[docs/kinetic.md](docs/kinetic.md)
 
 ## ROS Noetic 環境構築
-[docs/noetic.md]
+[docs/noetic.md](docs/noetic.md)
 
 ## Xserverセットアップ
-[docs/xserver.md]
+[docs/xserver.md](docs/xserver.md)
 
 # 利用方法
 
