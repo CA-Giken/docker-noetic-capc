@@ -1,11 +1,44 @@
 version: "3.9"
 
 services:
+  roskinetic:
+    container_name: roskinetic
+    hostname: roskinetic
+    build:
+      context: ./kinetic
+      dockerfile: Dockerfile
+      shm_size: 2gb
+    shm_size: 2gb
+    environment:
+      - RESOLUTION=1440x900
+      - DISPLAY=display:0
+      - PHOXI_CONTROL_PATH=/opt/Photoneo/PhoXiControl
+      - QT_X11_NO_MITSHM=1
+    volumes:
+      - ~/kinetic/catkin_ws/src:/app/catkin_ws/src
+      - ~/src:/app/src   
+      - /dev/shm:/dev/shm
+      - /var/run/dbus:/var/run/dbus
+    stdin_open: true
+    tty: true
+    ports:
+      - 7080:80
+      - 7079:6079
+      - 56375:46375
+      - 21311:11311
+    extra_hosts:
+      - "display:host-gateway"
+    networks:
+      - default
+    devices:
+      - /dev/dri:/dev/dri
+      - /dev/ttyUSB0:/dev/ttyUSB0
+      - /dev/ttyACM0:/dev/ttyACM0
   rosnoetic:
     container_name: rosnoetic
     hostname: rosnoetic
     build:
-      context: ./ros
+      context: ./noetic
       dockerfile: Dockerfile
     environment:
       - RESOLUTION=1440x900
