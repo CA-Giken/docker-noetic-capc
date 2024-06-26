@@ -41,11 +41,14 @@ services:
       context: ./noetic
       dockerfile: Dockerfile
     environment:
-      - RESOLUTION=1440x900
       - DISPLAY=display:0
     volumes:
-      - ~/noetic/catkin_ws/src:/app/catkin_ws/src
-      - ~/src:/app/src
+      - type: bind
+        source: ~/noetic/catkin_ws
+        target: /app/catkin_ws
+      - type: bind
+        source: ~/src
+        target: /app/src
     stdin_open: true
     tty: true
     ports:
@@ -57,9 +60,9 @@ services:
       - "display:host-gateway"
     networks:
       - default
-    devices:
-      - /dev/ttyUSB0:/dev/ttyUSB0
-      - /dev/ttyACM0:/dev/ttyACM0
+    # devices:
+    #   - /dev/ttyUSB0:/dev/ttyUSB0
+    #   - /dev/ttyACM0:/dev/ttyACM0
 
 networks:
   default:
