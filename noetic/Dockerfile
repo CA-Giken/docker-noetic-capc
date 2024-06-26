@@ -15,17 +15,13 @@ RUN apt-get update -q \
     && add-apt-repository universe && apt-get update \
     && apt-get install -y git build-essential wget curl vim sudo lsb-release locales
 
-# Set user
-ENV USER ros
-ENV PASSWD a
-RUN useradd --home-dir /home/$USER --shell /bin/bash --create-home --groups adm,sudo $USER
-RUN echo $USER:$USER | /usr/sbin/chpasswd
-
 # Install X11 requirements
 RUN apt-get install -y iputils-ping telnet x11-apps
 
 # Install Python
 RUN apt-get install -y python3 python3-pip python3-dev python3-tk
+# Symbolic link
+RUN apt-get install -y python-is-python3
 
 # Install ROS
 ENV ROS_DISTRO noetic
@@ -54,6 +50,16 @@ RUN cd aravis-0.6.0 && ./configure && make && make install
 
 # CAPC
 RUN pip install pyserial
+
+# Setting for Japanese
+RUN apt-get install -y tzdata locales fonts-noto-cjk fcitx-mozc
+RUN ln -s -f /usr/share/zoneinfo/Asia/Tokyo /etc/localtime && \
+    dpkg-reconfigure tzdata && \
+    locale-gen ja_JP.UTF-8
+
+# Set user
+ARG UID=1000
+RUN useradd -m -u ${UID} ros
 
 # Clean up
 RUN apt-get autoclean \
