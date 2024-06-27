@@ -22,6 +22,12 @@
 ## Xserverセットアップ
 [docs/xserver.md](docs/xserver.md)
 
+## マウントディレクトリ作成
+ホスト側で以下のディレクトリを作成する。
+- `~/catkin_ws/src`: ROSパッケージ群
+- `~/src`: ROSパッケージ以外の共有ファイル
+- `~/.ros/log`: ログファイル出力先
+
 # 利用方法
 
 1. ホスト側で、Xserver のアクセスを許可
@@ -47,12 +53,25 @@ catkin build
 ```
 
 # 設定
+## ファイルマウント
+`docker-compose.yml`ファイルの中の`volumes`を変更する
+```yaml
+    volumes:
+      - type: bind
+        source: ~/catkin_ws/src
+        target: /app/catkin_ws/src
+      - type: bind
+        source: ~/src
+        target: /app/src
+```
 
-## 画面解像度の変更
+`source`がホスト側、`target`がコンテナ側で、ファイル共有を行える。
 
-`docker-compose.yml`の`rosnoetic`サービスの環境変数`RESOLUTION=1920x1080`を変更
+`source`を書き換えればホスト側のホーム直下の`catkin_ws`以外も共有できる。
 
-1440x900, 1280x760
+(`catkin_ws/src`をマウントしているのは、`devel`等はアンマウントごとに消去したいため)
+
+`catkin_ws`以外のファイルを共有したい場合には、
 
 ## USB ポートを共有
 

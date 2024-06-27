@@ -44,11 +44,14 @@ services:
       - DISPLAY=display:0
     volumes:
       - type: bind
-        source: ~/noetic/catkin_ws
-        target: /app/catkin_ws
+        source: ~/catkin_ws/src
+        target: /app/catkin_ws/src
       - type: bind
         source: ~/src
         target: /app/src
+      - type: bind
+        source: ~/.ros/log
+        target: /root/.ros/log
     stdin_open: true
     tty: true
     ports:
