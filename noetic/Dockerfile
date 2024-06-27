@@ -66,6 +66,8 @@ RUN apt-get autoclean \
     && apt-get autoremove \
     && rm -rf /var/lib/apt/lists/*
 
+RUN sh -c 'echo "source /opt/ros/noetic/setup.bash" >> ~/.bashrc'
+
 # Command copy
 # COPY ./entrypoint.sh /app/
 # RUN chmod +x /app/entrypoint.sh
