@@ -44,8 +44,8 @@ RUN apt-get update -q \
     && rm -rf /var/lib/apt/lists/*
 
 # Python packages
-RUN python3 -m pip install PySimpleGUI pytk tkfilebrowser pymsgbox
-RUN python3 -m pip install open3d==0.13.0
+RUN pip install PySimpleGUI pytk tkfilebrowser pymsgbox
+RUN pip install open3d==0.13.0
 
 # for rviz_animted_view_controller
 RUN add-apt-repository universe && apt-get update -q \
