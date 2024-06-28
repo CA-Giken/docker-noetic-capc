@@ -111,3 +111,7 @@ RUN sh -c 'echo "export PYTHONPATH=/usr/local/lib/python3.8/dist-packages:$PYTHO
 
 # YCAM3D Setup
 RUN pip install scipy
+
+# Rovi_industrial setup
+RUN pip install git+https://github.com/UniversalRobots/RTDE_Python_Client_Library.git
+RUN pip install PySimpleGUI pytk

@@ -9,7 +9,7 @@ WORKDIR /app/
 # Python
 RUN apt-get update && \
     apt-get install -y software-properties-common
-RUN add-apt-repository universe && apt-get update   
+RUN add-apt-repository universe && apt-get update
 RUN apt-get install -y git build-essential libssl-dev libffi-dev python3 python3-venv python3-pip python3-tk tk-dev
 
 RUN apt-get install -y iputils-ping telnet x11-apps
@@ -31,7 +31,7 @@ RUN tar -xvf aravis-0.6.0.tar.xz
 RUN cd aravis-0.6.0 && ./configure && make && make install
 
 # CAPC
-RUN pip install pyserial	
+RUN pip install pyserial
 
 # PhoXiControl
 RUN apt-get install -y avahi-utils libqt5core5a libqt5dbus5 libqt5gui5 libgtk2.0-0 libssl1.0.0 libgomp1 libpcre16-3 libflann-dev libssh2-1-dev libpng16-16 libglfw3-dev xcb
@@ -45,9 +45,9 @@ RUN set -eux \
     && rm -rf phoxi.run
 RUN set -eux \
     && mkdir /root/.PhotoneoPhoXiControl
-    
+
 RUN apt-get clean && \
-    rm -rf /var/lib/apt/lists/* 
+    rm -rf /var/lib/apt/lists/*
 
 # Command copy
 COPY ./entrypoint.sh /app/
