@@ -79,7 +79,7 @@ RUN apt-get update && apt-get install -y \
 RUN npm install -g n
 RUN n 16.20.2
 RUN apt-get purge -y nodejs npm && apt-get autoremove -y
-RUN npm install rosnodejs js-yaml mathjs terminate ping
+RUN npm install -g rosnodejs js-yaml mathjs terminate ping
 
 # CAPC
 RUN python3 -m pip install pyserial
@@ -100,7 +100,7 @@ RUN useradd -m -u ${UID} ros
 RUN sh -c 'echo "source /opt/ros/noetic/setup.bash" >> ~/.bashrc'
 RUN sh -c 'echo "export ROS_HOSTNAME=localhost" >> ~/.bashrc'
 RUN sh -c 'echo "export ROS_MASTER_URI=http://localhost:11311" >> ~/.bashrc'
-RUN sh -c 'echo "export NODE_PATH=/usr/lib/node_modules" >> ~/.bashrc'
+RUN sh -c 'echo "export NODE_PATH=/usr/local/lib/node_modules" >> ~/.bashrc'
 RUN sh -c 'echo "export PYTHONPATH=/usr/local/lib/python3.8/dist-packages:$PYTHONPATH" >> ~/.bashrc'
 
 
