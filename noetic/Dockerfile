@@ -15,7 +15,7 @@ RUN apt-get update -q \
 RUN apt-get update -q \
     && apt-get install -y software-properties-common \
     && add-apt-repository universe && apt-get update -q \
-    && apt-get install -y git build-essential wget curl vim sudo lsb-release locales
+    && apt-get install -y git build-essential wget curl vim sudo lsb-release locales \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -44,12 +44,12 @@ RUN apt-get update -q \
     && rm -rf /var/lib/apt/lists/*
 
 # Python packages
-RUN python3 -m pip install PySimpleGUI pytk tkfilebxrowser pymsgbox
-RUN python3 -m pip install open3d==0.11.1
+RUN python3 -m pip install PySimpleGUI pytk tkfilebrowser pymsgbox
+RUN python3 -m pip install open3d==0.13.0
 
 # for rviz_animted_view_controller
-RUN apt-get update -q && apt-get install -y \
-    qt5-default qtscript5-dev libqwt-qt5-dev \
+RUN add-apt-repository universe && apt-get update -q \
+    && apt-get install -y qt5-default qtscript5-dev libqwt-qt5-dev \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
