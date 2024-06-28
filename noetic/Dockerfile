@@ -27,7 +27,7 @@ RUN apt-get update -q && apt-get install -y \
 
 # Install Python
 RUN apt-get update -q && apt-get install -y \
-    python3.8.10 python3-pip python3-dev python3-tk python-is-python3 \
+    python3.8 python3-pip python3-dev python3-tk python-is-python3 \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
