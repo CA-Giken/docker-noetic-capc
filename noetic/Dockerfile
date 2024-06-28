@@ -66,18 +66,19 @@ RUN cd aravis-0.6.0 && ./configure && make && make install
 
 # Install Eigen3
 RUN apt-get update -q && apt-get install -y \
-    && libeigen3-dev \
+    libeigen3-dev \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
 # Node.js setup
 RUN apt-get update && apt-get install -y \
-    && nodejs npm \
+    nodejs npm \
     && apt-get autoclean \
     && apt-get autoremove \
     && rm -rf /var/lib/apt/lists/*
 RUN npm install -g n
 RUN n 16.20.2
+RUN apt-get purge -y nodejs npm && apt-get autoremove -y
 RUN npm install rosnodejs js-yaml mathjs terminate ping
 
 # CAPC
