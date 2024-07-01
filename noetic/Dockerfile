@@ -44,8 +44,20 @@ RUN apt-get update -q \
     && rm -rf /var/lib/apt/lists/*
 
 # Python packages
-RUN pip install PySimpleGUI pytk tkfilebrowser pymsgbox
 RUN pip install open3d==0.13.0
+
+# Setting for Japanese
+RUN apt-get update -q && apt-get install -y \
+    tzdata locales fonts-noto-cjk fcitx-mozc \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+RUN ln -s -f /usr/share/zoneinfo/Asia/Tokyo /etc/localtime && \
+    dpkg-reconfigure tzdata && \
+    locale-gen ja_JP.UTF-8
+
+################################
+## CAPC Specific Instructions ##
+################################
 
 # for rviz_animted_view_controller
 RUN add-apt-repository universe && apt-get update -q \
@@ -85,14 +97,6 @@ RUN npm install -g rosnodejs js-yaml mathjs terminate ping
 RUN pip install pyserial
 RUN pip install git+https://github.com/CA-Giken/capc-host.git
 
-# Setting for Japanese
-RUN apt-get update -q && apt-get install -y \
-    tzdata locales fonts-noto-cjk fcitx-mozc \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
-RUN ln -s -f /usr/share/zoneinfo/Asia/Tokyo /etc/localtime && \
-    dpkg-reconfigure tzdata && \
-    locale-gen ja_JP.UTF-8
 
 # Set user
 ARG UID=1000
@@ -115,4 +119,3 @@ RUN pip install scipy
 
 # Rovi_industrial setup
 RUN pip install git+https://github.com/UniversalRobots/RTDE_Python_Client_Library.git
-RUN pip install PySimpleGUI pytk
