@@ -82,7 +82,8 @@ RUN apt-get purge -y nodejs npm && apt-get autoremove -y
 RUN npm install -g rosnodejs js-yaml mathjs terminate ping
 
 # CAPC
-RUN python3 -m pip install pyserial
+RUN pip install pyserial
+RUN pip install git+https://github.com/CA-Giken/capc-host.git
 
 # Setting for Japanese
 RUN apt-get update -q && apt-get install -y \
