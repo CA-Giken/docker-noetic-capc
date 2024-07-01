@@ -1,7 +1,7 @@
 FROM ubuntu:focal-20240427
 
 # Docker実行してシェルに入ったときの初期ディレクトリ（ワークディレクトリ）の設定
-WORKDIR /app/
+WORKDIR /root/
 
 ENV DEBIAN_FRONTEND=noninteractive
 
