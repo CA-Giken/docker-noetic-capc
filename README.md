@@ -36,7 +36,8 @@
 
 ### CAPC 対応
 
-- docker
+- ホスト側で`sudo pip install git+https://github.com/CA-Giken/capc-host.git`
+- 起動サービスに`capc-host`追加
 
 ## 利用方法
 

@@ -58,9 +58,9 @@ services:
     extra_hosts:
       - "display:host-gateway"
     network_mode: host
-    # devices:
-    #   - /dev/ttyUSB0:/dev/ttyUSB0
-    #   - /dev/ttyACM0:/dev/ttyACM0
+    devices:
+      - /dev/ttyUSB0:/dev/ttyUSB0
+      - /dev/ttyACM0:/dev/ttyACM0
 
 networks:
   default:
