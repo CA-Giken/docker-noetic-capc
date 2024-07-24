@@ -16,7 +16,7 @@ services:
       - QT_X11_NO_MITSHM=1
     volumes:
       - ~/kinetic/catkin_ws/src:/app/catkin_ws/src
-      - ~/src:/app/src   
+      - ~/src:/app/src
       - /dev/shm:/dev/shm
       - /var/run/dbus:/var/run/dbus
     stdin_open: true
@@ -42,30 +42,25 @@ services:
       dockerfile: Dockerfile
     environment:
       - DISPLAY=display:0
+    working_dir: /root
     volumes:
       - type: bind
         source: ~/catkin_ws/src
-        target: /app/catkin_ws/src
+        target: /root/catkin_ws/src
       - type: bind
         source: ~/src
-        target: /app/src
+        target: /root/src
       - type: bind
         source: ~/.ros/log
         target: /root/.ros/log
     stdin_open: true
     tty: true
-    ports:
-      - 6080:80
-      - 6079:6079
-      - 46375:46375
-      - 11311:11311
     extra_hosts:
       - "display:host-gateway"
-    networks:
-      - default
-    # devices:
-    #   - /dev/ttyUSB0:/dev/ttyUSB0
-    #   - /dev/ttyACM0:/dev/ttyACM0
+    network_mode: host
+    devices:
+      - /dev/ttyUSB0:/dev/ttyUSB0
+      - /dev/ttyACM0:/dev/ttyACM0
 
 networks:
   default:
