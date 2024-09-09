@@ -1,40 +1,71 @@
-# tiryohの提供する Noetic + VNC イメージ
-FROM tiryoh/ros-desktop-vnc:kinetic
+FROM ubuntu:16.04
 
-USER root
+WORKDIR /root/
 
-# Docker実行してシェルに入ったときの初期ディレクトリ（ワークディレクトリ）の設定
-WORKDIR /app/
+ENV DEBIAN_FRONTEND=noninteractive
 
-# Python
-RUN apt-get update && \
-    apt-get install -y software-properties-common
-RUN add-apt-repository universe && apt-get update
-RUN apt-get install -y git build-essential libssl-dev libffi-dev python3 python3-venv python3-pip python3-tk tk-dev
+# Upgrade Packages
+RUN apt-get update -q \
+    && apt-get upgrade -y \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
-RUN apt-get install -y iputils-ping telnet x11-apps
+# Utility packages
+RUN apt-get update -q \
+    && apt-get install -y software-properties-common \
+    && add-apt-repository universe && apt-get update -q \
+    && apt-get install -y git build-essential wget curl vim sudo lsb-release locales \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install X11 requirements
+RUN apt-get update -q && apt-get install -y \
+    iputils-ping telnet x11-apps \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Python
+RUN add-apt-repository universe && \
+    apt-get update -q && apt-get install -y \
+    python3-pip python3-dev python3-tk \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install ROS
+ENV ROS_DISTRO kinetic
+RUN sh -c 'echo "deb http://packages.ros.org/ros/ubuntu xenial main" > /etc/apt/sources.list.d/ros-latest.list'
+RUN curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | sudo apt-key add -
+RUN apt-get update -q \
+    && apt-get install -y ros-kinetic-desktop-full \
+    && apt-get install -y python-rosdep python-rosinstall python-rosinstall-generator python-wstool build-essential python-catkin-tools\
+    && rosdep init \
+    && rosdep update \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 # Python packages
-RUN python3 -m pip install --upgrade pip==20.3.4
 RUN python3 -m pip install PySimpleGUI pytk tkfilebrowser pymsgbox
-RUN python3 -m pip install open3d
 
-# for rviz_animted_view_controller
-RUN apt-get install -y qt5-default qtscript5-dev libqwt-qt5-dev
+# Setting for Japanese
+RUN apt-get update -q && apt-get install -y \
+    tzdata locales fonts-noto-cjk fcitx-mozc \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+RUN ln -s -f /usr/share/zoneinfo/Asia/Tokyo /etc/localtime && \
+    dpkg-reconfigure tzdata && \
+    locale-gen ja_JP.UTF-8
 
-# Rovi setup
-ENV LIBGL_ALWAYS_SOFTWARE=1
-ENV ORGE_RTT_MODE=Copy
-RUN apt-get install -y automake intltool libgstreamer*-dev
-RUN wget http://ftp.gnome.org/pub/GNOME/sources/aravis/0.6/aravis-0.6.0.tar.xz
-RUN tar -xvf aravis-0.6.0.tar.xz
-RUN cd aravis-0.6.0 && ./configure && make && make install
+# Set user
+ARG UID=1000
+RUN useradd -m -u ${UID} ros
 
-# CAPC
-RUN pip install pyserial
+################################
+## CAPC Specific Instructions ##
+################################
 
 # PhoXiControl
-RUN apt-get install -y avahi-utils libqt5core5a libqt5dbus5 libqt5gui5 libgtk2.0-0 libssl1.0.0 libgomp1 libpcre16-3 libflann-dev libssh2-1-dev libpng16-16 libglfw3-dev xcb
+RUN add-apt-repository universe && apt-get update -q \
+    && apt-get install -y avahi-utils libqt5core5a libqt5dbus5 libqt5gui5 libgtk2.0-0 libssl1.0.0 libgomp1 libpcre16-3 libflann-dev libssh2-1-dev libpng16-16 libglfw3-dev xcb
 COPY ./phoxi/PhotoneoPhoXiControlInstaller-1.2.35-Ubuntu16-STABLE.run /tmp/phoxi.run
 COPY ./phoxi/PhoXiControl /usr/local/bin/PhoXiControl
 ENV PHOXI_CONTROL_PATH="/opt/Photoneo/PhoXiControl"
@@ -48,6 +79,11 @@ RUN set -eux \
 
 RUN apt-get clean && \
     rm -rf /var/lib/apt/lists/*
+
+RUN sh -c 'echo "source /opt/ros/noetic/setup.bash" >> ~/.bashrc'
+RUN sh -c 'echo "export ROS_HOSTNAME=localhost" >> ~/.bashrc'
+RUN sh -c 'echo "export ROS_MASTER_URI=http://localhost:11311" >> ~/.bashrc'
+RUN sh -c 'echo "export NODE_PATH=/usr/local/lib/node_modules" >> ~/.bashrc'
 
 # Command copy
 COPY ./entrypoint.sh /app/

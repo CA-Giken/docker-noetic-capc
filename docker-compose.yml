@@ -4,36 +4,41 @@ services:
   roskinetic:
     container_name: roskinetic
     hostname: roskinetic
+    privileged: true
     build:
       context: ./kinetic
       dockerfile: Dockerfile
       shm_size: 2gb
     shm_size: 2gb
     environment:
-      - RESOLUTION=1440x900
       - DISPLAY=display:0
       - PHOXI_CONTROL_PATH=/opt/Photoneo/PhoXiControl
       - QT_X11_NO_MITSHM=1
+      - ROS_MASTER_URI=http://localhost:11311
     volumes:
-      - ~/kinetic/catkin_ws/src:/app/catkin_ws/src
-      - ~/src:/app/src
-      - /dev/shm:/dev/shm
-      - /var/run/dbus:/var/run/dbus
+      - type: bind
+        source: ~/kinetic/catkin_ws/src
+        target: /root/catkin_ws/src
+      - type: bind
+        source: ~/src
+        target: /root/src
+      - type: bind
+        source: ~/.ros/log
+        target: /root/.ros/log
+      - type: bind
+        source: /dev/shm
+        target: /dev/shm
+      - type: bind
+        source: /var/run/dbus
+        target: /var/run/dbus
     stdin_open: true
     tty: true
-    ports:
-      - 7080:80
-      - 7079:6079
-      - 56375:46375
-      - 21311:11311
     extra_hosts:
       - "display:host-gateway"
-    networks:
-      - default
+    network_mode: host
     devices:
       - /dev/dri:/dev/dri
-      - /dev/ttyUSB0:/dev/ttyUSB0
-      - /dev/ttyACM0:/dev/ttyACM0
+    command: bash -c "PhoXiControl"
   rosnoetic:
     container_name: rosnoetic
     hostname: rosnoetic
@@ -55,13 +60,11 @@ services:
         target: /root/.ros/log
     stdin_open: true
     tty: true
+    ports:
+      - 11311:11311
     extra_hosts:
       - "display:host-gateway"
     network_mode: host
     devices:
       - /dev/ttyUSB0:/dev/ttyUSB0
       - /dev/ttyACM0:/dev/ttyACM0
-
-networks:
-  default:
-    driver: bridge
