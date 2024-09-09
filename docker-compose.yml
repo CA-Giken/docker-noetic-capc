@@ -60,9 +60,11 @@ services:
         target: /root/.ros/log
     stdin_open: true
     tty: true
+    ports:
+      - 11311:11311
     extra_hosts:
       - "display:host-gateway"
     network_mode: host
-#    devices:
-#      - /dev/ttyUSB0:/dev/ttyUSB0
-#      - /dev/ttyACM0:/dev/ttyACM0
+    devices:
+      - /dev/ttyUSB0:/dev/ttyUSB0
+      - /dev/ttyACM0:/dev/ttyACM0

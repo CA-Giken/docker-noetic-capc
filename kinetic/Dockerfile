@@ -36,8 +36,8 @@ ENV ROS_DISTRO kinetic
 RUN sh -c 'echo "deb http://packages.ros.org/ros/ubuntu xenial main" > /etc/apt/sources.list.d/ros-latest.list'
 RUN curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | sudo apt-key add -
 RUN apt-get update -q \
-    && apt-get install -y ros-kinetic-desktop \
-    && apt-get install -y python-rosinstall python-catkin-tools \
+    && apt-get install -y ros-kinetic-desktop-full \
+    && apt-get install -y python-rosdep python-rosinstall python-rosinstall-generator python-wstool build-essential python-catkin-tools\
     && rosdep init \
     && rosdep update \
     && apt-get clean \
@@ -79,6 +79,11 @@ RUN set -eux \
 
 RUN apt-get clean && \
     rm -rf /var/lib/apt/lists/*
+
+RUN sh -c 'echo "source /opt/ros/noetic/setup.bash" >> ~/.bashrc'
+RUN sh -c 'echo "export ROS_HOSTNAME=localhost" >> ~/.bashrc'
+RUN sh -c 'echo "export ROS_MASTER_URI=http://localhost:11311" >> ~/.bashrc'
+RUN sh -c 'echo "export NODE_PATH=/usr/local/lib/node_modules" >> ~/.bashrc'
 
 # Command copy
 COPY ./entrypoint.sh /app/
