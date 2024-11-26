@@ -11,7 +11,7 @@ services:
       shm_size: 2gb
     shm_size: 2gb
     environment:
-      - DISPLAY=display:0
+      - DISPLAY=:0
       - PHOXI_CONTROL_PATH=/opt/Photoneo/PhoXiControl
       - QT_X11_NO_MITSHM=1
       - ROS_MASTER_URI=http://localhost:11311
@@ -46,7 +46,7 @@ services:
       context: ./noetic
       dockerfile: Dockerfile
     environment:
-      - DISPLAY=display:0
+      - DISPLAY=:0
     working_dir: /root
     volumes:
       - type: bind
@@ -58,13 +58,35 @@ services:
       - type: bind
         source: ~/.ros/log
         target: /root/.ros/log
+      - type: bind
+        source: /tmp/.X11-unix
+        target: /tmp/.X11-unix
     stdin_open: true
     tty: true
     ports:
       - 11311:11311
-    extra_hosts:
-      - "display:host-gateway"
+      - 8000:8000
     network_mode: host
     devices:
       - /dev/ttyUSB0:/dev/ttyUSB0
       - /dev/ttyACM0:/dev/ttyACM0
+  ursim:
+    container_name: ursim
+    hostname: ursim
+    image: universalrobots/ursim_e-series
+    environment:
+      - ROBOT_MODEL=UR10
+      - ROS_MASTER_URI=http://localhost:11311
+    network_mode: host
+    stdin_open: true
+    tty: true
+    volumes:
+      - type: bind
+        source: /tmp/.X11-unix
+        target: /tmp/.X11-unix
+      - type: bind
+        source: ~/.ursim/programs
+        target: /root/.ursim/programs
+      - type: bind
+        source: ~/.ursim/urcaps
+        target: /root/.ursim/urcaps

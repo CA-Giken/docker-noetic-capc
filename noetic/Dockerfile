@@ -119,3 +119,17 @@ RUN pip install scipy
 
 # Rovi_industrial setup
 RUN pip install git+https://github.com/UniversalRobots/RTDE_Python_Client_Library.git
+
+# Install pymsgboxs
+RUN pip install pymsgbox tkfilebrowser pysimplegui
+
+# Install Eel
+RUN pip install eel
+RUN apt-get update \
+    && apt-get install -y chromium-browser libgtk2.0-0 libgtk-3-0 libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb libgbm-dev fonts-ipafont \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+RUN apt-get update \
+    && apt-get install -y net-tools \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
