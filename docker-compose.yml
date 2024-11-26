@@ -74,10 +74,18 @@ services:
     container_name: ursim
     hostname: ursim
     image: universalrobots/ursim_e-series
+    networks:
+      ur_network:
+        ipv4_address: 192.168.56.101
+    ports:
+      - 5900:5900 # VNC
+      - 6080:6080 # Web Browser VNC
+      - 29999:29999
+      - 30001-30004:30001-30004
     environment:
+      - DISPLAY=${DISPLAY}
       - ROBOT_MODEL=UR10
       - ROS_MASTER_URI=http://localhost:11311
-    network_mode: host
     stdin_open: true
     tty: true
     volumes:
@@ -90,3 +98,11 @@ services:
       - type: bind
         source: ~/.ursim/urcaps
         target: /root/.ursim/urcaps
+
+networks:
+  ur_network:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.56.0/24
