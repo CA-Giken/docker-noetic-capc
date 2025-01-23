@@ -39,12 +39,18 @@ services:
     devices:
       - /dev/dri:/dev/dri
     command: bash -c "PhoXiControl"
+  rosnoetic-base:
+    build:
+      context: ./noetic
+      dockerfile: base.Dockerfile
   rosnoetic:
     container_name: rosnoetic
     hostname: rosnoetic
     build:
       context: ./noetic
-      dockerfile: Dockerfile
+      dockerfile: rovi.Dockerfile
+    depends_on:
+      - rosnoetic-base
     environment:
       - DISPLAY=:0
     working_dir: /root
@@ -67,9 +73,9 @@ services:
       - 11311:11311
       - 8000:8000
     network_mode: host
-    devices:
-      - /dev/ttyUSB0:/dev/ttyUSB0
-      - /dev/ttyACM0:/dev/ttyACM0
+    # devices:
+    #   - /dev/ttyUSB0:/dev/ttyUSB0
+    #   - /dev/ttyACM0:/dev/ttyACM0
   ursim:
     container_name: ursim
     hostname: ursim
