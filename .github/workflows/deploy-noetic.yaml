@@ -1,4 +1,4 @@
-name: Create and publish to GCR for ROS Noetic
+name: Create and publish to ghcr.io for ROS Noetic
 
 on:
   push:
@@ -11,7 +11,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}/rosnoetic-base
+  IMAGE_NAME: rosnoetic-base
 
 jobs:
   build-and-push-image:
@@ -38,15 +38,15 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          images: ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}
 
       - name: Build and push Docker image
         id: push
         uses: docker/build-push-action@v6
         with:
-          context: ./noetic
-          file: base.Dockerfile
-          push: true
+          context: noetic
+          file: noetic/base.Dockerfile
+          outputs: type=image,push=true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
