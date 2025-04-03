@@ -26,6 +26,10 @@
 
 [docs/xserver.md](docs/xserver.md)
 
+### WSL2環境セットアップ
+
+[docs/wsl2.md](docs/wsl2.md)
+
 ### マウントディレクトリ作成
 
 ホスト側で以下のディレクトリを作成する。
