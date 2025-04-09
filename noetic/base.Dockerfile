@@ -1,4 +1,4 @@
-FROM ubuntu:focal-20240427 as capc_base
+FROM ubuntu:focal-20250404 as capc_base
 
 # Docker実行してシェルに入ったときの初期ディレクトリ（ワークディレクトリ）の設定
 WORKDIR /root/
