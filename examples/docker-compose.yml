@@ -1,0 +1,33 @@
+version: "3.9"
+
+services:
+  example-rosnoetic:
+    container_name: example-rosnoetic
+    hostname: example-rosnoetic
+    build:
+      context: .
+      dockerfile: noetic.Dockerfile
+    environment:
+      - DISPLAY=:0
+    working_dir: /root
+    volumes:
+      - type: bind
+        source: ~/catkin_ws/src
+        target: /root/catkin_ws/src
+      - type: bind
+        source: ~/src
+        target: /root/src
+      - type: bind
+        source: ~/.ros/log
+        target: /root/.ros/log
+      - type: bind
+        source: /tmp/.X11-unix
+        target: /tmp/.X11-unix
+    stdin_open: true
+    tty: true
+    ports:
+      - 11311:11311
+    network_mode: host
+    # devices:
+    #   - /dev/ttyUSB0:/dev/ttyUSB0
+    #   - /dev/ttyACM0:/dev/ttyACM0
