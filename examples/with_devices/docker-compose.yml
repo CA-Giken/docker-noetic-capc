@@ -1,12 +1,25 @@
 version: "3.9"
 
 services:
-  example-rosnoetic:
-    container_name: example-rosnoetic
-    hostname: example-rosnoetic
+  ensenso:
+    build:
+      context: ./ensenso
+      dockerfile: Dockerfile
+    environment:
+      - DISPLAY=:0
+    volumes:
+      - type: bind
+        source: /tmp/.X11-unix
+        target: /tmp/.X11-unix
+    stdin_open: true
+    tty: true
+    network_mode: host
+    depends_on:
+      - rosnoetic
+  rosnoetic:
     build:
       context: .
-      dockerfile: noetic.Dockerfile
+      dockerfile: Dockerfile
     environment:
       - DISPLAY=:0
     working_dir: /root
@@ -25,8 +38,6 @@ services:
         target: /tmp/.X11-unix
     stdin_open: true
     tty: true
-    ports:
-      - 11311:11311
     network_mode: host
     # devices:
     #   - /dev/ttyUSB0:/dev/ttyUSB0

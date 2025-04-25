@@ -1,6 +1,4 @@
 #!/bin/bash
-PROJECT_NAME=$1
-
 source /opt/ros/noetic/setup.bash
 cd /root/catkin_ws
 catkin build
