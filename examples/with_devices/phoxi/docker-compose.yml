@@ -1,9 +1,9 @@
 version: "3.9"
 
 services:
-  ensenso:
+  phoxi:
     build:
-      context: ./ensenso
+      context: .
       dockerfile: Dockerfile
     environment:
       - DISPLAY=:0
@@ -16,9 +16,11 @@ services:
     network_mode: host
     depends_on:
       - rosnoetic
+    devices:
+      - /dev/dri:/dev/dri
   rosnoetic:
     build:
-      context: .
+      context: ../
       dockerfile: Dockerfile
     environment:
       - DISPLAY=:0
