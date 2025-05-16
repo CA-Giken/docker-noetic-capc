@@ -18,6 +18,8 @@ services:
       - rosnoetic
     devices:
       - /dev/dri:/dev/dri
+    command:
+      - bash -c "PhoXiControl"
   rosnoetic:
     build:
       context: ../

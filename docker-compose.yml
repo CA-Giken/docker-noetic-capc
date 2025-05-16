@@ -1,44 +1,6 @@
 version: "3.9"
 
 services:
-  roskinetic:
-    container_name: roskinetic
-    hostname: roskinetic
-    privileged: true
-    build:
-      context: ./kinetic
-      dockerfile: Dockerfile
-      shm_size: 2gb
-    shm_size: 2gb
-    environment:
-      - DISPLAY=:0
-      - PHOXI_CONTROL_PATH=/opt/Photoneo/PhoXiControl
-      - QT_X11_NO_MITSHM=1
-      - ROS_MASTER_URI=http://localhost:11311
-    volumes:
-      - type: bind
-        source: ~/kinetic/catkin_ws/src
-        target: /root/catkin_ws/src
-      - type: bind
-        source: ~/src
-        target: /root/src
-      - type: bind
-        source: ~/.ros/log
-        target: /root/.ros/log
-      - type: bind
-        source: /dev/shm
-        target: /dev/shm
-      - type: bind
-        source: /var/run/dbus
-        target: /var/run/dbus
-    stdin_open: true
-    tty: true
-    extra_hosts:
-      - "display:host-gateway"
-    network_mode: host
-    devices:
-      - /dev/dri:/dev/dri
-    command: bash -c "PhoXiControl"
   rosnoetic-base:
     build:
       context: ./noetic
