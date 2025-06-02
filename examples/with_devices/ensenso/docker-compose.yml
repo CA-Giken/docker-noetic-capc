@@ -13,6 +13,7 @@ services:
         target: /tmp/.X11-unix
     stdin_open: true
     tty: true
+    privileged: true
     network_mode: host
     depends_on:
       - rosnoetic
@@ -22,6 +23,7 @@ services:
       dockerfile: Dockerfile
     environment:
       - DISPLAY=:0
+      - QT_X11_NO_MITSHM=1
     working_dir: /root
     volumes:
       - type: bind
@@ -38,6 +40,7 @@ services:
         target: /tmp/.X11-unix
     stdin_open: true
     tty: true
+    privileged: true
     network_mode: host
     # devices:
     #   - /dev/ttyUSB0:/dev/ttyUSB0
