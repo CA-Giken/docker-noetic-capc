@@ -13,7 +13,7 @@ RUN if [ "$TARGETARCH" = "amd64" ]; then \
         echo "Skipping Open3D installation for ARM64. Users can build from source if needed."; \
     fi
 
-RUN pip install scipy
+RUN pip install --no-cache-dir scipy
 
 # Node.js setup
 RUN apt-get update && apt-get install -y \
