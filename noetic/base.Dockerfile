@@ -8,6 +8,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 ARG TARGETARCH
 RUN if [ "$TARGETARCH" = "arm64" ]; then \
         apt-get update && apt-get install -y \
+            wget \
             cmake \
             git \
             libeigen3-dev \
@@ -25,6 +26,16 @@ RUN if [ "$TARGETARCH" = "arm64" ]; then \
             libfmt-dev \
             libspdlog-dev && \
         rm -rf /var/lib/apt/lists/*; \
+    fi
+
+# Upgrade CMake for ARM64 (Open3D requires CMake 3.18+)
+RUN if [ "$TARGETARCH" = "arm64" ]; then \
+        echo "Upgrading CMake to 3.27..."; \
+        cd /tmp && \
+        wget https://github.com/Kitware/CMake/releases/download/v3.27.0/cmake-3.27.0-linux-aarch64.tar.gz && \
+        tar -xzf cmake-3.27.0-linux-aarch64.tar.gz && \
+        cp -r cmake-3.27.0-linux-aarch64/* /usr/local/ && \
+        rm -rf cmake-3.27.0-linux-aarch64*; \
     fi
 
 # Open3d - ARM64 builds from source from GitHub, AMD64 uses prebuilt wheel
@@ -46,7 +57,7 @@ RUN if [ "$TARGETARCH" = "arm64" ]; then \
         cd / && rm -rf /tmp/Open3D; \
     else \
         echo "Installing Open3D 0.13.0 prebuilt wheel for AMD64"; \
-        pip install open3d==0.13.0; \
+        pip install --no-cache-dir open3d==0.13.0; \
     fi
 
 RUN pip install scipy
