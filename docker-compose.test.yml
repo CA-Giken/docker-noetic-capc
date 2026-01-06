@@ -1,0 +1,37 @@
+version: "3.9"
+
+services:
+  slim:
+    build:
+      context: ./noetic
+      dockerfile: slim.Dockerfile
+    image: ghcr.io/ca-giken/rosnoetic-slim:main
+    platforms:
+      - linux/amd64
+      - linux/arm64
+  base:
+    build:
+      context: ./noetic
+      dockerfile: base.Dockerfile
+    image: ghcr.io/ca-giken/rosnoetic-base:main
+    platforms:
+      - linux/amd64
+      - linux/arm64
+    args:
+      REGISTRY: ghcr.io
+      OWNER: ca-giken
+    depends_on:
+      - slim
+  full:
+    build:
+      context: ./noetic
+      dockerfile: full.Dockerfile
+    image: ghcr.io/ca-giken/rosnoetic-full:main
+    platforms:
+      - linux/amd64
+      - linux/arm64
+    args:
+      REGISTRY: ghcr.io
+      OWNER: ca-giken
+    depends_on:
+      - base
