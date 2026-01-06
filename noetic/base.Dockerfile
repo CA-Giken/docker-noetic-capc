@@ -1,63 +1,38 @@
-FROM ubuntu:focal-20240427 as capc_base
-
-# Docker実行してシェルに入ったときの初期ディレクトリ（ワークディレクトリ）の設定
-WORKDIR /root/
+ARG REGISTRY=ghcr.io
+ARG OWNER=ca-giken
+FROM ${REGISTRY}/${OWNER}/rosnoetic-slim:main
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Upgrade Packages
-RUN apt-get update -q \
-    && apt-get upgrade -y \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+# Open3d dependencies for ARM64 build from source
+ARG TARGETARCH
+RUN if [ "$TARGETARCH" = "arm64" ]; then \
+        apt-get update && apt-get install -y \
+            cmake \
+            libeigen3-dev \
+            libglew-dev \
+            libglfw3-dev \
+            libjpeg-dev \
+            libpng-dev \
+            libpython3-dev \
+            xorg-dev \
+            libx11-dev \
+            libxrandr-dev \
+            libxi-dev \
+            libxinerama-dev \
+            libxcursor-dev && \
+        rm -rf /var/lib/apt/lists/*; \
+    fi
 
-# Utility packages
-RUN apt-get update -q \
-    && apt-get install -y software-properties-common \
-    && add-apt-repository universe && apt-get update -q \
-    && apt-get install -y git build-essential wget curl vim sudo lsb-release locales \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+# Open3d - ARM64 builds from source, AMD64 uses prebuilt wheel
+RUN if [ "$TARGETARCH" = "arm64" ]; then \
+        echo "Building Open3D 0.13.0 from source for ARM64 (may take 30-60 minutes)"; \
+        pip install --no-binary open3d open3d==0.13.0; \
+    else \
+        echo "Installing Open3D 0.13.0 prebuilt wheel for AMD64"; \
+        pip install open3d==0.13.0; \
+    fi
 
-# Install X11 requirements
-RUN apt-get update -q && apt-get install -y \
-    iputils-ping telnet x11-apps \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
-
-# Install Python
-RUN apt-get update -q && apt-get install -y \
-    python3.8 python3-pip python3-dev python3-tk python-is-python3 \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
-
-# Install ROS
-ENV ROS_DISTRO=noetic
-RUN sh -c 'echo "deb http://packages.ros.org/ros/ubuntu focal main" > /etc/apt/sources.list.d/ros-latest.list'
-RUN curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | sudo apt-key add -
-RUN apt-get update -q \
-    && apt-get install -y ros-noetic-desktop-full \
-    && apt-get install -y python3-rosdep python3-rosinstall python3-rosinstall-generator python3-wstool build-essential python3-catkin-tools \
-    && rosdep init \
-    && rosdep update \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
-
-# Setting for Japanese
-RUN apt-get update -q && apt-get install -y \
-    tzdata locales fonts-noto-cjk fcitx-mozc \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
-RUN ln -s -f /usr/share/zoneinfo/Asia/Tokyo /etc/localtime && \
-    dpkg-reconfigure tzdata && \
-    locale-gen ja_JP.UTF-8
-
-################################
-## CAPC Specific Instructions ##
-################################
-
-# Open3d Compatibility
-RUN pip install open3d==0.13.0
 RUN pip install scipy
 
 # Node.js setup
@@ -77,53 +52,18 @@ RUN apt-get update -q && apt-get install -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# CAPC
-RUN pip install pyserial
-RUN pip install git+https://github.com/CA-Giken/capc-host.git
-
-###################################
-## For CAPC GUI App Instructions ##
-###################################
-
-# for rviz_animted_view_controller
+# For rviz_animated_view_controller
 RUN add-apt-repository universe && apt-get update -q \
     && apt-get install -y qt5-default qtscript5-dev libqwt-qt5-dev \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Install pymsgboxs
+# Install pymsgbox, tkfilebrowser, pysimplegui
 RUN pip install pymsgbox tkfilebrowser pysimplegui
 
-# Install Eel
-RUN pip install eel
-RUN apt-get update \
-    && apt-get install -y chromium-browser libgtk2.0-0 libgtk-3-0 libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb libgbm-dev fonts-ipafont \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
-RUN apt-get update \
-    && apt-get install -y net-tools \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+# CAPC-host
+RUN pip install pyserial
+RUN pip install git+https://github.com/CA-Giken/capc-host.git
 
-###################
-## Closing Steps ##
-###################
-
-# Set user
-ARG UID=1000
-RUN useradd -m -u ${UID} ros
-
-RUN sh -c 'echo "source /opt/ros/noetic/setup.bash" >> ~/.bashrc'
-RUN sh -c 'echo "export ROS_HOSTNAME=localhost" >> ~/.bashrc'
-RUN sh -c 'echo "export ROS_MASTER_URI=http://localhost:11311" >> ~/.bashrc'
+# Bash configuration
 RUN sh -c 'echo "export NODE_PATH=/usr/local/lib/node_modules" >> ~/.bashrc'
-RUN sh -c 'echo "export PYTHONPATH=/usr/local/lib/python3.8/dist-packages:$PYTHONPATH" >> ~/.bashrc'
-
-
-# Command copy
-# COPY ./entrypoint.sh /app/
-# RUN chmod +x /app/entrypoint.sh
-# CMD ["/bin/sh", "-c", "./entrypoint.sh"]
-
-# YCAM3D Setup
-
