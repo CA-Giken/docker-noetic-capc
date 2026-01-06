@@ -9,6 +9,7 @@ ARG TARGETARCH
 RUN if [ "$TARGETARCH" = "arm64" ]; then \
         apt-get update && apt-get install -y \
             cmake \
+            git \
             libeigen3-dev \
             libglew-dev \
             libglfw3-dev \
@@ -20,14 +21,29 @@ RUN if [ "$TARGETARCH" = "arm64" ]; then \
             libxrandr-dev \
             libxi-dev \
             libxinerama-dev \
-            libxcursor-dev && \
+            libxcursor-dev \
+            libfmt-dev \
+            libspdlog-dev && \
         rm -rf /var/lib/apt/lists/*; \
     fi
 
-# Open3d - ARM64 builds from source, AMD64 uses prebuilt wheel
+# Open3d - ARM64 builds from source from GitHub, AMD64 uses prebuilt wheel
 RUN if [ "$TARGETARCH" = "arm64" ]; then \
         echo "Building Open3D 0.13.0 from source for ARM64 (may take 30-60 minutes)"; \
-        pip install --no-binary open3d open3d==0.13.0; \
+        cd /tmp && \
+        git clone --branch v0.13.0 --depth 1 https://github.com/isl-org/Open3D.git && \
+        cd Open3D && \
+        mkdir build && cd build && \
+        cmake -DBUILD_SHARED_LIBS=ON \
+              -DCMAKE_INSTALL_PREFIX=/usr/local \
+              -DBUILD_PYTHON_MODULE=ON \
+              -DBUILD_CUDA_MODULE=OFF \
+              -DBUILD_EXAMPLES=OFF \
+              -DBUILD_UNIT_TESTS=OFF \
+              .. && \
+        make -j$(nproc) && \
+        make install-pip-package && \
+        cd / && rm -rf /tmp/Open3D; \
     else \
         echo "Installing Open3D 0.13.0 prebuilt wheel for AMD64"; \
         pip install open3d==0.13.0; \
