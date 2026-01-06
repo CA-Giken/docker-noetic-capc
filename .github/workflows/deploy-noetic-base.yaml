@@ -18,6 +18,7 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: rosnoetic-base
+  REPOSITORY_OWNER: ca-giken
 
 jobs:
   build-amd64:
@@ -122,5 +123,5 @@ jobs:
       
       - name: Create and push manifest
         run: |
-          docker buildx imagetools create -t ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:main \
-            ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:main
+          docker buildx imagetools create -t ${{ env.REGISTRY }}/${{ env.REPOSITORY_OWNER }}/${{ env.IMAGE_NAME }}:main \
+            ${{ env.REGISTRY }}/${{ env.REPOSITORY_OWNER }}/${{ env.IMAGE_NAME }}:main
