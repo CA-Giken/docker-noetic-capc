@@ -4,60 +4,13 @@ FROM ${REGISTRY}/${OWNER}/rosnoetic-slim:main
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Open3d dependencies for ARM64 build from source
+# Open3d - AMD64のみプレビルドwheelをインストール、ARM64はユーザーが必要に応じてビルド
 ARG TARGETARCH
-RUN if [ "$TARGETARCH" = "arm64" ]; then \
-        apt-get update && apt-get install -y \
-            wget \
-            cmake \
-            git \
-            libeigen3-dev \
-            libglew-dev \
-            libglfw3-dev \
-            libjpeg-dev \
-            libpng-dev \
-            libpython3-dev \
-            xorg-dev \
-            libx11-dev \
-            libxrandr-dev \
-            libxi-dev \
-            libxinerama-dev \
-            libxcursor-dev \
-            libfmt-dev \
-            libspdlog-dev && \
-        rm -rf /var/lib/apt/lists/*; \
-    fi
-
-# Upgrade CMake for ARM64 (Open3D requires CMake 3.18+)
-RUN if [ "$TARGETARCH" = "arm64" ]; then \
-        echo "Upgrading CMake to 3.27..."; \
-        cd /tmp && \
-        wget https://github.com/Kitware/CMake/releases/download/v3.27.0/cmake-3.27.0-linux-aarch64.tar.gz && \
-        tar -xzf cmake-3.27.0-linux-aarch64.tar.gz && \
-        cp -r cmake-3.27.0-linux-aarch64/* /usr/local/ && \
-        rm -rf cmake-3.27.0-linux-aarch64*; \
-    fi
-
-# Open3d - ARM64 builds from source from GitHub, AMD64 uses prebuilt wheel
-RUN if [ "$TARGETARCH" = "arm64" ]; then \
-        echo "Building Open3D 0.13.0 from source for ARM64 (may take 30-60 minutes)"; \
-        cd /tmp && \
-        git clone --branch v0.13.0 --depth 1 https://github.com/isl-org/Open3D.git && \
-        cd Open3D && \
-        mkdir build && cd build && \
-        cmake -DBUILD_SHARED_LIBS=ON \
-              -DCMAKE_INSTALL_PREFIX=/usr/local \
-              -DBUILD_PYTHON_MODULE=ON \
-              -DBUILD_CUDA_MODULE=OFF \
-              -DBUILD_EXAMPLES=OFF \
-              -DBUILD_UNIT_TESTS=OFF \
-              .. && \
-        make -j$(nproc) && \
-        make install-pip-package && \
-        cd / && rm -rf /tmp/Open3D; \
-    else \
+RUN if [ "$TARGETARCH" = "amd64" ]; then \
         echo "Installing Open3D 0.13.0 prebuilt wheel for AMD64"; \
         pip install --no-cache-dir open3d==0.13.0; \
+    else \
+        echo "Skipping Open3D installation for ARM64. Users can build from source if needed."; \
     fi
 
 RUN pip install scipy

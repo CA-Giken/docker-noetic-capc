@@ -6,32 +6,25 @@ services:
       context: ./noetic
       dockerfile: slim.Dockerfile
     image: ghcr.io/ca-giken/rosnoetic-slim:main
-    platforms:
-      - linux/amd64
-      - linux/arm64
   base:
     build:
       context: ./noetic
       dockerfile: base.Dockerfile
+      args:
+        TARGETARCH: ${TARGETARCH}
+        REGISTRY: ghcr.io
+        OWNER: ca-giken
     image: ghcr.io/ca-giken/rosnoetic-base:main
-    platforms:
-      - linux/amd64
-      - linux/arm64
-    args:
-      REGISTRY: ghcr.io
-      OWNER: ca-giken
     depends_on:
       - slim
   full:
     build:
       context: ./noetic
       dockerfile: full.Dockerfile
+      args:
+        TARGETARCH: ${TARGETARCH}
+        REGISTRY: ghcr.io
+        OWNER: ca-giken
     image: ghcr.io/ca-giken/rosnoetic-full:main
-    platforms:
-      - linux/amd64
-      - linux/arm64
-    args:
-      REGISTRY: ghcr.io
-      OWNER: ca-giken
     depends_on:
       - base
