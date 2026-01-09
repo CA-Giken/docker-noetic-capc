@@ -64,7 +64,7 @@ jobs:
 
   build-arm64:
     runs-on: ubuntu-latest
-    timeout-minutes: 180
+    timeout-minutes: 360
     needs: build-amd64
     if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
     permissions:
