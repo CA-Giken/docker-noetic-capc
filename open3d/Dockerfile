@@ -30,14 +30,16 @@ RUN cd /tmp && \
 RUN cd /tmp/Open3D && \
   git submodule update --init --recursive
 RUN mkdir /tmp/Open3D/build && cd /tmp/Open3D/build && \
-  cmake \
+cmake \
     -DCMAKE_BUILD_TYPE=Release \
-    -DBUILD_SHARED_LIBS=ON \
+    -DBUILD_SHARED_LIBS=OFF \
     -DBUILD_CUDA_MODULE=OFF \
     -DBUILD_GUI=OFF \
     -DBUILD_TENSORFLOW_OPS=OFF \
     -DBUILD_PYTORCH_OPS=OFF \
     -DBUILD_UNIT_TESTS=OFF \
+    -DBUILD_EXAMPLES=OFF \
+    -DCMAKE_INSTALL_PREFIX=~/open3d_install \
     -DPYTHON_EXECUTABLE=$(which python3) \
     .. && \
   make -j2 && \

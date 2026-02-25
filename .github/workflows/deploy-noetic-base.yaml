@@ -56,7 +56,7 @@ jobs:
           context: noetic
           file: noetic/base.Dockerfile
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: ${{ env.REGISTRY }}/${{ env.REPOSITORY_OWNER }}/${{ env.IMAGE_NAME }}:main-amd64
           labels: ${{ steps.meta.outputs.labels }}
           platforms: linux/amd64
           cache-from: type=gha,scope=base-amd64
@@ -101,7 +101,7 @@ jobs:
           context: noetic
           file: noetic/base.Dockerfile
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: ${{ env.REGISTRY }}/${{ env.REPOSITORY_OWNER }}/${{ env.IMAGE_NAME }}:main-arm64
           labels: ${{ steps.meta.outputs.labels }}
           platforms: linux/arm64
           cache-from: type=gha,scope=base-arm64
@@ -124,4 +124,5 @@ jobs:
       - name: Create and push manifest
         run: |
           docker buildx imagetools create -t ${{ env.REGISTRY }}/${{ env.REPOSITORY_OWNER }}/${{ env.IMAGE_NAME }}:main \
-            ${{ env.REGISTRY }}/${{ env.REPOSITORY_OWNER }}/${{ env.IMAGE_NAME }}:main
+            ${{ env.REGISTRY }}/${{ env.REPOSITORY_OWNER }}/${{ env.IMAGE_NAME }}:main-amd64 \
+            ${{ env.REGISTRY }}/${{ env.REPOSITORY_OWNER }}/${{ env.IMAGE_NAME }}:main-arm64
